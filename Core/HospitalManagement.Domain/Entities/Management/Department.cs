@@ -9,7 +9,7 @@ namespace HospitalManagement.Domain.Entities.Management
         public string? DepartmentName { get; set; }
         public int SortOrderNo { get; set; }
         public int ManagerMemberId { get; set; }
-        public double Param1 { get; set; }
+        public string? Param1 { get; set; }
         public string? Param2 { get; set; }
         public bool isActive { get; set; }
     }

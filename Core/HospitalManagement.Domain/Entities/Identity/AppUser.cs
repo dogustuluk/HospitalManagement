@@ -25,8 +25,8 @@ namespace HospitalManagement.Domain.Entities.Identity
         public DateTime? RefreshTokenEndDate { get; set; }
 
 
-        public virtual Doctor Doctor { get; set; }
-        public virtual Patient Patient { get; set; }
-        public virtual Staff Staff { get; set; }
+        public virtual Doctor? Doctor { get; set; }
+        public virtual Patient? Patient { get; set; }
+        public virtual Staff? Staff { get; set; }
     }
 }

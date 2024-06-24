@@ -9,7 +9,7 @@ namespace HospitalManagement.Application.Repositories
         
         bool Remove(T model);
         bool RemoveRange(List<T> datas);
-        Task<bool> RemoveAsync(string id);
+        Task<bool> RemoveAsync(int id);
         
         Task<bool> UpdateAsync(T model);
         bool Update(T model);

@@ -1077,8 +1077,8 @@ namespace HospitalManagement.Persistence.Migrations
                     b.Property<int>("ManagerMemberId")
                         .HasColumnType("integer");
 
-                    b.Property<double>("Param1")
-                        .HasColumnType("double precision");
+                    b.Property<string>("Param1")
+                        .HasColumnType("text");
 
                     b.Property<string>("Param2")
                         .HasColumnType("text");

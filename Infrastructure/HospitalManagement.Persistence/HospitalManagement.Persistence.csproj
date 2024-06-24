@@ -26,6 +26,8 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="Services\HR\" />
+    <Folder Include="Services\Payment\" />
   </ItemGroup>
 
 </Project>

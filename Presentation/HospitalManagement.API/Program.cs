@@ -1,9 +1,11 @@
+using HospitalManagement.Application;
 using HospitalManagement.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddApplicationServices();
 builder.Services.AddPersistenceServices();
 
 builder.Services.AddControllers();

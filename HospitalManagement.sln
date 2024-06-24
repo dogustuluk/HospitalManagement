@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalManagement.SignalR"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalManagement.API", "Presentation\HospitalManagement.API\HospitalManagement.API.csproj", "{81B6479B-AEAF-4FA4-ADC2-BC5732CAE3D9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalManagement.Client", "Presentation\HospitalManagement.Client\HospitalManagement.Client.csproj", "{8A868109-8CF8-4090-BFFB-7720C6DBB496}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{81B6479B-AEAF-4FA4-ADC2-BC5732CAE3D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81B6479B-AEAF-4FA4-ADC2-BC5732CAE3D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81B6479B-AEAF-4FA4-ADC2-BC5732CAE3D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A868109-8CF8-4090-BFFB-7720C6DBB496}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A868109-8CF8-4090-BFFB-7720C6DBB496}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A868109-8CF8-4090-BFFB-7720C6DBB496}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A868109-8CF8-4090-BFFB-7720C6DBB496}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +68,7 @@ Global
 		{E84AE2F8-936C-4336-A98F-471AFC5D4372} = {1AD2CFAD-FE1D-47A9-AB57-7A8935242D70}
 		{7AA003EB-D131-44BC-AE80-088841CD4C8B} = {1AD2CFAD-FE1D-47A9-AB57-7A8935242D70}
 		{81B6479B-AEAF-4FA4-ADC2-BC5732CAE3D9} = {8F2246F9-5A39-47E3-9336-A77238B2D432}
+		{8A868109-8CF8-4090-BFFB-7720C6DBB496} = {8F2246F9-5A39-47E3-9336-A77238B2D432}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ACAB9055-6C5F-467A-9983-37E0AEED214C}

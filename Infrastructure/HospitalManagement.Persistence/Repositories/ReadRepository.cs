@@ -3,7 +3,6 @@ using HospitalManagement.Application.Repositories;
 using HospitalManagement.Domain.Entities.Common;
 using HospitalManagement.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
@@ -43,10 +42,11 @@ namespace HospitalManagement.Persistence.Repositories
                 query = query.Include(include);
             if (predicate != null)
                 query = query.Where(predicate);
-            if (query.Count() > 0)
-                return query;
-            else
-                throw new ArgumentNullException();
+            //if (query.Count() > 0)
+            //    return query;
+            //else
+            //    throw new ArgumentNullException();
+            return query;
         }
 
         public async Task<List<T>> GetAllSqlAsync(string table, string sqlQuery, string? include)
@@ -80,24 +80,59 @@ namespace HospitalManagement.Persistence.Repositories
             return query;
         }
 
-        public Task<PaginatedList<T>> GetDataPagedAsync(Expression<Func<T, bool>> predicate, string? include, int pageIndex, int take, string orderBy)
+        public async Task<PaginatedList<T>> GetDataPagedAsync(Expression<Func<T, bool>> predicate, string? include, int pageIndex, int take, string orderBy)
         {
-            throw new NotImplementedException();
+            var query = Table.AsQueryable();
+            
+            if (!string.IsNullOrEmpty(include))
+                query = query.Include(include);
+            
+            if (predicate != null)
+                query = query.Where(predicate);
+
+            if (!string.IsNullOrEmpty(orderBy))
+                query = await GetSortedDataAsync(query, orderBy);
+
+            query = query.Take(take);
+
+            return await CreatePaginatedList.CreateAsync<T>(query, pageIndex, take);
         }
 
-        public Task<PaginatedList<T>> GetDataPagedSqlAsync(string table, string sqlQuery, string? include, int pageIndex, int take, string orderBy)
+        public async Task<PaginatedList<T>> GetDataPagedSqlAsync(string table, string sqlQuery, string? include, int pageIndex, int take, string orderBy)
         {
-            throw new NotImplementedException();
+            string queryString = $"Select * from {table} Where {sqlQuery}";
+
+            var query = Table.FromSqlRaw(queryString).AsQueryable();
+            if (!string.IsNullOrEmpty(include))
+                query = query.Include(include);
+            if (!string.IsNullOrEmpty(orderBy))
+                query = await GetSortedDataAsync(query, orderBy);
+            //Take için kontrol et.
+            return await CreatePaginatedList.CreateAsync<T>(query, pageIndex, take);
+
         }
 
-        public Task<List<T>> GetDataSqlAsync(string table, string sqlQuery, string? include, int pageIndex, int take, string orderBy)
+        public async Task<List<T>> GetDataSqlAsync(string table, string sqlQuery, string? include, int pageIndex, int take, string orderBy)
         {
-            throw new NotImplementedException();
+            string queryString = $"SELECT * FROM {table} WHERE {sqlQuery} ORDER BY {orderBy} OFFSET {pageIndex * take} ROWS FETCH NEXT {take} ROWS ONLY";
+            if (!string.IsNullOrEmpty(include))
+                return await Table.FromSqlRaw(queryString).Include(include).ToListAsync();
+            else
+                return await Table.FromSqlRaw(queryString).ToListAsync();
+
         }
 
-        public Task<T> GetEntityWithIncludeAsync(Expression<Func<T, bool>> predicate, string? include)
+        public async Task<T> GetEntityWithIncludeAsync(Expression<Func<T, bool>> predicate, string? include)
         {
-            throw new NotImplementedException();
+            var query = Table.AsQueryable().Where(predicate);
+            if (!string.IsNullOrEmpty(include))
+            {
+                foreach (string b in include.Split(','))
+                {
+                    query = query.Include(b);
+                }
+            }
+            return await query.FirstOrDefaultAsync();
         }
 
         public async Task<T> GetSingleEntityAsync(Expression<Func<T, bool>> method, bool tracking = true)
@@ -121,9 +156,9 @@ namespace HospitalManagement.Persistence.Repositories
         public string? GetValue(string table, string column, string sqlQuery)
         {
             string sql = $"SELECT TOP 1 CONVERT(nvarchar, {column}) as [Value] FROM {table} WHERE {sqlQuery}";
-            
+
             var result = _context.Set<string>().FromSqlRaw(sql).FirstOrDefault();
-            
+
             if (result != null) return result;
             else throw new ArgumentNullException();
         }
@@ -131,11 +166,11 @@ namespace HospitalManagement.Persistence.Repositories
         public async Task<string?> GetValueAsync(string table, string column, string sqlQuery)
         {
             string sql = $"SELECT TOP 1 CONVERT(nvarchar, {column}) as [Value] FROM {table} WHERE {sqlQuery}";
-            
+
             FormattableString formattedSqlQuery = FormattableStringFactory.Create(sql);
-            
+
             string result = await _context.Database.SqlQuery<string>(formattedSqlQuery).FirstOrDefaultAsync();
-            
+
             if (result != null) return result;
             else throw new ArgumentNullException();
         }
