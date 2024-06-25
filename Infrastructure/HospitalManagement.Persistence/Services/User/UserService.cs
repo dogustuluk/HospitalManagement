@@ -33,6 +33,11 @@ namespace HospitalManagement.Persistence.Services.User
                 NameSurname = model.NameSurname,
                 UserName = model.UserName,
                 Email = model.Email,
+                Gender = model.Gender,
+                GSM = model.GSM,
+                GSMPersonal = model.GSMPersonal,
+                UserDetailsJSON = model.UserDetailsJSON,
+                Address = model.Address,
                 CountyId = 1,
                 CityId = 35,
                 StatusId = 10

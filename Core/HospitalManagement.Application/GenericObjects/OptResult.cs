@@ -122,7 +122,6 @@ namespace HospitalManagement.Application.GenericObjects
                 Exception = exception
             };
         }
-
         #endregion
 
         #endregion

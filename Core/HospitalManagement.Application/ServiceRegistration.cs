@@ -1,4 +1,6 @@
 ﻿using FluentValidation;
+using HospitalManagement.Application.Abstractions.Security;
+using HospitalManagement.Application.Services;
 using HospitalManagement.Application.Specifications;
 using HospitalManagement.Application.Validators;
 using MediatR;
@@ -15,7 +17,12 @@ namespace HospitalManagement.Application
             serviceCollection.AddHttpClient();
             serviceCollection.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly()); 
             serviceCollection.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
+            serviceCollection.AddAutoMapper(Assembly.GetExecutingAssembly());
+            
+
+            //otomatize et -->
             serviceCollection.AddScoped<DepartmentSpecifications>();
+            serviceCollection.AddScoped<ICryptographyService,CryptographyService>();
         }
     }
 }

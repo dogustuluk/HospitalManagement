@@ -1,5 +1,8 @@
-﻿using HospitalManagement.Application.Abstractions.Services.Users;
+﻿using AutoMapper;
+using HospitalManagement.Application.Abstractions.Security;
+using HospitalManagement.Application.Abstractions.Services.Users;
 using HospitalManagement.Application.DTOs.User;
+using HospitalManagement.Application.Extensions;
 using HospitalManagement.Application.GenericObjects;
 using MediatR;
 
@@ -7,36 +10,35 @@ namespace HospitalManagement.Application.Features.Commands.User.AppUser.CreateUs
 {
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommandRequest, OptResult<CreateUserCommandResponse>>
     {
-        readonly IUserService _userService;
-
-        public CreateUserCommandHandler(IUserService userService)
+        private readonly IUserService _userService;
+        private readonly ICryptographyService _cryptoHelperService;
+        private readonly IMapper _mapper;
+        public CreateUserCommandHandler(IUserService userService, ICryptographyService cryptoHelperService, IMapper mapper)
         {
             _userService = userService;
+            _cryptoHelperService = cryptoHelperService;
+            _mapper = mapper;
         }
-
+       
         public async Task<OptResult<CreateUserCommandResponse>> Handle(CreateUserCommandRequest request, CancellationToken cancellationToken)
         {
             OptResult<CreateUserCommandResponse> response = new OptResult<CreateUserCommandResponse>();
-            try
+            return await ExceptionHandler.HandleOptResultAsync(async () =>
             {
-                OptResult<CreateUser_Dto> createUserDto = await _userService.CreateAsync(new CreateUser_Dto
-                {
-                    NameSurname = request.NameSurname,
-                    Password = request.Password,
-                    PasswordConfirm = request.PasswordConfirm,
-                    UserName = request.UserName,
-                    Guid = Guid.NewGuid().ToString(),
-                    Email = request.Email,
-                });
-
+                var createUserDto = _mapper.Map<CreateUser_Dto>(request);
+                createUserDto.Guid = Guid.NewGuid().ToString();
+                createUserDto.IdentityNo = await _cryptoHelperService.EncryptString(request.IdentityNo);
+               
+                var createdUser = await _userService.CreateAsync(createUserDto);
                 if (createUserDto != null)
                 {
                     response.Succeeded = true;
                     response.Data = new CreateUserCommandResponse
                     {
-                        Id = createUserDto.Data.Guid,
-                        UserName = createUserDto.Data.UserName,
-                        Email = createUserDto.Data.Email
+                        Id = createUserDto.Guid,
+                        UserName = createUserDto.UserName,
+                        Email = createUserDto.Email,
+                        GSM = createUserDto.GSM,
                     };
                 }
                 else
@@ -44,14 +46,8 @@ namespace HospitalManagement.Application.Features.Commands.User.AppUser.CreateUs
                     response.Succeeded = false;
                     response.Message = "User creation failed.";
                 }
-            }
-            catch (Exception ex)
-            {
-                response.Succeeded = false;
-                response.Message = $"An error occurred: {ex.Message}";
-            }
-
-            return response;
+                return response;
+            });
         }
     }
 }

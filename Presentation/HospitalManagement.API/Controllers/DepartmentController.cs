@@ -21,7 +21,7 @@ namespace HospitalManagement.API.Controllers
         [Route("GetAllDepartment")]
         public async Task<IActionResult> GetAll(GetAllDepartmentQueryRequest request)
         {
-            List<OptResult<GetAllDepartmentQueryResponse>> response = await _mediator.Send(request);
+            OptResult<IQueryable<GetAllDepartmentQueryResponse>> response = await _mediator.Send(request);
             return Ok(response);
 
         }

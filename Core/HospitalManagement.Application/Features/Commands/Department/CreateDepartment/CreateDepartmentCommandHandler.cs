@@ -1,5 +1,8 @@
-﻿using HospitalManagement.Application.Abstractions.Services.Management;
+﻿using AutoMapper;
+using HospitalManagement.Application.Abstractions.Services.Management;
 using HospitalManagement.Application.Constants;
+using HospitalManagement.Application.DTOs.Management;
+using HospitalManagement.Application.Extensions;
 using HospitalManagement.Application.GenericObjects;
 using MediatR;
 
@@ -8,41 +11,33 @@ namespace HospitalManagement.Application.Features.Commands.Department.CreateDepa
     public class CreateDepartmentCommandHandler : IRequestHandler<CreateDepartmentCommandRequest, OptResult<CreateDepartmentCommandResponse>>
     {
         private readonly IDepartmentService _departmentService;
+        private readonly IMapper _mapper;
 
-        public CreateDepartmentCommandHandler(IDepartmentService departmentService)
+
+        public CreateDepartmentCommandHandler(IDepartmentService departmentService, IMapper mapper)
         {
             _departmentService = departmentService;
+            _mapper = mapper;
         }
 
         public async Task<OptResult<CreateDepartmentCommandResponse>> Handle(CreateDepartmentCommandRequest request, CancellationToken cancellationToken)
         {
-            try
+            return await ExceptionHandler.HandleOptResultAsync(async () =>
             {
-                await _departmentService.CreateDepartment(new DTOs.Management.Create_Department_Dto
                 {
-                    DepartmentCode = request.DepartmentCode,
-                    DepartmentName = request.DepartmentName,
-                    isActive = request.isActive,
-                    ManagerMemberId = request.ManagerMemberId,
-                    Param1 = request.Param1,
-                    Param2 = request.Param2,
-                    ParentId = request.ParentId,
-                    SortOrderNo = request.SortOrderNo
-                });
+                    var createDepartmentDto = _mapper.Map<Create_Department_Dto>(request);
 
-                var response = new CreateDepartmentCommandResponse
-                {
-                    DepartmentName = request.DepartmentName,
-                    DepartmentCode = request.DepartmentCode,
-                    SortOrderNo = request.SortOrderNo.ToString()
-                };
-                return OptResult<CreateDepartmentCommandResponse>.Success(response, Messages.SuccessfullyAdded);
-            }
-            catch (Exception ex)
-            {
-                return OptResult<CreateDepartmentCommandResponse>.Failure(ex.Message);
+                    var newDepartment = await _departmentService.CreateDepartment(createDepartmentDto);
 
-            }
+                    var response = new CreateDepartmentCommandResponse
+                    {
+                        DepartmentName = request.DepartmentName,
+                        DepartmentCode = request.DepartmentCode,
+                        SortOrderNo = request.SortOrderNo.ToString()
+                    };
+                    return OptResult<CreateDepartmentCommandResponse>.Success(response, Messages.SuccessfullyAdded);
+                }
+            });
         }
     }
 }
