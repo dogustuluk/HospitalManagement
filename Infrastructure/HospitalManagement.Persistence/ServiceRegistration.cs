@@ -1,4 +1,5 @@
-﻿using HospitalManagement.Application.Extensions;
+﻿using HospitalManagement.Application.Abstractions.Token;
+using HospitalManagement.Application.Extensions;
 using HospitalManagement.Application.Repositories.Appointment;
 using HospitalManagement.Application.Repositories.Common;
 using HospitalManagement.Application.Repositories.Management;
@@ -28,6 +29,7 @@ namespace HospitalManagement.Persistence
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
             }).AddEntityFrameworkStores<HospitalManagementDbContext>();//identity
+            
 
             services.RegisterRepositories(typeof(IAppointmentReadRepository).Assembly, typeof(ErrorReadRepository).Assembly);
             services.AddServicesInDbContextFromAttributes(Assembly.GetExecutingAssembly());

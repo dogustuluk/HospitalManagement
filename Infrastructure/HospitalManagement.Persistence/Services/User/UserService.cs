@@ -2,16 +2,9 @@
 using HospitalManagement.Application.DTOs.User;
 using HospitalManagement.Application.GenericObjects;
 using HospitalManagement.Application.Settings;
-using HospitalManagement.Domain.Entities.Common;
 using HospitalManagement.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HospitalManagement.Persistence.Services.User
 {
@@ -63,9 +56,13 @@ namespace HospitalManagement.Persistence.Services.User
             return response;
         }
 
-        public Task UpdateRefreshToken(string refreshToken, AppUser user, DateTime accessTokenDate, int addOnAccessTokenDate)
+        public async Task UpdateRefreshToken(string refreshToken, AppUser user, DateTime accessTokenDate, int addOnAccessTokenDate)
         {
-            throw new NotImplementedException();
+            if (user == null)
+                throw new ArgumentException(); //custom yap
+            user.RefreshToken= refreshToken;
+            user.RefreshTokenEndDate= accessTokenDate.AddSeconds(addOnAccessTokenDate);
+            await _userManager.UpdateAsync(user);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using HospitalManagement.Application.Abstractions.Security;
+using HospitalManagement.Application.Abstractions.Token;
 using HospitalManagement.Application.Services;
 using HospitalManagement.Application.Specifications;
 using HospitalManagement.Application.Validators;
@@ -19,7 +20,7 @@ namespace HospitalManagement.Application
             serviceCollection.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
             serviceCollection.AddAutoMapper(Assembly.GetExecutingAssembly());
             
-
+            
             //otomatize et -->
             serviceCollection.AddScoped<DepartmentSpecifications>();
             serviceCollection.AddScoped<ICryptographyService,CryptographyService>();
