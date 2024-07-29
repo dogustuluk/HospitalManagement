@@ -1,6 +1,6 @@
 ﻿using HospitalManagement.Application.GenericObjects;
 using HospitalManagement.Application.Repositories;
-using HospitalManagement.Domain.Entities.Common;
+using HospitalManagement.Domain.Entities.Identity;
 using HospitalManagement.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
@@ -9,24 +9,24 @@ using System.Runtime.CompilerServices;
 
 namespace HospitalManagement.Persistence.Repositories
 {
-    public class ReadRepository<T> : IReadRepository<T> where T : BaseEntity
+    public class AppUserReadRepository : IAppUserReadRepository
     {
         private readonly HospitalManagementDbContext _context;
 
-        public ReadRepository(HospitalManagementDbContext context)
+        public AppUserReadRepository(HospitalManagementDbContext context)
         {
             _context = context;
         }
 
-        public DbSet<T> Table => _context.Set<T>();
+        public DbSet<AppUser> Table => _context.Set<AppUser>();
 
-        public async Task<int> CountAsync(Expression<Func<T, bool>>? predicate)
+        public async Task<int> CountAsync(Expression<Func<AppUser, bool>>? predicate)
         {
             int count = await Table.CountAsync(predicate);
             return count;
         }
 
-        public async Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate)
+        public async Task<bool> ExistsAsync(Expression<Func<AppUser, bool>> predicate)
         {
             bool exist = await Table.AnyAsync(predicate);
             if (exist)
@@ -35,9 +35,9 @@ namespace HospitalManagement.Persistence.Repositories
                 return false;
         }
 
-        public async Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>>? predicate, string? include)
+        public async Task<IQueryable<AppUser>> GetAllAsync(Expression<Func<AppUser, bool>>? predicate, string? include)
         {
-            IQueryable<T> query = Table.AsQueryable();
+            IQueryable<AppUser> query = Table.AsQueryable();
             if (!string.IsNullOrEmpty(include))
                 query = query.Include(include);
             if (predicate != null)
@@ -49,7 +49,7 @@ namespace HospitalManagement.Persistence.Repositories
             return query;
         }
 
-        public async Task<List<T>> GetAllSqlAsync(string table, string sqlQuery, string? include)
+        public async Task<List<AppUser>> GetAllSqlAsync(string table, string sqlQuery, string? include)
         {
             string sql = $"SELECT * FROM {table} WHERE {sqlQuery}";
             var query = Table.FromSqlRaw(sql);
@@ -60,22 +60,22 @@ namespace HospitalManagement.Persistence.Repositories
             return await query.ToListAsync();
         }
 
-        public async Task<T> GetByIdAsync(int id)
+        public async Task<AppUser> GetByIdAsync(int id)
         {
             var entity = await Table.FirstAsync(x => x.Id == id);
             if (entity != null) return entity;
             else throw new ArgumentNullException("id bulunamadı");
         }
-        public async Task<T> GetByGuidAsync(Guid guid)
+        public async Task<AppUser> GetByGuidAsync(Guid guid)
         {
             var entity = await Table.FirstAsync(x => x.Guid == guid);
             if (entity != null) return entity;
             else throw new ArgumentNullException("guid bulunamadı");
         }
 
-        public async Task<IQueryable<T>> GetDataAsync(Expression<Func<T, bool>> predicate, string? include, int take, string orderBy)
+        public async Task<IQueryable<AppUser>> GetDataAsync(Expression<Func<AppUser, bool>> predicate, string? include, int take, string orderBy)
         {
-            IQueryable<T> query = Table.AsQueryable();
+            IQueryable<AppUser> query = Table.AsQueryable();
             if (!string.IsNullOrEmpty(include))
                 query = query.Include(include);
             if (predicate != null)
@@ -86,13 +86,13 @@ namespace HospitalManagement.Persistence.Repositories
             return query;
         }
 
-        public async Task<PaginatedList<T>> GetDataPagedAsync(Expression<Func<T, bool>> predicate, string? include, int pageIndex, int take, string orderBy)
+        public async Task<PaginatedList<AppUser>> GetDataPagedAsync(Expression<Func<AppUser, bool>> predicate, string? include, int pageIndex, int take, string orderBy)
         {
             var query = Table.AsQueryable();
-            
+
             if (!string.IsNullOrEmpty(include))
                 query = query.Include(include);
-            
+
             if (predicate != null)
                 query = query.Where(predicate);
 
@@ -101,10 +101,10 @@ namespace HospitalManagement.Persistence.Repositories
 
             query = query.Take(take);
 
-            return await CreatePaginatedList.CreateAsync<T>(query, pageIndex, take);
+            return await CreatePaginatedList.CreateAsync<AppUser>(query, pageIndex, take);
         }
 
-        public async Task<PaginatedList<T>> GetDataPagedSqlAsync(string table, string sqlQuery, string? include, int pageIndex, int take, string orderBy)
+        public async Task<PaginatedList<AppUser>> GetDataPagedSqlAsync(string table, string sqlQuery, string? include, int pageIndex, int take, string orderBy)
         {
             string queryString = $"Select * from {table} Where {sqlQuery}";
 
@@ -114,11 +114,11 @@ namespace HospitalManagement.Persistence.Repositories
             if (!string.IsNullOrEmpty(orderBy))
                 query = await GetSortedDataAsync(query, orderBy);
             //Take için kontrol et.
-            return await CreatePaginatedList.CreateAsync<T>(query, pageIndex, take);
+            return await CreatePaginatedList.CreateAsync<AppUser>(query, pageIndex, take);
 
         }
 
-        public async Task<List<T>> GetDataSqlAsync(string table, string sqlQuery, string? include, int pageIndex, int take, string orderBy)
+        public async Task<List<AppUser>> GetDataSqlAsync(string table, string sqlQuery, string? include, int pageIndex, int take, string orderBy)
         {
             string queryString = $"SELECT * FROM {table} WHERE {sqlQuery} ORDER BY {orderBy} OFFSET {pageIndex * take} ROWS FETCH NEXT {take} ROWS ONLY";
             if (!string.IsNullOrEmpty(include))
@@ -128,7 +128,7 @@ namespace HospitalManagement.Persistence.Repositories
 
         }
 
-        public async Task<T> GetEntityWithIncludeAsync(Expression<Func<T, bool>> predicate, string? include)
+        public async Task<AppUser> GetEntityWithIncludeAsync(Expression<Func<AppUser, bool>> predicate, string? include)
         {
             var query = Table.AsQueryable().Where(predicate);
             if (!string.IsNullOrEmpty(include))
@@ -141,9 +141,9 @@ namespace HospitalManagement.Persistence.Repositories
             return await query.FirstOrDefaultAsync();
         }
 
-        public async Task<T> GetSingleEntityAsync(Expression<Func<T, bool>> method, bool tracking = true)
+        public async Task<AppUser> GetSingleEntityAsync(Expression<Func<AppUser, bool>> method, bool tracking = true)
         {
-            IQueryable<T> query = Table;
+            IQueryable<AppUser> query = Table;
             if (!tracking)
                 query = query.AsNoTracking();
             var result = await query.SingleOrDefaultAsync(method);
@@ -151,9 +151,9 @@ namespace HospitalManagement.Persistence.Repositories
             else throw new InvalidOperationException("Eşleşen bir entity bulunamadı");
         }
 
-        public async Task<IQueryable<T>> GetSortedDataAsync(IQueryable<T> query, string orderBy)
+        public async Task<IQueryable<AppUser>> GetSortedDataAsync(IQueryable<AppUser> query, string orderBy)
         {
-            IQueryable<T> queryData = Table.AsQueryable();
+            IQueryable<AppUser> queryData = Table.AsQueryable();
             queryData = queryData.OrderBy(orderBy);
             if (queryData != null) return queryData;
             else throw new NullReferenceException();
@@ -181,9 +181,9 @@ namespace HospitalManagement.Persistence.Repositories
             else throw new ArgumentNullException();
         }
 
-        public IQueryable<T> GetWhere(Expression<Func<T, bool>> predicate, bool tracking = true)
+        public IQueryable<AppUser> GetWhere(Expression<Func<AppUser, bool>> predicate, bool tracking = true)
         {
-            IQueryable<T> query = Table;
+            IQueryable<AppUser> query = Table;
             if (!tracking)
                 query = query.AsNoTracking();
             if (query != null) return query;

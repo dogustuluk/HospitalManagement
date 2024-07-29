@@ -1,4 +1,5 @@
 ﻿using HospitalManagement.Application.Features.Commands.User.AppUser.CreateUser;
+using HospitalManagement.Application.Features.Commands.User.AppUser.UpdateUser;
 using HospitalManagement.Application.GenericObjects;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -22,6 +23,13 @@ namespace HospitalManagement.API.Controllers
         public async Task<IActionResult> CreateUser(CreateUserCommandRequest createUserCommandRequest)
         {
             OptResult<CreateUserCommandResponse> response = await _mediator.Send(createUserCommandRequest);
+            return Ok(response);
+        }
+        [HttpPut]
+        [Route("UpdateUser")]
+        public async Task<IActionResult> UpdateUser(UpdateUserCommandRequest updateUserCommandRequest)
+        {
+            OptResult<UpdateUserCommandResponse> response = await _mediator.Send(updateUserCommandRequest);
             return Ok(response);
         }
     }

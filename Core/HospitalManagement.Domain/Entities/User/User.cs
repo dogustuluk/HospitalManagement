@@ -1,12 +1,14 @@
 ﻿using HospitalManagement.Domain.Entities.Common;
-using Microsoft.AspNetCore.Identity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace HospitalManagement.Domain.Entities.Identity
+namespace HospitalManagement.Domain.Entities.User
 {
-    public class AppUser : IdentityUser<int>
+    public class User : BaseEntity
     {
-        public int Id { get; set; }
-        public Guid Guid { get; set; }
         public int UserType { get; set; }
         public string NameSurname { get; set; }
         public string? Gender { get; set; }
@@ -22,8 +24,5 @@ namespace HospitalManagement.Domain.Entities.Identity
         public DateTime? BirthDate { get; set; }
         public string? UserDetailsJSON { get; set; }
         public DateTime? Experience { get; set; }
-
-        public string? RefreshToken { get; set; }
-        public DateTime? RefreshTokenEndDate { get; set; }
     }
 }

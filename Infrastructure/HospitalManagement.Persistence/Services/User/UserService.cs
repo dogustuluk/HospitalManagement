@@ -1,6 +1,7 @@
 ﻿using HospitalManagement.Application.Abstractions.Services.Users;
 using HospitalManagement.Application.DTOs.User;
 using HospitalManagement.Application.GenericObjects;
+using HospitalManagement.Application.Repositories;
 using HospitalManagement.Application.Settings;
 using HospitalManagement.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
@@ -20,23 +21,29 @@ namespace HospitalManagement.Persistence.Services.User
 
         public async Task<OptResult<CreateUser_Dto>> CreateAsync(CreateUser_Dto model)
         {
-            IdentityResult result = await _userManager.CreateAsync(new()
+            var appUser = new AppUser
             {
-                Id = Guid.NewGuid().ToString(),
+                Guid = Guid.NewGuid(),
+                UserType = model.UserType,
                 NameSurname = model.NameSurname,
                 UserName = model.UserName,
                 Email = model.Email,
                 Gender = model.Gender,
+                IdentityNo = model.IdentityNo,
                 GSM = model.GSM,
                 GSMPersonal = model.GSMPersonal,
                 UserDetailsJSON = model.UserDetailsJSON,
                 Address = model.Address,
-                CountyId = 1,
-                CityId = 35,
+                CountyId = model.CountyId,
+                CityId = model.CityId,
+                BirthDate= model.BirthDate,
+                Experience = model.Experience,
                 StatusId = 10
-            }, model.Password);
+            };
 
-            OptResult<CreateUser_Dto> response = new() { Succeeded = result.Succeeded };
+            IdentityResult result = await _userManager.CreateAsync(appUser, model.Password);
+            
+            OptResult<CreateUser_Dto> response = new() { Succeeded = result.Succeeded};
 
             if (result.Succeeded)
             {
@@ -44,6 +51,7 @@ namespace HospitalManagement.Persistence.Services.User
 
                 response.Data = new CreateUser_Dto()
                 {
+                    Guid = appUser.Guid,
                     Email = model.Email,
                     NameSurname = model.NameSurname,
                     UserName = model.UserName,
@@ -54,6 +62,11 @@ namespace HospitalManagement.Persistence.Services.User
                     response.Message += $"{error.Code}-{error.Description}\n";
 
             return response;
+        }
+
+        public async Task<OptResult<UpdateUser_Dto>> UpdateAsync(UpdateUser_Dto model)
+        {
+            return null;
         }
 
         public async Task UpdateRefreshToken(string refreshToken, AppUser user, DateTime accessTokenDate, int addOnAccessTokenDate)

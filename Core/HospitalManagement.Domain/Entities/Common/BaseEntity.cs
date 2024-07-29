@@ -1,6 +1,6 @@
 ﻿namespace HospitalManagement.Domain.Entities.Common
 {
-    public class BaseEntity
+    public abstract class BaseEntity
     {
         public int Id { get; set; }
         public Guid Guid { get; set; }

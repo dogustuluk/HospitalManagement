@@ -1,4 +1,6 @@
 ﻿using HospitalManagement.Domain.Entities.Common;
+using HospitalManagement.Domain.Entities.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace HospitalManagement.Application.Repositories
 {

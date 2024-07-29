@@ -7,4 +7,5 @@ namespace HospitalManagement.Application.Repositories
     {
         DbSet<T> Table { get; }
     }
+    
 }

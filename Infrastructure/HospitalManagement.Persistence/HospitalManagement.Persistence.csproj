@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="Repositories\Users\" />
     <Folder Include="Services\HR\" />
     <Folder Include="Services\Payment\" />
   </ItemGroup>

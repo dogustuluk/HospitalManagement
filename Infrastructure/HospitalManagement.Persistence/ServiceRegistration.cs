@@ -1,13 +1,9 @@
-﻿using HospitalManagement.Application.Abstractions.Token;
-using HospitalManagement.Application.Extensions;
+﻿using HospitalManagement.Application.Extensions;
 using HospitalManagement.Application.Repositories.Appointment;
-using HospitalManagement.Application.Repositories.Common;
-using HospitalManagement.Application.Repositories.Management;
-using HospitalManagement.Application.Repositories.Users;
+using HospitalManagement.Domain;
 using HospitalManagement.Domain.Entities.Identity;
 using HospitalManagement.Persistence.Context;
 using HospitalManagement.Persistence.Repositories.Common;
-using HospitalManagement.Persistence.Repositories.Management;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -34,5 +30,15 @@ namespace HospitalManagement.Persistence
             services.RegisterRepositories(typeof(IAppointmentReadRepository).Assembly, typeof(ErrorReadRepository).Assembly);
             services.AddServicesInDbContextFromAttributes(Assembly.GetExecutingAssembly());
         }
+
+        public static void InitializeSeedData(this IServiceProvider serviceProvider)
+        {
+            using (var scope = serviceProvider.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<HospitalManagementDbContext>();
+                SeedDataHelper.SeedDepartments(dbContext);
+            }
+        }
+
     }
 }

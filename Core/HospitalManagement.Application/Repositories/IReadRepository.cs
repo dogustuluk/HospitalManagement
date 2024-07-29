@@ -21,6 +21,7 @@ namespace HospitalManagement.Application.Repositories
 
         Task<T> GetSingleEntityAsync(Expression<Func<T, bool>> method, bool tracking = true);
         Task<T> GetByIdAsync(int id);
+        Task<T> GetByGuidAsync(Guid guid);
         Task<T> GetEntityWithIncludeAsync(Expression<Func<T, bool>> predicate, string? include);
         string? GetValue(string table, string column, string sqlQuery);
         Task<string?> GetValueAsync(string table, string column, string sqlQuery);

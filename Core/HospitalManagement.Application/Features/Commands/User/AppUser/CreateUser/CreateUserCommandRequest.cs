@@ -5,6 +5,7 @@ namespace HospitalManagement.Application.Features.Commands.User.AppUser.CreateUs
 {
     public class CreateUserCommandRequest : IRequest<OptResult<CreateUserCommandResponse>>
     {
+        public int UserType { get; set; }
         public string Guid { get; set; }
         public string NameSurname { get; set; }
         public string UserName { get; set; }
@@ -15,7 +16,7 @@ namespace HospitalManagement.Application.Features.Commands.User.AppUser.CreateUs
         public string IdentityNo { get; set; }
         public string GSM { get; set; }
         public string GSMPersonal { get; set; }
-        public string UserDetailJson { get; set; }
+        public string UserDetailsJson { get; set; }
         public string Address { get; set; }
         public int CountyId { get; set; }
         public int CityId { get; set; }

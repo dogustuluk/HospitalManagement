@@ -3,14 +3,12 @@ using HospitalManagement.Domain.Entities.Common;
 using HospitalManagement.Domain.Entities.Identity;
 using HospitalManagement.Domain.Entities.Management;
 using HospitalManagement.Domain.Entities.Medical;
-using HospitalManagement.Domain.Entities.Users;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Emit;
 
 namespace HospitalManagement.Persistence.Context
 {
-    public class HospitalManagementDbContext : IdentityDbContext<AppUser, AppRole, string>
+    public class HospitalManagementDbContext : IdentityDbContext<AppUser, AppRole, int>
     {
         public HospitalManagementDbContext(DbContextOptions options) : base(options)
         {
@@ -68,15 +66,23 @@ namespace HospitalManagement.Persistence.Context
         #endregion
 
         #region Users
-        public DbSet<Doctor> Doctors { get; set; }
-        public DbSet<Patient> Patients { get; set; }
-        public DbSet<Staff> Staffs { get; set; }
-        public DbSet<Visitor> Visitors { get; set; }
+        
         #endregion
 
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<AppUser>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(a => a.Id)
+                .ValueGeneratedOnAdd();
+                
+            });
+
+            
+
+
             builder.Entity<City>()
                 .HasKey(a => a.Id);
             builder.Entity<County>()
@@ -88,12 +94,7 @@ namespace HospitalManagement.Persistence.Context
 
             builder.Entity<Room>()
                 .HasKey(a => a.Id);
-            builder.Entity<Patient>()
-                .HasKey(a => a.Id);
-            builder.Entity<Patient>()
-                .HasOne(a => a.Room)
-                .WithMany(a => a.Patients)
-                .HasForeignKey(a => a.Id);
+            
 
 
             builder.Entity<Medicine>()
@@ -120,7 +121,7 @@ namespace HospitalManagement.Persistence.Context
                 .WithMany(a => a.Prescriptions)
                 .HasForeignKey(a => a.Id);
 
-            
+
             builder.Entity<Prescription>()
                 .HasMany(p => p.Medicines) // Prescription sınıfının birden fazla Medicine nesnesine sahip olduğunu belirt
                 .WithMany() // Medicine nesnesinin herhangi bir koleksiyon ile ilişkili olmadığını belirt (Medicine sınıfında belirtilen koleksiyon olmadığı için)

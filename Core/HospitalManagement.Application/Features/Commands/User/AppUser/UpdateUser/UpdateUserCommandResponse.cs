@@ -1,10 +1,9 @@
-﻿namespace HospitalManagement.Application.DTOs.User
+﻿namespace HospitalManagement.Application.Features.Commands.User.AppUser.UpdateUser
 {
-    public class CreateUser_Dto
+    public class UpdateUserCommandResponse
     {
-        public int Id { get; set; }
-        public Guid Guid { get; set; }
         public int UserType { get; set; }
+        public string Guid { get; set; }
         public string NameSurname { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
@@ -13,12 +12,12 @@
         public string Gender { get; set; }
         public string IdentityNo { get; set; }
         public string GSM { get; set; }
-        public string? GSMPersonal { get; set; }
-        public string? UserDetailsJSON { get; set; }
-        public string? Address { get; set; }
+        public string GSMPersonal { get; set; }
+        public string UserDetailsJson { get; set; }
+        public string Address { get; set; }
         public int CountyId { get; set; }
         public int CityId { get; set; }
         public DateTime BirthDate { get; set; }
-        public DateTime? Experience { get; set; }
+        public DateTime Experience { get; set; }
     }
 }

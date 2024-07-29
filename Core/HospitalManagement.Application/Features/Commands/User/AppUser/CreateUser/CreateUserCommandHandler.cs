@@ -26,20 +26,13 @@ namespace HospitalManagement.Application.Features.Commands.User.AppUser.CreateUs
             return await ExceptionHandler.HandleOptResultAsync(async () =>
             {
                 var createUserDto = _mapper.Map<CreateUser_Dto>(request);
-                createUserDto.Guid = Guid.NewGuid().ToString();
                 createUserDto.IdentityNo = await _cryptoHelperService.EncryptString(request.IdentityNo);
                
                 var createdUser = await _userService.CreateAsync(createUserDto);
-                if (createUserDto != null)
+                if (createdUser.Succeeded)
                 {
                     response.Succeeded = true;
-                    response.Data = new CreateUserCommandResponse
-                    {
-                        Id = createUserDto.Guid,
-                        UserName = createUserDto.UserName,
-                        Email = createUserDto.Email,
-                        GSM = createUserDto.GSM,
-                    };
+                    response.Data = _mapper.Map<CreateUserCommandResponse>(createdUser.Data);
                 }
                 else
                 {

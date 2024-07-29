@@ -3,6 +3,7 @@ using HospitalManagement.Application.Features.Queries.Department.GetAllDepartmen
 using HospitalManagement.Application.GenericObjects;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace HospitalManagement.API.Controllers
 {
@@ -23,7 +24,6 @@ namespace HospitalManagement.API.Controllers
         {
             OptResult<IQueryable<GetAllDepartmentQueryResponse>> response = await _mediator.Send(request);
             return Ok(response);
-
         }
         [HttpPost]
         [Route("CreateDepartment")]

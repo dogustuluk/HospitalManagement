@@ -2,9 +2,11 @@
 {
     public class CreateUserCommandResponse
     {
-        public string Id { get; set; }
+        public Guid Guid { get; set; }
+        public int UserType { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
         public string GSM { get; set; }
+        
     }
 }

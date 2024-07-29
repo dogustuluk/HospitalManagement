@@ -41,6 +41,46 @@ namespace HospitalManagement.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AnyParams",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    TargetModelId = table.Column<int>(type: "integer", nullable: false),
+                    TargetModelType = table.Column<int>(type: "integer", nullable: false),
+                    ParamType = table.Column<int>(type: "integer", nullable: true),
+                    ItemModelName = table.Column<string>(type: "text", nullable: true),
+                    AnyParamName1 = table.Column<string>(type: "text", nullable: true),
+                    AnyParamName2 = table.Column<string>(type: "text", nullable: true),
+                    isActive = table.Column<bool>(type: "boolean", nullable: false),
+                    SortOrderNo = table.Column<int>(type: "integer", nullable: false),
+                    Value1 = table.Column<string>(type: "text", nullable: true),
+                    Value2 = table.Column<string>(type: "text", nullable: true),
+                    Value3 = table.Column<string>(type: "text", nullable: true),
+                    Value4 = table.Column<string>(type: "text", nullable: true),
+                    Value5 = table.Column<string>(type: "text", nullable: true),
+                    BoolValue1 = table.Column<bool>(type: "boolean", nullable: true),
+                    BoolValue2 = table.Column<bool>(type: "boolean", nullable: true),
+                    BoolValue3 = table.Column<bool>(type: "boolean", nullable: true),
+                    BoolValue4 = table.Column<bool>(type: "boolean", nullable: true),
+                    BoolValue5 = table.Column<bool>(type: "boolean", nullable: true),
+                    DateTimeValue1 = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DateTimeValue2 = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DateTimeValue3 = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DateTimeValue4 = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DateTimeValue5 = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Guid = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedUser = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedUser = table.Column<Guid>(type: "uuid", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AnyParams", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Appointments",
                 columns: table => new
                 {
@@ -76,7 +116,8 @@ namespace HospitalManagement.Persistence.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "text", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "text", nullable: true)
@@ -90,7 +131,10 @@ namespace HospitalManagement.Persistence.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "text", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Guid = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserType = table.Column<int>(type: "integer", nullable: false),
                     NameSurname = table.Column<string>(type: "text", nullable: false),
                     Gender = table.Column<string>(type: "text", nullable: true),
                     IdentityNo = table.Column<string>(type: "text", nullable: true),
@@ -104,7 +148,7 @@ namespace HospitalManagement.Persistence.Migrations
                     StatusId = table.Column<int>(type: "integer", nullable: false),
                     BirthDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     UserDetailsJSON = table.Column<string>(type: "text", nullable: true),
-                    Experience = table.Column<int>(type: "integer", nullable: true),
+                    Experience = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     RefreshToken = table.Column<string>(type: "text", nullable: true),
                     RefreshTokenEndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -205,7 +249,7 @@ namespace HospitalManagement.Persistence.Migrations
                     DepartmentName = table.Column<string>(type: "text", nullable: true),
                     SortOrderNo = table.Column<int>(type: "integer", nullable: false),
                     ManagerMemberId = table.Column<int>(type: "integer", nullable: false),
-                    Param1 = table.Column<double>(type: "double precision", nullable: false),
+                    Param1 = table.Column<string>(type: "text", nullable: true),
                     Param2 = table.Column<string>(type: "text", nullable: true),
                     isActive = table.Column<bool>(type: "boolean", nullable: false),
                     Guid = table.Column<Guid>(type: "uuid", nullable: false),
@@ -492,7 +536,7 @@ namespace HospitalManagement.Persistence.Migrations
                     RoomNumber = table.Column<int>(type: "integer", nullable: false),
                     Floor = table.Column<int>(type: "integer", nullable: false),
                     DepartmentId = table.Column<int>(type: "integer", nullable: false),
-                    PatientIds = table.Column<List<string>>(type: "text[]", nullable: false),
+                    RoomType = table.Column<int>(type: "integer", nullable: false),
                     Guid = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedUser = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -563,7 +607,7 @@ namespace HospitalManagement.Persistence.Migrations
                     TreatmentId = table.Column<int>(type: "integer", nullable: false),
                     PatientId = table.Column<int>(type: "integer", nullable: false),
                     Doctors = table.Column<List<int>>(type: "integer[]", nullable: false),
-                    PresctiptionId = table.Column<int>(type: "integer", nullable: false),
+                    PrescriptionId = table.Column<int>(type: "integer", nullable: false),
                     StartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     EndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     StatusId = table.Column<int>(type: "integer", nullable: false),
@@ -601,34 +645,12 @@ namespace HospitalManagement.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Visitors",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    NameSurname = table.Column<string>(type: "text", nullable: false),
-                    PatientGuid = table.Column<Guid>(type: "uuid", nullable: false),
-                    VisitorCode = table.Column<string>(type: "text", nullable: false),
-                    VisitDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    VisitDesc = table.Column<string>(type: "text", nullable: true),
-                    Guid = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedUser = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdatedUser = table.Column<Guid>(type: "uuid", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Visitors", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    RoleId = table.Column<string>(type: "text", nullable: false),
+                    RoleId = table.Column<int>(type: "integer", nullable: false),
                     ClaimType = table.Column<string>(type: "text", nullable: true),
                     ClaimValue = table.Column<string>(type: "text", nullable: true)
                 },
@@ -649,7 +671,7 @@ namespace HospitalManagement.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UserId = table.Column<string>(type: "text", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
                     ClaimType = table.Column<string>(type: "text", nullable: true),
                     ClaimValue = table.Column<string>(type: "text", nullable: true)
                 },
@@ -671,7 +693,7 @@ namespace HospitalManagement.Persistence.Migrations
                     LoginProvider = table.Column<string>(type: "text", nullable: false),
                     ProviderKey = table.Column<string>(type: "text", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "text", nullable: true),
-                    UserId = table.Column<string>(type: "text", nullable: false)
+                    UserId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -688,8 +710,8 @@ namespace HospitalManagement.Persistence.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "text", nullable: false),
-                    RoleId = table.Column<string>(type: "text", nullable: false)
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    RoleId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -712,7 +734,7 @@ namespace HospitalManagement.Persistence.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "text", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
                     LoginProvider = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Value = table.Column<string>(type: "text", nullable: true)
@@ -723,64 +745,6 @@ namespace HospitalManagement.Persistence.Migrations
                     table.ForeignKey(
                         name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Doctors",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    AppUserId = table.Column<string>(type: "text", nullable: false),
-                    SpecializationId = table.Column<int>(type: "integer", nullable: false),
-                    DepartmentId = table.Column<int>(type: "integer", nullable: false),
-                    LicenseNumber = table.Column<string>(type: "text", nullable: false),
-                    DoctorStartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    DoctorLeftDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    Certifications = table.Column<string>(type: "text", nullable: true),
-                    Languages = table.Column<string>(type: "text", nullable: true),
-                    ConsultationHours = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    Notes = table.Column<string>(type: "text", nullable: true),
-                    Guid = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedUser = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdatedUser = table.Column<Guid>(type: "uuid", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Doctors", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Doctors_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Staffs",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    AppUserId = table.Column<string>(type: "text", nullable: false),
-                    DepartmentId = table.Column<int>(type: "integer", nullable: false),
-                    Guid = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedUser = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdatedUser = table.Column<Guid>(type: "uuid", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Staffs", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Staffs_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -915,64 +879,17 @@ namespace HospitalManagement.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Patients",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false),
-                    AppUserId = table.Column<string>(type: "text", nullable: false),
-                    DepartmentId = table.Column<int>(type: "integer", nullable: false),
-                    RoomId = table.Column<int>(type: "integer", nullable: false),
-                    AdmissionDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    DischargeDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    Diagnosis = table.Column<string>(type: "text", nullable: false),
-                    Doctors = table.Column<List<int>>(type: "integer[]", nullable: false),
-                    TreatmentPlanId = table.Column<int>(type: "integer", nullable: true),
-                    Desc = table.Column<string>(type: "text", nullable: true),
-                    TreatmentPlanId1 = table.Column<int>(type: "integer", nullable: true),
-                    Guid = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedUser = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdatedUser = table.Column<Guid>(type: "uuid", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Patients", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Patients_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Patients_Rooms_Id",
-                        column: x => x.Id,
-                        principalTable: "Rooms",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Patients_TreatmentPlans_TreatmentPlanId1",
-                        column: x => x.TreatmentPlanId1,
-                        principalTable: "TreatmentPlans",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Prescriptions",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    TreatmentPlanId = table.Column<int>(type: "integer", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false),
                     DoctorId = table.Column<int>(type: "integer", nullable: false),
                     PatientId = table.Column<int>(type: "integer", nullable: false),
-                    Medicines = table.Column<List<int>>(type: "integer[]", nullable: false),
                     Instructions = table.Column<string>(type: "text", nullable: true),
                     PrescriptionDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ExpireDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     IsFilled = table.Column<bool>(type: "boolean", nullable: false),
                     Notes = table.Column<string>(type: "text", nullable: true),
-                    MedicineId = table.Column<int>(type: "integer", nullable: false),
                     Guid = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedUser = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -983,95 +900,41 @@ namespace HospitalManagement.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_Prescriptions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Prescriptions_Medicines_MedicineId",
-                        column: x => x.MedicineId,
-                        principalTable: "Medicines",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Prescriptions_TreatmentPlans_TreatmentPlanId",
-                        column: x => x.TreatmentPlanId,
+                        name: "FK_Prescriptions_TreatmentPlans_Id",
+                        column: x => x.Id,
                         principalTable: "TreatmentPlans",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AnyParams",
+                name: "PrescriptionMedicines",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    TargetModelId = table.Column<int>(type: "integer", nullable: false),
-                    TargetModelType = table.Column<int>(type: "integer", nullable: false),
-                    ItemModelName = table.Column<string>(type: "text", nullable: true),
-                    AnyParamName1 = table.Column<string>(type: "text", nullable: true),
-                    AnyParamName2 = table.Column<string>(type: "text", nullable: true),
-                    isActive = table.Column<bool>(type: "boolean", nullable: false),
-                    SortOrderNo = table.Column<int>(type: "integer", nullable: false),
-                    Value1 = table.Column<string>(type: "text", nullable: true),
-                    Value2 = table.Column<string>(type: "text", nullable: true),
-                    Value3 = table.Column<string>(type: "text", nullable: true),
-                    Value4 = table.Column<string>(type: "text", nullable: true),
-                    Value5 = table.Column<string>(type: "text", nullable: true),
-                    BoolValue1 = table.Column<bool>(type: "boolean", nullable: true),
-                    BoolValue2 = table.Column<bool>(type: "boolean", nullable: true),
-                    BoolValue3 = table.Column<bool>(type: "boolean", nullable: true),
-                    BoolValue4 = table.Column<bool>(type: "boolean", nullable: true),
-                    BoolValue5 = table.Column<bool>(type: "boolean", nullable: true),
-                    DateTimeValue1 = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    DateTimeValue2 = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    DateTimeValue3 = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    DateTimeValue4 = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    DateTimeValue5 = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    DoctorId = table.Column<int>(type: "integer", nullable: true),
-                    DoctorId1 = table.Column<int>(type: "integer", nullable: true),
-                    DoctorId2 = table.Column<int>(type: "integer", nullable: true),
-                    Guid = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedUser = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdatedUser = table.Column<Guid>(type: "uuid", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    MedicinesId = table.Column<int>(type: "integer", nullable: false),
+                    PrescriptionId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AnyParams", x => x.Id);
+                    table.PrimaryKey("PK_PrescriptionMedicines", x => new { x.MedicinesId, x.PrescriptionId });
                     table.ForeignKey(
-                        name: "FK_AnyParams_Doctors_DoctorId",
-                        column: x => x.DoctorId,
-                        principalTable: "Doctors",
-                        principalColumn: "Id");
+                        name: "FK_PrescriptionMedicines_Medicines_MedicinesId",
+                        column: x => x.MedicinesId,
+                        principalTable: "Medicines",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AnyParams_Doctors_DoctorId1",
-                        column: x => x.DoctorId1,
-                        principalTable: "Doctors",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_AnyParams_Doctors_DoctorId2",
-                        column: x => x.DoctorId2,
-                        principalTable: "Doctors",
-                        principalColumn: "Id");
+                        name: "FK_PrescriptionMedicines_Prescriptions_PrescriptionId",
+                        column: x => x.PrescriptionId,
+                        principalTable: "Prescriptions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Addresses_HospitalId",
                 table: "Addresses",
                 column: "HospitalId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AnyParams_DoctorId",
-                table: "AnyParams",
-                column: "DoctorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AnyParams_DoctorId1",
-                table: "AnyParams",
-                column: "DoctorId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AnyParams_DoctorId2",
-                table: "AnyParams",
-                column: "DoctorId2");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -1121,43 +984,15 @@ namespace HospitalManagement.Persistence.Migrations
                 column: "DbParameterTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Doctors_AppUserId",
-                table: "Doctors",
-                column: "AppUserId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_MedicineDetails_MedicineId",
                 table: "MedicineDetails",
                 column: "MedicineId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Patients_AppUserId",
-                table: "Patients",
-                column: "AppUserId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Patients_TreatmentPlanId1",
-                table: "Patients",
-                column: "TreatmentPlanId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Prescriptions_MedicineId",
-                table: "Prescriptions",
-                column: "MedicineId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Prescriptions_TreatmentPlanId",
-                table: "Prescriptions",
-                column: "TreatmentPlanId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Staffs_AppUserId",
-                table: "Staffs",
-                column: "AppUserId",
-                unique: true);
+                name: "IX_PrescriptionMedicines_PrescriptionId",
+                table: "PrescriptionMedicines",
+                column: "PrescriptionId");
         }
 
         /// <inheritdoc />
@@ -1221,22 +1056,19 @@ namespace HospitalManagement.Persistence.Migrations
                 name: "OperationLogs");
 
             migrationBuilder.DropTable(
-                name: "Patients");
-
-            migrationBuilder.DropTable(
                 name: "PdfTemplates");
 
             migrationBuilder.DropTable(
-                name: "Prescriptions");
+                name: "PrescriptionMedicines");
 
             migrationBuilder.DropTable(
                 name: "Reminders");
 
             migrationBuilder.DropTable(
-                name: "ServiceLogs");
+                name: "Rooms");
 
             migrationBuilder.DropTable(
-                name: "Staffs");
+                name: "ServiceLogs");
 
             migrationBuilder.DropTable(
                 name: "Statuses");
@@ -1245,16 +1077,13 @@ namespace HospitalManagement.Persistence.Migrations
                 name: "Treatments");
 
             migrationBuilder.DropTable(
-                name: "Visitors");
-
-            migrationBuilder.DropTable(
                 name: "Hospitals");
 
             migrationBuilder.DropTable(
-                name: "Doctors");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Cities");
@@ -1263,16 +1092,13 @@ namespace HospitalManagement.Persistence.Migrations
                 name: "DbParameterTypes");
 
             migrationBuilder.DropTable(
-                name: "Rooms");
-
-            migrationBuilder.DropTable(
                 name: "Medicines");
 
             migrationBuilder.DropTable(
-                name: "TreatmentPlans");
+                name: "Prescriptions");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "TreatmentPlans");
         }
     }
 }
