@@ -3,7 +3,7 @@
     public class UpdateUserCommandResponse
     {
         public int UserType { get; set; }
-        public string Guid { get; set; }
+        public Guid Guid { get; set; }
         public string NameSurname { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }

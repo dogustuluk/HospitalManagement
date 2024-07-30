@@ -72,6 +72,50 @@ namespace HospitalManagement.Persistence.Repositories
             if (entity != null) return entity;
             else throw new ArgumentNullException("guid bulunamadı");
         }
+        public async Task<AppUser> GetByEntityAsync(object value, string? fieldName = null)
+        {
+            if (value == null) throw new ArgumentNullException(nameof(value));
+            AppUser entity = null;
+
+            // ID ve GUID kontrolü
+            if (int.TryParse(value.ToString(), out int id))
+            {
+                entity = await Table.FirstOrDefaultAsync(x => x.Id == id);
+            }
+            else if (Guid.TryParse(value.ToString(), out Guid guid))
+            {
+                entity = await Table.FirstOrDefaultAsync(x => x.Guid == guid);
+            }
+            else if (!string.IsNullOrEmpty(fieldName))
+            {
+                //// Diğer alanlar için dinamik kontrol
+                //var parameter = Expression.Parameter(typeof(AppUser), "x");
+                //var member = Expression.PropertyOrField(parameter, fieldName);
+                //var constant = Expression.Constant(value);
+                //var equal = Expression.Equal(member, constant);
+                //var lambda = Expression.Lambda<Func<AppUser, bool>>(equal, parameter);
+
+                //entity = await Table.FirstOrDefaultAsync(lambda);
+
+                var parameter = Expression.Parameter(typeof(AppUser), "x");
+                var member = Expression.PropertyOrField(parameter, fieldName);
+                object? typedValue = value.ToString();
+                var constant = Expression.Constant(typedValue);
+                var equal = Expression.Equal(member, constant);
+                var lambda = Expression.Lambda<Func<AppUser, bool>>(equal, parameter);
+
+                entity = await Table.FirstOrDefaultAsync(lambda);
+            }
+
+            if (entity != null)
+            {
+                return entity;
+            }
+            else
+            {
+                throw new ArgumentNullException($"{fieldName ?? "Belirtilen değer"} bulunamadı");
+            }
+        }
 
         public async Task<IQueryable<AppUser>> GetDataAsync(Expression<Func<AppUser, bool>> predicate, string? include, int take, string orderBy)
         {
@@ -187,7 +231,7 @@ namespace HospitalManagement.Persistence.Repositories
             if (!tracking)
                 query = query.AsNoTracking();
             if (query != null) return query;
-            else throw new InvalidOperationException("Bulunamadı");
+            else throw new InvalidOperationException("Bulunamadı"); //custom yap
         }
     }
 }

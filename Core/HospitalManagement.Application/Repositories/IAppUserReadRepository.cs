@@ -19,6 +19,7 @@ namespace HospitalManagement.Application.Repositories
         IQueryable<AppUser> GetWhere(Expression<Func<AppUser, bool>> predicate, bool tracking = true);
 
         Task<AppUser> GetSingleEntityAsync(Expression<Func<AppUser, bool>> method, bool tracking = true);
+        Task<AppUser> GetByEntityAsync(object value, string fieldName = null);
         Task<AppUser> GetByIdAsync(int id);
         Task<AppUser> GetByGuidAsync(Guid guid);
         Task<AppUser> GetEntityWithIncludeAsync(Expression<Func<AppUser, bool>> predicate, string? include);

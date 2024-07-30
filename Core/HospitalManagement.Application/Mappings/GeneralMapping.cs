@@ -5,6 +5,7 @@ using HospitalManagement.Application.Features.Commands.Department.CreateDepartme
 using HospitalManagement.Application.Features.Commands.User.AppUser.CreateUser;
 using HospitalManagement.Application.Features.Commands.User.AppUser.UpdateUser;
 using HospitalManagement.Application.Features.Queries.Department.GetAllDepartment;
+using HospitalManagement.Domain.Entities.Identity;
 using HospitalManagement.Domain.Entities.Management;
 
 namespace HospitalManagement.Application.Mappings
@@ -21,6 +22,7 @@ namespace HospitalManagement.Application.Mappings
                 .ForMember(dest => dest.Guid, opt => opt.MapFrom(src => src.Guid));
 
             CreateMap<UpdateUserCommandRequest, UpdateUser_Dto>().ReverseMap();
+            CreateMap<AppUser, UpdateUserCommandResponse>().ReverseMap();
             CreateMap<UpdateUser_Dto, UpdateUserCommandResponse>();
 
             CreateMap<Department, GetAllDepartmentQueryResponse>();
