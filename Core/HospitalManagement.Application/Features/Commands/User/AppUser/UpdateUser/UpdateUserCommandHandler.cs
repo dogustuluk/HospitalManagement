@@ -40,8 +40,8 @@ namespace HospitalManagement.Application.Features.Commands.User.AppUser.UpdateUs
                     return await OptResult<UpdateUserCommandResponse>.FailureAsync(Messages.UserNotFound);
                 }
 
-                //_mapper.Map(updatedUserDto, myUser);
-                myUser.NameSurname = request.NameSurname;
+                _mapper.Map(updatedUserDto, myUser);
+                //myUser.NameSurname = request.NameSurname;
                 var result = await _appUserWriteRepository.SaveChanges();
                 if (result > 0)
                 {

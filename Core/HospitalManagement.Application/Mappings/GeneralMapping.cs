@@ -24,6 +24,7 @@ namespace HospitalManagement.Application.Mappings
             CreateMap<UpdateUserCommandRequest, UpdateUser_Dto>().ReverseMap();
             CreateMap<AppUser, UpdateUserCommandResponse>().ReverseMap();
             CreateMap<UpdateUser_Dto, UpdateUserCommandResponse>();
+            CreateMap<UpdateUser_Dto, AppUser>().ReverseMap();
 
             CreateMap<Department, GetAllDepartmentQueryResponse>();
             CreateMap<CreateDepartmentCommandRequest, Create_Department_Dto>();
