@@ -5,5 +5,19 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
+	
+  <ItemGroup>
+    <Content Include="wwwroot\assets\.idea\modules.xml" />
+    <Content Include="wwwroot\assets\.idea\vcs.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\assets\.idea\.gitignore" />
+    <None Include="wwwroot\assets\.idea\assets.iml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\HospitalManagement.Application\HospitalManagement.Application.csproj" />
+  </ItemGroup>
 
 </Project>
