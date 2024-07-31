@@ -6,6 +6,16 @@ using System.Threading.Tasks;
 
 namespace HospitalManagement.Application.GenericObjects
 {
+    public class OptResultClient
+    {
+        public string Message { get; set; }
+        public List<string> Messages { get; set; } = new List<string>();
+        public bool Succeeded { get; set; }
+        public string Data { get; set; }
+        public Exception Exception { get; set; }
+        public int Code { get; set; }
+
+    }
     public class OptResult<T> : IOptResult<T>
     {
         public string Message { get; set; }

@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using HospitalManagement.Application.GenericObjects;
+using MediatR;
 
 namespace HospitalManagement.Application.Features.Commands.User.AppUser.LoginUser
 {
-    public class LoginUserCommandRequest : IRequest<LoginUserCommandResponse>
+    public class LoginUserCommandRequest : IRequest<OptResult<LoginUserCommandResponse>>
     {
         public string UsernameOrEmail { get; set; }
         public string Password { get; set; }

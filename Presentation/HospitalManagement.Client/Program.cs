@@ -1,8 +1,23 @@
+using HospitalManagement.Client.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddHttpClient("MyApiClient", client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7083/api");
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
+
+builder.Services.AddScoped<IHttpClientService>(provider =>
+{
+    var httpClientFactory = provider.GetRequiredService<IHttpClientFactory>();
+    var configuration = provider.GetRequiredService<IConfiguration>();
+    var baseUrl = configuration.GetValue<string>("HttpClientSettings:BaseAddress");
+    return new HttpClientService(httpClientFactory, baseUrl);
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

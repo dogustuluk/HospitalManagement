@@ -1,7 +1,7 @@
 ﻿using HospitalManagement.Application.Features.Commands.User.AppUser.LoginUser;
 using HospitalManagement.Application.Features.Commands.User.AppUser.RefreshTokenLogin;
+using HospitalManagement.Application.GenericObjects;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalManagement.API.Controllers
@@ -18,10 +18,10 @@ namespace HospitalManagement.API.Controllers
         }
 
         [HttpPost]
-        [Route("userlogin")]
+        [Route("[action]")]
         public async Task<IActionResult> Login(LoginUserCommandRequest loginUserCommandRequest)
         {
-            LoginUserCommandResponse response = await _mediator.Send(loginUserCommandRequest);
+            OptResult<LoginUserCommandResponse> response = await _mediator.Send(loginUserCommandRequest);
             return Ok(response);
         }
         [HttpPost("[action]")]
