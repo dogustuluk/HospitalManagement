@@ -6,7 +6,7 @@ namespace HospitalManagement.Client.Models
     {
         public string UsernameOrEmail { get; set; }
         public string Password { get; set; }
-        public bool isSigned { get; set; } /*= false;*/
+        public bool isSigned { get; set; } = false;
         public Token? Token { get; set; }
         public DateTime? TokenExpireDate { get; set; }
     }

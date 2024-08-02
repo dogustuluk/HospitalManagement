@@ -46,10 +46,11 @@ namespace HospitalManagement.Client.Controllers
             var response = await _httpClientService.PostAsync2<OptResult<LoginViewModel>>(requestParameters, Model);
             if (response.Succeeded)
             {
+                Model.isSigned = true;
                 Response.Cookies.Append("JWTToken", response.Data.Token.AccessToken, new CookieOptions
                 {
                     HttpOnly = true,
-                    Secure = false, // Production'da true olmalı
+                    Secure = false, // production'da true olmalı
                     SameSite = SameSiteMode.Lax
                 });
                 var token = new JwtSecurityTokenHandler().ReadJwtToken(response.Data.Token.AccessToken);
