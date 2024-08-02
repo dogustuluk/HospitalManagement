@@ -3,6 +3,7 @@
     public class Messages
     {
         #region -----------------------------------------General
+        public static string UnLogin = "Lütfen Email/Kullanıcı Adınızı kontrol ediniz.";
         public static string AccessDenied = "Access denied, please check your authorities.";
         public static string AccessDeniednull = "Access denied, response is null, please check your authorities / operation.";
         

@@ -18,9 +18,6 @@ namespace HospitalManagement.Application.Features.Commands.User.AppUser.LoginUse
 
         public async Task<OptResult<LoginUserCommandResponse>> Handle(LoginUserCommandRequest request, CancellationToken cancellationToken)
         {
-            //var token = await _internalAuthentication.LoginAsync(request.UsernameOrEmail, request.Password, 900);
-
-            //return new LoginUserSuccessCommandResponse() { Token = token };
             return await ExceptionHandler.HandleOptResultAsync(async () =>
             {
                 var token = await _internalAuthentication.LoginAsync(request.UsernameOrEmail, request.Password, 900);

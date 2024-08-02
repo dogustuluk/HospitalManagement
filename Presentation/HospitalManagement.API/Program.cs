@@ -1,16 +1,16 @@
 using HospitalManagement.Application;
-using HospitalManagement.Domain;
 using HospitalManagement.Infrastructure;
 using HospitalManagement.Persistence;
-using HospitalManagement.Persistence.Context;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpLogging;
-using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,42 +37,80 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull; //null degerleri api'den geri dondurmez, daha performansli olmasi icin.
         options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
         options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.PropertyNamingPolicy = null;
 
     });
 
-//builder.Services.AddResponseCompression(options =>
-//{
-//    options.Providers.Add<GzipCompressionProvider>(); // Gzip sýkýþtýrma saðlayýcýsý eklenir
-//    options.EnableForHttps = true; // HTTPS üzerinden de sýkýþtýrma yapýlabilir
-//});
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(swaggerOpt =>
+{
+    swaggerOpt.SwaggerDoc("medSis_V1", new OpenApiInfo
+    {
+        Title = "MedSis V1",
+        Description = "MedSis V1 Docs",
+        Version = "Version_1"
+    });
+    swaggerOpt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Please enter a valid token"
+    });
+    swaggerOpt.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id= "Bearer"
+                }
+            },
+        new string[] {}
+        }
+    });
+});
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer("Admin", options =>
     {
+        options.SaveToken = true;//yeni eklendi
         options.TokenValidationParameters = new()
         {
             ValidateAudience = true,
-            ValidateIssuer = true,
-            ValidateLifetime = true,
+            ValidateIssuer = false,
+            ValidateLifetime = false,
             ValidateIssuerSigningKey = true,
 
             ValidAudience = builder.Configuration["Token:Audience"],
             ValidIssuer = builder.Configuration["Token:Issuer"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Token:SecurityKey"])),
-            LifetimeValidator = (notBefore, expires, securityToken, validationParameters) => expires != null ? expires > DateTime.UtcNow : false, 
+            LifetimeValidator = (notBefore, expires, securityToken, validationParameters) => expires != null ? expires > DateTime.UtcNow : false,
 
             //claims
             NameClaimType = ClaimTypes.Name
-            
         };
     });
 
+//options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+//options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+//options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+
 
 var app = builder.Build();
+
+//for jquery
+app.UseCors(x => x
+          .AllowAnyOrigin()
+          .AllowAnyMethod()
+          .AllowAnyHeader());
 app.Services.InitializeSeedData();
 
 // Configure the HTTP request pipeline.
@@ -86,8 +124,6 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-//app.UseResponseCompression();
 
 app.MapControllers();
 
