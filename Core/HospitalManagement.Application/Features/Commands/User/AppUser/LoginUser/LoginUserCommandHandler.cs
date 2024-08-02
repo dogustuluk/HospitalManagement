@@ -20,7 +20,7 @@ namespace HospitalManagement.Application.Features.Commands.User.AppUser.LoginUse
         {
             return await ExceptionHandler.HandleOptResultAsync(async () =>
             {
-                var token = await _internalAuthentication.LoginAsync(request.UsernameOrEmail, request.Password, 900);
+                var token = await _internalAuthentication.LoginAsync(request.UsernameOrEmail, request.Password, 48);
 
                 if (token == null)
                 {
