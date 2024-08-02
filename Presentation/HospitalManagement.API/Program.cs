@@ -26,7 +26,11 @@ app.Services.InitializeSeedData();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/medSis_V1/swagger.json", "MedSis V1");
+        c.RoutePrefix = string.Empty;
+    });
 }
 app.UseHttpsRedirection();
 app.UseAuthentication();

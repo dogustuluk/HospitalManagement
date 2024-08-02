@@ -38,9 +38,7 @@ namespace HospitalManagement.Infrastructure.Services
                 Expiration = _accessTokenExpiration,
                 RefreshToken = CreateRefreshToken()
             };
-
             return token;
-
         }
 
         public string CreateRefreshToken()

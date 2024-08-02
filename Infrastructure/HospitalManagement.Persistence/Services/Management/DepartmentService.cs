@@ -63,5 +63,16 @@ namespace HospitalManagement.Persistence.Services.Management
             var departments = await _readRepository.GetAllAsync(predicate, include);
             return departments.ToList();
         }
+
+        public async Task<List<DataList1>> GetDataListAsync()
+        {
+            List<DataList1> returnDataList = new();
+            var datas = await _readRepository.GetDataAsync(a => a.Id > 0, "", 5000, "DepartmentName ASC");
+            foreach (var data in datas)
+            {
+                returnDataList.Add(new DataList1() { Guid = "", Id = data.Id.ToString(), Name = data.DepartmentName });
+            }
+            return returnDataList;
+        }
     }
 }
