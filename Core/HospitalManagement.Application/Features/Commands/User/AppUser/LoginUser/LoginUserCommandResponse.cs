@@ -1,6 +1,4 @@
-﻿using HospitalManagement.Application.DTOs;
-
-namespace HospitalManagement.Application.Features.Commands.User.AppUser.LoginUser
+﻿namespace HospitalManagement.Application.Features.Commands.User.AppUser.LoginUser
 {
     public class LoginUserCommandResponse
     {

@@ -1,7 +1,4 @@
-﻿using HospitalManagement.Application.GenericObjects;
-using MediatR;
-
-namespace HospitalManagement.Application.Features.Commands.User.AppUser.UpdateUser
+﻿namespace HospitalManagement.Application.Features.Commands.User.AppUser.UpdateUser
 {
     public class UpdateUserCommandRequest : IRequest<OptResult<UpdateUserCommandResponse>>
     {

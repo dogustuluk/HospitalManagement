@@ -1,12 +1,4 @@
-﻿using AutoMapper;
-using HospitalManagement.Application.Abstractions.Security;
-using HospitalManagement.Application.Abstractions.Services.Users;
-using HospitalManagement.Application.DTOs.User;
-using HospitalManagement.Application.Extensions;
-using HospitalManagement.Application.GenericObjects;
-using MediatR;
-
-namespace HospitalManagement.Application.Features.Commands.User.AppUser.CreateUser
+﻿namespace HospitalManagement.Application.Features.Commands.User.AppUser.CreateUser
 {
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommandRequest, OptResult<CreateUserCommandResponse>>
     {

@@ -1,8 +1,7 @@
-﻿using HospitalManagement.Application.Features.Commands.User.AppUser.CreateUser;
+﻿using HospitalManagement.Application.Common.GenericObjects;
+using HospitalManagement.Application.Features.Commands.User.AppUser.CreateUser;
 using HospitalManagement.Application.Features.Commands.User.AppUser.UpdateUser;
-using HospitalManagement.Application.GenericObjects;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalManagement.API.Controllers

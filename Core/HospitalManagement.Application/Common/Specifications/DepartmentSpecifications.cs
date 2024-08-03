@@ -1,9 +1,4 @@
-﻿using HospitalManagement.Application.Features.Queries.Department.GetAllDepartment;
-using HospitalManagement.Domain.Entities.Management;
-using LinqKit;
-using System.Linq.Expressions;
-
-namespace HospitalManagement.Application.Specifications
+﻿namespace HospitalManagement.Application.Common.Specifications
 {
     public class DepartmentSpecifications
     {

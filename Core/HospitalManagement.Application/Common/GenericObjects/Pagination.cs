@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace HospitalManagement.Application.GenericObjects
+﻿namespace HospitalManagement.Application.Common.GenericObjects
 {
     public class PaginatedList<T> where T : class
     {

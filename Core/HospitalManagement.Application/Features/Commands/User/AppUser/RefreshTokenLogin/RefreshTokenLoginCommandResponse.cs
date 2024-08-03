@@ -1,6 +1,4 @@
-﻿using HospitalManagement.Application.DTOs;
-
-namespace HospitalManagement.Application.Features.Commands.User.AppUser.RefreshTokenLogin
+﻿namespace HospitalManagement.Application.Features.Commands.User.AppUser.RefreshTokenLogin
 {
     public class RefreshTokenLoginCommandResponse
     {

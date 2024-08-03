@@ -1,4 +1,4 @@
-﻿namespace HospitalManagement.Application.DTOs.Management
+﻿namespace HospitalManagement.Application.Common.DTOs.Management
 {
     public class GetAll_Department_Dto
     {

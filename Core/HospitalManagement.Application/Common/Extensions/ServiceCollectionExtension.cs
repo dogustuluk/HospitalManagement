@@ -1,8 +1,4 @@
-﻿using HospitalManagement.Application.Settings;
-using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
-
-namespace HospitalManagement.Application.Extensions
+﻿namespace HospitalManagement.Application.Common.Extensions
 {
     public static class ServiceCollectionExtension
     {

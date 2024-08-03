@@ -1,6 +1,4 @@
-﻿using HospitalManagement.Domain.Entities.Medical;
-
-namespace HospitalManagement.Application.Repositories.Medical
+﻿namespace HospitalManagement.Application.Repositories.Medical
 {
     public interface IPrescriptionReadRepository : IReadRepository<Prescription>
     {

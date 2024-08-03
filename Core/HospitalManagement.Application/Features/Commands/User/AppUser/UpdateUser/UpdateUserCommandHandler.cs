@@ -1,15 +1,4 @@
-﻿using AutoMapper;
-using HospitalManagement.Application.Abstractions.Security;
-using HospitalManagement.Application.Abstractions.Services.Users;
-using HospitalManagement.Application.Constants;
-using HospitalManagement.Application.DTOs.User;
-using HospitalManagement.Application.Extensions;
-using HospitalManagement.Application.Features.Commands.User.AppUser.CreateUser;
-using HospitalManagement.Application.GenericObjects;
-using HospitalManagement.Application.Repositories;
-using MediatR;
-
-namespace HospitalManagement.Application.Features.Commands.User.AppUser.UpdateUser
+﻿namespace HospitalManagement.Application.Features.Commands.User.AppUser.UpdateUser
 {
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommandRequest, OptResult<UpdateUserCommandResponse>>
     {

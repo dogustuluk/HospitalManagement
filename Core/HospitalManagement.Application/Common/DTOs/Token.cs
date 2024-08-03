@@ -1,4 +1,4 @@
-﻿namespace HospitalManagement.Application.DTOs
+﻿namespace HospitalManagement.Application.Common.DTOs
 {
     public class Token
     {

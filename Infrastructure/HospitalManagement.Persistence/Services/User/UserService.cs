@@ -1,6 +1,8 @@
-﻿using HospitalManagement.Application.Abstractions.Services.Users;
-using HospitalManagement.Application.DTOs.User;
-using HospitalManagement.Application.GenericObjects;
+﻿using HospitalManagement.Application.Common.DTOs.User;
+using HospitalManagement.Application.Abstractions.Services.Users;
+using HospitalManagement.Application.Common.DTOs.User;
+using HospitalManagement.Application.Common.DTOs.User;
+using HospitalManagement.Application.Common.GenericObjects;
 using HospitalManagement.Application.Repositories;
 using HospitalManagement.Application.Settings;
 using HospitalManagement.Domain.Entities.Identity;
@@ -63,7 +65,7 @@ namespace HospitalManagement.Persistence.Services.User
 
             return response;
         }
-
+        
         public async Task<OptResult<UpdateUser_Dto>> UpdateAsync(UpdateUser_Dto model)
         {
             return null;

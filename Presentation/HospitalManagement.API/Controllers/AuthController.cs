@@ -1,6 +1,6 @@
 ﻿using HospitalManagement.Application.Features.Commands.User.AppUser.LoginUser;
 using HospitalManagement.Application.Features.Commands.User.AppUser.RefreshTokenLogin;
-using HospitalManagement.Application.GenericObjects;
+using HospitalManagement.Application.Common.GenericObjects;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,8 +1,4 @@
-﻿using HospitalManagement.Domain.Entities.Common;
-using HospitalManagement.Domain.Entities.Identity;
-using Microsoft.AspNetCore.Identity;
-
-namespace HospitalManagement.Application.Repositories
+﻿namespace HospitalManagement.Application.Repositories
 {
     public interface IWriteRepository<T> : IRepository<T> where T : BaseEntity
     {

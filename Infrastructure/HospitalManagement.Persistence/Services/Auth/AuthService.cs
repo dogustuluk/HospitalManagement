@@ -1,7 +1,7 @@
 ﻿using HospitalManagement.Application.Abstractions.Services.Auth;
 using HospitalManagement.Application.Abstractions.Services.Users;
 using HospitalManagement.Application.Abstractions.Token;
-using HospitalManagement.Application.DTOs;
+using HospitalManagement.Application.Common.DTOs;
 using HospitalManagement.Application.Settings;
 using HospitalManagement.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;

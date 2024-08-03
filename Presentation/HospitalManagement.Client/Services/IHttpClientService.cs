@@ -1,4 +1,4 @@
-﻿using HospitalManagement.Application.GenericObjects;
+﻿using HospitalManagement.Application.Common.GenericObjects;
 using HospitalManagement.Client.Models;
 
 namespace HospitalManagement.Client.Services

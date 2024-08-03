@@ -1,6 +1,4 @@
-﻿using Microsoft.IdentityModel.Tokens;
-
-namespace HospitalManagement.Application.Utilities.Security.Encryption
+﻿namespace HospitalManagement.Application.Utilities.Security.Encryption
 {
     public class SigningCredentialsHelper
     {

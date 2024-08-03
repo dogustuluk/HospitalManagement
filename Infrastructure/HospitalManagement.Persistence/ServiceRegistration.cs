@@ -1,4 +1,4 @@
-﻿using HospitalManagement.Application.Extensions;
+﻿using HospitalManagement.Application.Common.Extensions;
 using HospitalManagement.Application.Repositories.Appointment;
 using HospitalManagement.Domain;
 using HospitalManagement.Domain.Entities.Identity;

@@ -1,8 +1,4 @@
-﻿using HospitalManagement.Application.GenericObjects;
-using HospitalManagement.Domain.Entities.Common;
-using System.Linq.Expressions;
-
-namespace HospitalManagement.Application.Repositories
+﻿namespace HospitalManagement.Application.Repositories
 {
     public interface IReadRepository<T> : IRepository<T> where T : BaseEntity
     {

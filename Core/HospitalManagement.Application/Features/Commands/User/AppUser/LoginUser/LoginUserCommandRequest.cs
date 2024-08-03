@@ -1,7 +1,4 @@
-﻿using HospitalManagement.Application.GenericObjects;
-using MediatR;
-
-namespace HospitalManagement.Application.Features.Commands.User.AppUser.LoginUser
+﻿namespace HospitalManagement.Application.Features.Commands.User.AppUser.LoginUser
 {
     public class LoginUserCommandRequest : IRequest<OptResult<LoginUserCommandResponse>>
     {

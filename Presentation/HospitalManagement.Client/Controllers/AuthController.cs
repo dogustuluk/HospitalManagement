@@ -1,5 +1,5 @@
-﻿using HospitalManagement.Application.Constants;
-using HospitalManagement.Application.GenericObjects;
+﻿using HospitalManagement.Application.Common.GenericObjects;
+using HospitalManagement.Application.Constants;
 using HospitalManagement.Client.HelperServices;
 using HospitalManagement.Client.Models;
 using HospitalManagement.Client.Services;

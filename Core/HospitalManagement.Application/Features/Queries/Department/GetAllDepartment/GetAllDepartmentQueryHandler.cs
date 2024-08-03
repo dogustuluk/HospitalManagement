@@ -1,12 +1,4 @@
-﻿using AutoMapper;
-using HospitalManagement.Application.Abstractions.Services.Management;
-using HospitalManagement.Application.Constants;
-using HospitalManagement.Application.GenericObjects;
-using HospitalManagement.Application.Specifications;
-using MediatR;
-using System.Linq.Dynamic.Core;
-
-namespace HospitalManagement.Application.Features.Queries.Department.GetAllDepartment
+﻿namespace HospitalManagement.Application.Features.Queries.Department.GetAllDepartment
 {
     public class GetAllDepartmentQueryHandler : IRequestHandler<GetAllDepartmentQueryRequest, OptResult<IQueryable<GetAllDepartmentQueryResponse>>>
     {

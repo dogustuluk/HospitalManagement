@@ -1,7 +1,4 @@
-﻿using HospitalManagement.Application.GenericObjects;
-using MediatR;
-
-namespace HospitalManagement.Application.Features.Queries.Department.GetAllDepartment
+﻿namespace HospitalManagement.Application.Features.Queries.Department.GetAllDepartment
 {
     public class GetAllDepartmentQueryRequest : IRequest<OptResult<IQueryable<GetAllDepartmentQueryResponse>>>
     {

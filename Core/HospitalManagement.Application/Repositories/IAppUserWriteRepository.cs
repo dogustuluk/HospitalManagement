@@ -1,6 +1,4 @@
-﻿using HospitalManagement.Domain.Entities.Identity;
-
-namespace HospitalManagement.Application.Repositories
+﻿namespace HospitalManagement.Application.Repositories
 {
     public interface IAppUserWriteRepository
     {

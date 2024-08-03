@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using HospitalManagement.Application.Abstractions.Services.Management;
-using HospitalManagement.Application.Extensions;
-using HospitalManagement.Application.GenericObjects;
-using MediatR;
-
-namespace HospitalManagement.Application.Features.Queries.Department.GetDataList
+﻿namespace HospitalManagement.Application.Features.Queries.Department.GetDataList
 {
     public class GetDataListQueryHandler : IRequestHandler<GetDataListQueryRequest, OptResult<List<GetDataListQueryResponse>>>
     {

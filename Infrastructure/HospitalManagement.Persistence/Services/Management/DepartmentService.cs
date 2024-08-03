@@ -1,8 +1,8 @@
 ﻿using HospitalManagement.Application.Abstractions.Services.Management;
 using HospitalManagement.Application.Constants;
-using HospitalManagement.Application.DTOs.Management;
-using HospitalManagement.Application.DTOs.User;
-using HospitalManagement.Application.GenericObjects;
+using HospitalManagement.Application.Common.DTOs.Management;
+using HospitalManagement.Application.Common.DTOs.User;
+using HospitalManagement.Application.Common.GenericObjects;
 using HospitalManagement.Application.Repositories.Management;
 using HospitalManagement.Application.Settings;
 using HospitalManagement.Domain.Entities.Management;

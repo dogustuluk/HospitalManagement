@@ -1,7 +1,4 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using System.Text;
-
-namespace HospitalManagement.Application.Utilities.Security.Encryption
+﻿namespace HospitalManagement.Application.Utilities.Security.Encryption
 {
     public class SecurityKeyHelper
     {

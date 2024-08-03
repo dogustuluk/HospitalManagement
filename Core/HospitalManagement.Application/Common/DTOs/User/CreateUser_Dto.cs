@@ -1,7 +1,8 @@
-﻿namespace HospitalManagement.Application.DTOs.User
+﻿namespace HospitalManagement.Application.Common.DTOs.User
 {
-    public class UpdateUser_Dto
+    public class CreateUser_Dto
     {
+        public int Id { get; set; }
         public Guid Guid { get; set; }
         public int UserType { get; set; }
         public string NameSurname { get; set; }

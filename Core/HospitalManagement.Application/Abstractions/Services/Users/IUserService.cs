@@ -1,8 +1,4 @@
-﻿using HospitalManagement.Application.DTOs.User;
-using HospitalManagement.Application.GenericObjects;
-using HospitalManagement.Domain.Entities.Identity;
-
-namespace HospitalManagement.Application.Abstractions.Services.Users
+﻿namespace HospitalManagement.Application.Abstractions.Services.Users
 {
     public interface IUserService
     {

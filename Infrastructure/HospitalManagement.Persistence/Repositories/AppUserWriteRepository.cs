@@ -1,4 +1,4 @@
-﻿using HospitalManagement.Application.GenericObjects;
+﻿using HospitalManagement.Application.Common.GenericObjects;
 using HospitalManagement.Application.Repositories;
 using HospitalManagement.Domain.Entities.Identity;
 using HospitalManagement.Persistence.Context;

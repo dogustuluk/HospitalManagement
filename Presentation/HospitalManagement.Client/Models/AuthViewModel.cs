@@ -1,4 +1,4 @@
-﻿using HospitalManagement.Application.DTOs;
+﻿using HospitalManagement.Application.Common.DTOs;
 
 namespace HospitalManagement.Client.Models
 {

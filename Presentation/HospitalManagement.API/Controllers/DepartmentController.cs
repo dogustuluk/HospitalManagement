@@ -1,7 +1,7 @@
 ﻿using HospitalManagement.Application.Features.Commands.Department.CreateDepartment;
 using HospitalManagement.Application.Features.Queries.Department.GetAllDepartment;
 using HospitalManagement.Application.Features.Queries.Department.GetDataList;
-using HospitalManagement.Application.GenericObjects;
+using HospitalManagement.Application.Common.GenericObjects;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;

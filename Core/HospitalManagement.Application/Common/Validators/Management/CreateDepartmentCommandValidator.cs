@@ -1,12 +1,4 @@
-﻿using FluentValidation;
-using HospitalManagement.Application.Features.Commands.Department.CreateDepartment;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HospitalManagement.Application.Validators.Management
+﻿namespace HospitalManagement.Application.Common.Validators.Management
 {
     public class CreateDepartmentCommandValidator : AbstractValidator<CreateDepartmentCommandRequest>
     {

@@ -1,7 +1,4 @@
-﻿using HospitalManagement.Application.GenericObjects;
-using MediatR;
-
-namespace HospitalManagement.Application.Features.Commands.Department.CreateDepartment
+﻿namespace HospitalManagement.Application.Features.Commands.Department.CreateDepartment
 {
     public class CreateDepartmentCommandRequest : IRequest<OptResult<CreateDepartmentCommandResponse>>
     {

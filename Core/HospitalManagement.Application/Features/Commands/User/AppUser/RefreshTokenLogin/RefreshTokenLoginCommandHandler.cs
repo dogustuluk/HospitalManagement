@@ -1,8 +1,4 @@
-﻿using HospitalManagement.Application.Abstractions.Services.Auth;
-using HospitalManagement.Application.DTOs;
-using MediatR;
-
-namespace HospitalManagement.Application.Features.Commands.User.AppUser.RefreshTokenLogin
+﻿namespace HospitalManagement.Application.Features.Commands.User.AppUser.RefreshTokenLogin
 {
     public class RefreshTokenLoginCommandHandler : IRequestHandler<RefreshTokenLoginCommandRequest, RefreshTokenLoginCommandResponse>
     {

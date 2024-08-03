@@ -1,9 +1,4 @@
-﻿using HospitalManagement.Application.DTOs.Management;
-using HospitalManagement.Application.GenericObjects;
-using HospitalManagement.Domain.Entities.Management;
-using System.Linq.Expressions;
-
-namespace HospitalManagement.Application.Abstractions.Services.Management
+﻿namespace HospitalManagement.Application.Abstractions.Services.Management
 {
     public interface IDepartmentService
     {

@@ -1,7 +1,4 @@
-﻿using HospitalManagement.Application.Abstractions.Security;
-using System.Security.Cryptography;
-
-namespace HospitalManagement.Application.Services
+﻿namespace HospitalManagement.Application.Services
 {
     public class CryptographyService : ICryptographyService
     {

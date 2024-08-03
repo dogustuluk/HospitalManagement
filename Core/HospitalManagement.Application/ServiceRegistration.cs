@@ -1,14 +1,4 @@
-﻿using FluentValidation;
-using HospitalManagement.Application.Abstractions.Security;
-using HospitalManagement.Application.Abstractions.Token;
-using HospitalManagement.Application.Services;
-using HospitalManagement.Application.Specifications;
-using HospitalManagement.Application.Validators;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
-
-namespace HospitalManagement.Application
+﻿namespace HospitalManagement.Application
 {
     public static class ServiceRegistration
     {

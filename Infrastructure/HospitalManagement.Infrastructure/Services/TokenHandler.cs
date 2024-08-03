@@ -1,5 +1,5 @@
 ﻿using HospitalManagement.Application.Abstractions.Token;
-using HospitalManagement.Application.DTOs;
+using HospitalManagement.Application.Common.DTOs;
 using HospitalManagement.Application.Utilities.Security.Encryption;
 using HospitalManagement.Application.Utilities.Security.JWT;
 using HospitalManagement.Domain.Entities.Identity;
@@ -32,7 +32,7 @@ namespace HospitalManagement.Infrastructure.Services
             var jwt = CreateJwtSecurityToken(_tokenOptions,appUser,signingCredentials);
             var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
             var tokenString = jwtSecurityTokenHandler.WriteToken(jwt);
-            var token = new Application.DTOs.Token
+            var token = new Application.Common.DTOs.Token
             {
                 AccessToken = tokenString,
                 Expiration = _accessTokenExpiration,

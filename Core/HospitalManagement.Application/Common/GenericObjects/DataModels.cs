@@ -1,4 +1,4 @@
-﻿namespace HospitalManagement.Application.GenericObjects
+﻿namespace HospitalManagement.Application.Common.GenericObjects
 {
     public class Models
     {

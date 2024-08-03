@@ -1,6 +1,4 @@
-﻿using HospitalManagement.Application.GenericObjects;
-
-namespace HospitalManagement.Application.Extensions
+﻿namespace HospitalManagement.Application.Common.Extensions
 {
     public static class ExceptionHandler
     {

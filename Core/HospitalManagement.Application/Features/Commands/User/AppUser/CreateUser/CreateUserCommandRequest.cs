@@ -1,7 +1,4 @@
-﻿using HospitalManagement.Application.GenericObjects;
-using MediatR;
-
-namespace HospitalManagement.Application.Features.Commands.User.AppUser.CreateUser
+﻿namespace HospitalManagement.Application.Features.Commands.User.AppUser.CreateUser
 {
     public class CreateUserCommandRequest : IRequest<OptResult<CreateUserCommandResponse>>
     {

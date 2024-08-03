@@ -1,16 +1,4 @@
-﻿using AutoMapper;
-using HospitalManagement.Application.DTOs.Management;
-using HospitalManagement.Application.DTOs.User;
-using HospitalManagement.Application.Features.Commands.Department.CreateDepartment;
-using HospitalManagement.Application.Features.Commands.User.AppUser.CreateUser;
-using HospitalManagement.Application.Features.Commands.User.AppUser.UpdateUser;
-using HospitalManagement.Application.Features.Queries.Department.GetAllDepartment;
-using HospitalManagement.Application.Features.Queries.Department.GetDataList;
-using HospitalManagement.Application.GenericObjects;
-using HospitalManagement.Domain.Entities.Identity;
-using HospitalManagement.Domain.Entities.Management;
-
-namespace HospitalManagement.Application.Mappings
+﻿namespace HospitalManagement.Application.Common.Mappings
 {
     public class GeneralMapping : Profile
     {

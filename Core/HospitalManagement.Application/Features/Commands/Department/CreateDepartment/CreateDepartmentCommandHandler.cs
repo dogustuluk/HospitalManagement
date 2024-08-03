@@ -1,12 +1,4 @@
-﻿using AutoMapper;
-using HospitalManagement.Application.Abstractions.Services.Management;
-using HospitalManagement.Application.Constants;
-using HospitalManagement.Application.DTOs.Management;
-using HospitalManagement.Application.Extensions;
-using HospitalManagement.Application.GenericObjects;
-using MediatR;
-
-namespace HospitalManagement.Application.Features.Commands.Department.CreateDepartment
+﻿namespace HospitalManagement.Application.Features.Commands.Department.CreateDepartment
 {
     public class CreateDepartmentCommandHandler : IRequestHandler<CreateDepartmentCommandRequest, OptResult<CreateDepartmentCommandResponse>>
     {

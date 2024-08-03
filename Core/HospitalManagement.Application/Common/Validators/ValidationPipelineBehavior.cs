@@ -1,7 +1,4 @@
-﻿using FluentValidation;
-using MediatR;
-
-namespace HospitalManagement.Application.Validators
+﻿namespace HospitalManagement.Application.Common.Validators
 {
     public class ValidationPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
