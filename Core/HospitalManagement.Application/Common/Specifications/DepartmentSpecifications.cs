@@ -2,7 +2,7 @@
 {
     public class DepartmentSpecifications
     {
-        public Expression<Func<Department, bool>> GetPredicate(GetAllDepartmentQueryRequest departmentRequestParameters)
+        public Expression<Func<Department, bool>> GetAllPredicate(GetAllDepartmentQueryRequest departmentRequestParameters)
         {
             var predicate1 = PredicateBuilder.New<Department>(true);
 
@@ -20,6 +20,31 @@
 
             if (!string.IsNullOrEmpty(departmentRequestParameters.DepartmentName))
                 predicate1 = predicate1.And(a => a.DepartmentName.Contains(departmentRequestParameters.DepartmentName));
+
+            return predicate1;
+        }
+        public Expression<Func<Department, bool>> GetDataPagedListPredicate(GetDataPagedListQueryRequest getDataPagedListRequest)
+        {
+            var predicate1 = PredicateBuilder.New<Department>(true);
+
+            if (!string.IsNullOrEmpty(getDataPagedListRequest.SearchText))
+                predicate1 = predicate1.And(a => a.DepartmentName.Contains(getDataPagedListRequest.SearchText) || a.DepartmentCode.Contains(getDataPagedListRequest.SearchText));
+
+            if (getDataPagedListRequest.ParentID > 0)
+                predicate1 = predicate1.And(a => a.ParentId == getDataPagedListRequest.ParentID);
+
+            if (getDataPagedListRequest.ManagerMemberID > 0)
+                predicate1 = predicate1.And(a => a.ManagerMemberId == getDataPagedListRequest.ManagerMemberID);
+
+            if (getDataPagedListRequest.ActiveStatus != 0)
+                predicate1 = predicate1.And(a => a.isActive == (getDataPagedListRequest.ActiveStatus == -1 ? false : true));
+
+            if (!string.IsNullOrEmpty(getDataPagedListRequest.IDsList))
+            {
+                List<int> ids = getDataPagedListRequest.IDsList.Split(',').Select(int.Parse).ToList();
+                if (string.IsNullOrEmpty(getDataPagedListRequest.IDsColumn) || getDataPagedListRequest.IDsColumn == "Id")
+                    predicate1 = predicate1.And(a => ids.Contains(a.Id));
+            }
 
             return predicate1;
         }

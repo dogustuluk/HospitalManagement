@@ -77,7 +77,6 @@ namespace HospitalManagement.Persistence.Repositories
             if (value == null) throw new ArgumentNullException(nameof(value));
             AppUser entity = null;
 
-            // ID ve GUID kontrolü
             if (int.TryParse(value.ToString(), out int id))
             {
                 entity = await Table.FirstOrDefaultAsync(x => x.Id == id);
@@ -88,15 +87,6 @@ namespace HospitalManagement.Persistence.Repositories
             }
             else if (!string.IsNullOrEmpty(fieldName))
             {
-                //// Diğer alanlar için dinamik kontrol
-                //var parameter = Expression.Parameter(typeof(AppUser), "x");
-                //var member = Expression.PropertyOrField(parameter, fieldName);
-                //var constant = Expression.Constant(value);
-                //var equal = Expression.Equal(member, constant);
-                //var lambda = Expression.Lambda<Func<AppUser, bool>>(equal, parameter);
-
-                //entity = await Table.FirstOrDefaultAsync(lambda);
-
                 var parameter = Expression.Parameter(typeof(AppUser), "x");
                 var member = Expression.PropertyOrField(parameter, fieldName);
                 object? typedValue = value.ToString();

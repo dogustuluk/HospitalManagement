@@ -15,7 +15,7 @@
 
         public async Task<OptResult<IQueryable<GetAllDepartmentQueryResponse>>> Handle(GetAllDepartmentQueryRequest request, CancellationToken cancellationToken)
         {
-            var predicate = _departmentSpecifications.GetPredicate(request);
+            var predicate = _departmentSpecifications.GetAllPredicate(request);
             
             var departments = await _departmentService.GetAllDepartment(predicate, "");
 

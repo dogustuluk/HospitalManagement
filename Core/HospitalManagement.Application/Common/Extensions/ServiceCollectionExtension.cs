@@ -46,7 +46,6 @@
                     foreach (var implementation in implementations)
                     {
                         services.AddScoped(repositoryInterface, implementation);
-                        //Console.WriteLine($"Registered {repositoryInterface.FullName} with {implementation.FullName}");
                     }
                 }
                 else

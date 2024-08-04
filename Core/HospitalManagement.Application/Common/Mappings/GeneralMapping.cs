@@ -18,6 +18,7 @@
 
             //DEPARTMENT
             CreateMap<Department, GetAllDepartmentQueryResponse>();
+            CreateMap<Department, GetDataPagedListQueryResponse>();
             CreateMap<DataList1, GetDataListQueryResponse>();
             CreateMap<CreateDepartmentCommandRequest, Create_Department_Dto>();
 

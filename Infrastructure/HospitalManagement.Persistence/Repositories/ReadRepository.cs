@@ -1,6 +1,7 @@
 ﻿using HospitalManagement.Application.Common.GenericObjects;
 using HospitalManagement.Application.Repositories;
 using HospitalManagement.Domain.Entities.Common;
+using HospitalManagement.Domain.Entities.Identity;
 using HospitalManagement.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
@@ -66,11 +67,47 @@ namespace HospitalManagement.Persistence.Repositories
             if (entity != null) return entity;
             else throw new ArgumentNullException("id bulunamadı");
         }
+
         public async Task<T> GetByGuidAsync(Guid guid)
         {
             var entity = await Table.FirstAsync(x => x.Guid == guid);
             if (entity != null) return entity;
             else throw new ArgumentNullException("guid bulunamadı");
+        }
+
+        public async Task<T> GetByEntityAsync(object value, string? fieldName = null)
+        {
+            if (value == null) throw new ArgumentNullException(nameof(value));
+            T entity = null;
+
+            if (int.TryParse(value.ToString(), out int id))
+            {
+                entity = await Table.FirstOrDefaultAsync(x => x.Id == id);
+            }
+            else if (Guid.TryParse(value.ToString(), out Guid guid))
+            {
+                entity = await Table.FirstOrDefaultAsync(x => x.Guid == guid);
+            }
+            else if (!string.IsNullOrEmpty(fieldName))
+            {
+                var parameter = Expression.Parameter(typeof(T), "x");
+                var member = Expression.PropertyOrField(parameter, fieldName);
+                object? typedValue = value.ToString();
+                var constant = Expression.Constant(typedValue);
+                var equal = Expression.Equal(member, constant);
+                var lambda = Expression.Lambda<Func<T, bool>>(equal, parameter);
+
+                entity = await Table.FirstOrDefaultAsync(lambda);
+            }
+
+            if (entity != null)
+            {
+                return entity;
+            }
+            else
+            {
+                throw new ArgumentNullException($"{fieldName ?? "Belirtilen değer"} bulunamadı");
+            }
         }
 
         public async Task<IQueryable<T>> GetDataAsync(Expression<Func<T, bool>> predicate, string? include, int take, string orderBy)

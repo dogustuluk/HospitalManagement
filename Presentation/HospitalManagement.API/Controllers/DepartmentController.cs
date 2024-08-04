@@ -5,6 +5,7 @@ using HospitalManagement.Application.Common.GenericObjects;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using HospitalManagement.Application.Features.Queries.Department.GetDataPagedList;
 
 namespace HospitalManagement.API.Controllers
 {
@@ -31,12 +32,17 @@ namespace HospitalManagement.API.Controllers
         public async Task<IActionResult> GetDataList([FromQuery]GetDataListQueryRequest request)
         {
             OptResult<List<GetDataListQueryResponse>> responseDataList = await _mediator.Send(request);
-            //if (!string.IsNullOrEmpty(request.SelectedText))
-            //{
-            //    responseDataList.Data.Insert(0, new DataList1() { Id = "0", Guid = "", Name = request.SelectedText });
-            //}
-
+            if (!string.IsNullOrEmpty(request.SelectedText))
+                responseDataList.Data.Insert(0, new GetDataListQueryResponse() { Id = "0", Guid = "", Name = request.SelectedText });
+            
             return Ok(responseDataList);
+        }
+        [HttpGet]
+        [Route("GetAllPagedData")]
+        public async Task<IActionResult> GetAllPagedData([FromQuery]GetDataPagedListQueryRequest request)
+        {
+            OptResult<PaginatedList<Domain.Entities.Management.Department>> responsePaginatedData = await _mediator.Send(request);
+            return Ok(responsePaginatedData);
         }
 
         [HttpPost]

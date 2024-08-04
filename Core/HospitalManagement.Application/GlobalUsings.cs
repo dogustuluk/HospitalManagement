@@ -41,6 +41,7 @@ global using HospitalManagement.Application.Features.Commands.User.AppUser.Refre
 global using HospitalManagement.Application.Features.Commands.User.AppUser.UpdateUser;
 global using HospitalManagement.Application.Features.Queries.Department.GetAllDepartment;
 global using HospitalManagement.Application.Features.Queries.Department.GetDataList;
+global using HospitalManagement.Application.Features.Queries.Department.GetDataPagedList;
 global using HospitalManagement.Application.Repositories;
 global using HospitalManagement.Application.Repositories.Appointment;
 global using HospitalManagement.Application.Repositories.Common;
