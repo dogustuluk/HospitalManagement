@@ -1,4 +1,6 @@
-﻿namespace HospitalManagement.Application.Common.Mappings
+﻿using HospitalManagement.Application.Utilities.Converters;
+
+namespace HospitalManagement.Application.Common.Mappings
 {
     public class GeneralMapping : Profile
     {
@@ -18,7 +20,10 @@
 
             //DEPARTMENT
             CreateMap<Department, GetAllDepartmentQueryResponse>();
+            
             CreateMap<Department, GetDataPagedListQueryResponse>();
+            CreateMap(typeof(PaginatedList<>), typeof(PaginatedList<>)).ConvertUsing(typeof(PaginatedListConverter<,>));
+
             CreateMap<DataList1, GetDataListQueryResponse>();
             CreateMap<CreateDepartmentCommandRequest, Create_Department_Dto>();
 

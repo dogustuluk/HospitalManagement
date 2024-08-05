@@ -1,8 +1,6 @@
-﻿using HospitalManagement.Domain.Entities.Management;
-
-namespace HospitalManagement.Application.Features.Queries.Department.GetDataPagedList
+﻿namespace HospitalManagement.Application.Features.Queries.Department.GetDataPagedList
 {
-    public class GetDataPagedListQueryHandler : IRequestHandler<GetDataPagedListQueryRequest, OptResult<PaginatedList<Domain.Entities.Management.Department>>>
+    public class GetDataPagedListQueryHandler : IRequestHandler<GetDataPagedListQueryRequest, OptResult<PaginatedList<GetDataPagedListQueryResponse>>>
     {
         private readonly IDepartmentService _departmentService;
         private readonly IDepartmentReadRepository _departmentReadRepository;
@@ -17,43 +15,19 @@ namespace HospitalManagement.Application.Features.Queries.Department.GetDataPage
             _departmentReadRepository = departmentReadRepository;
         }
         //eksik
-        public async Task<OptResult<PaginatedList<Domain.Entities.Management.Department>>> Handle(GetDataPagedListQueryRequest request, CancellationToken cancellationToken)
+        public async Task<OptResult<PaginatedList<GetDataPagedListQueryResponse>>> Handle(GetDataPagedListQueryRequest request, CancellationToken cancellationToken)
         {
             var predicate = _departmentSpecifications.GetDataPagedListPredicate(request);
 
             if (string.IsNullOrEmpty(request.OrderBy))
                 request.OrderBy = "DepartmentName ASC";
 
-            //var pagedDepartments = await _departmentReadRepository.GetDataPagedAsync(predicate, "", request.PageIndex, request.Take, request.OrderBy);
-
-            //var responsePagedDataList = _mapper.Map<PaginatedList<GetDataPagedListQueryResponse>>(pagedDepartments.Data);
-            //var paginatedList = await responsePagedDataList.AsQueryable().CreateAsync(request.PageIndex, request.Take);
-            // return await OptResult<PaginatedList<GetDataPagedListQueryResponse>>.SuccessAsync(responsePagedDataList, Messages.Successfull);
-
             var pagedDepartments = await _departmentReadRepository.GetDataPagedAsync(predicate, "", request.PageIndex, request.Take, request.OrderBy);
 
-            var responsePagedDataList = _mapper.Map<List<Domain.Entities.Management.Department>>(pagedDepartments.Data);
+            var responsePagedDataList = _mapper.Map<PaginatedList<GetDataPagedListQueryResponse>>(pagedDepartments);
 
-            var totalRecords = await _departmentReadRepository.CountAsync(predicate);
-            var totalPages = (int)Math.Ceiling(totalRecords / (double)request.Take);
-            var pagination = new Pagination
-            {
-                PageIndex = request.PageIndex,
-                TotalPages = totalPages,
-                TotalRecords = totalRecords,
-                PageSize = request.Take,
-                HasPreviousPage = request.PageIndex > 1,
-                HasNextPage = request.PageIndex < totalPages
-            };
+            return await OptResult<PaginatedList<GetDataPagedListQueryResponse>>.SuccessAsync(responsePagedDataList, Messages.Successfull);
 
-            var paginatedList = new PaginatedList<Domain.Entities.Management.Department>
-            {
-                Data = responsePagedDataList,
-                pagination = pagination
-            };
-
-            return await OptResult<PaginatedList<Domain.Entities.Management.Department>>.SuccessAsync(paginatedList, Messages.Successfull);
         }
-
     }
 }

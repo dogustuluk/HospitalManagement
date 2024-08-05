@@ -136,8 +136,6 @@ namespace HospitalManagement.Persistence.Repositories
             if (!string.IsNullOrEmpty(orderBy))
                 query = await GetSortedDataAsync(query, orderBy);
 
-            query = query.Take(take);
-
             return await CreatePaginatedList.CreateAsync<T>(query, pageIndex, take);
         }
 

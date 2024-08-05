@@ -3,7 +3,7 @@
     public class PaginatedList<T> where T : class
     {
         public List<T>? Data { get; set; }
-        public Pagination? pagination { get; set; }
+        public Pagination? Pagination { get; set; }
     }
 
 
@@ -37,7 +37,7 @@
 
             var returnData = new PaginatedList<T>();
             returnData.Data = data;
-            returnData.pagination = pagination;
+            returnData.Pagination = pagination;
 
             return returnData;
         }

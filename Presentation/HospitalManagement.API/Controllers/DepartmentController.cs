@@ -41,7 +41,7 @@ namespace HospitalManagement.API.Controllers
         [Route("GetAllPagedData")]
         public async Task<IActionResult> GetAllPagedData([FromQuery]GetDataPagedListQueryRequest request)
         {
-            OptResult<PaginatedList<Domain.Entities.Management.Department>> responsePaginatedData = await _mediator.Send(request);
+            OptResult<PaginatedList<GetDataPagedListQueryResponse>> responsePaginatedData = await _mediator.Send(request);
             return Ok(responsePaginatedData);
         }
 

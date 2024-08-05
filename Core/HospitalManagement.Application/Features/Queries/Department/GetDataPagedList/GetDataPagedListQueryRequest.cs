@@ -1,6 +1,6 @@
 ﻿namespace HospitalManagement.Application.Features.Queries.Department.GetDataPagedList
 {
-    public class GetDataPagedListQueryRequest : IRequest<OptResult<PaginatedList<Domain.Entities.Management.Department>>>
+    public class GetDataPagedListQueryRequest : IRequest<OptResult<PaginatedList<GetDataPagedListQueryResponse>>>
     {
         public int PageIndex { get; set; } = 1;
         public string? SearchText { get; set; }
