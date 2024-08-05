@@ -1,4 +1,9 @@
-﻿using HospitalManagement.Application.Utilities.Converters;
+﻿using HospitalManagement.Application.Features.Queries.Department.GetByEntity;
+using HospitalManagement.Application.Features.Queries.Department.GetByGuid;
+using HospitalManagement.Application.Features.Queries.Department.GetById;
+using HospitalManagement.Application.Features.Queries.Department.GetSingleEntity;
+using HospitalManagement.Application.Features.Queries.Department.GetValue;
+using HospitalManagement.Application.Utilities.Converters;
 
 namespace HospitalManagement.Application.Common.Mappings
 {
@@ -23,6 +28,12 @@ namespace HospitalManagement.Application.Common.Mappings
             
             CreateMap<Department, GetDataPagedListQueryResponse>();
             CreateMap(typeof(PaginatedList<>), typeof(PaginatedList<>)).ConvertUsing(typeof(PaginatedListConverter<,>));
+            CreateMap<Department, GetSingleEntityQueryResponse>();
+            CreateMap<Department, GetByEntityQueryResponse>();
+            CreateMap<Department, GetByIdQueryResponse>();
+            CreateMap<Department, GetByGuidQueryResponse>();
+            CreateMap<string, GetValueQueryResponse>()
+            .ConstructUsing(value => new GetValueQueryResponse { Value = value });
 
             CreateMap<DataList1, GetDataListQueryResponse>();
             CreateMap<CreateDepartmentCommandRequest, Create_Department_Dto>();

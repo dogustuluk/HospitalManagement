@@ -4,6 +4,7 @@ using HospitalManagement.Domain.Entities.Common;
 using HospitalManagement.Domain.Entities.Identity;
 using HospitalManagement.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
@@ -204,9 +205,26 @@ namespace HospitalManagement.Persistence.Repositories
             else throw new ArgumentNullException();
         }
 
-        public async Task<string?> GetValueAsync(string table, string column, string sqlQuery)
+        public async Task<string?> GetValueAsync(string table, string column, string sqlQuery, int dbType)
         {
-            string sql = $"SELECT TOP 1 CONVERT(nvarchar, {column}) as [Value] FROM {table} WHERE {sqlQuery}";
+            string sql;
+
+            // Determine the SQL query based on the database type
+            if (dbType == 1) // postgreSql
+            {
+                // PostgreSQL query
+                sql = $"SELECT \"{column}\" as \"Value\" FROM \"{table}\" WHERE {sqlQuery} LIMIT 1";
+
+            }
+            else if (dbType == 2) //sql server
+            {
+                // SQL Server query
+                sql = $"SELECT TOP 1 {column} as [Value] FROM {table} WHERE {sqlQuery}";
+            }
+            else
+            {
+                throw new ArgumentException("Invalid database type.");
+            }
 
             FormattableString formattedSqlQuery = FormattableStringFactory.Create(sql);
 
@@ -214,6 +232,14 @@ namespace HospitalManagement.Persistence.Repositories
 
             if (result != null) return result;
             else throw new ArgumentNullException();
+            //string sql = $"SELECT TOP 1 CONVERT(nvarchar, {column}) as [Value] FROM {table} WHERE {sqlQuery}";
+
+            //FormattableString formattedSqlQuery = FormattableStringFactory.Create(sql);
+
+            //string result = await _context.Database.SqlQuery<string>(formattedSqlQuery).FirstOrDefaultAsync();
+
+            //if (result != null) return result;
+            //else throw new ArgumentNullException();
         }
 
         public IQueryable<T> GetWhere(Expression<Func<T, bool>> predicate, bool tracking = true)

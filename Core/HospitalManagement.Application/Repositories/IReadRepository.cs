@@ -16,16 +16,12 @@
         IQueryable<T> GetWhere(Expression<Func<T, bool>> predicate, bool tracking = true);
 
         Task<T> GetSingleEntityAsync(Expression<Func<T, bool>> method, bool tracking = true);
-        
-        
         Task<T> GetByEntityAsync(object value, string fieldName = null);
-        
-        
         Task<T> GetByIdAsync(int id);
         Task<T> GetByGuidAsync(Guid guid);
         Task<T> GetEntityWithIncludeAsync(Expression<Func<T, bool>> predicate, string? include);
         string? GetValue(string table, string column, string sqlQuery);
-        Task<string?> GetValueAsync(string table, string column, string sqlQuery);
+        Task<string?> GetValueAsync(string table, string column, string sqlQuery, int dbType);
 
         Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate);
         Task<int> CountAsync(Expression<Func<T, bool>>? predicate);
