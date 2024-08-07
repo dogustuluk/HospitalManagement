@@ -68,7 +68,7 @@ namespace HospitalManagement.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<int> SaveChanges()
-            => _context.SaveChangesAsync();
+        public Task<int> SaveChanges(CancellationToken cancellationToken = default)
+            => _context.SaveChangesAsync(cancellationToken);
     }
 }

@@ -13,7 +13,12 @@
             
             //otomatize et -->
             serviceCollection.AddScoped<DepartmentSpecifications>();
+            serviceCollection.AddScoped<UserRegistrationStrategyFactoryService>();
             serviceCollection.AddScoped<ICryptographyService,CryptographyService>();
+            serviceCollection.AddScoped<IUserRegistrationStrategyService, DefaultUserRegistrationStrategyService>();
+            serviceCollection.AddScoped<IUserRegistrationStrategyService, DoctorUserRegistrationStrategyService>();
+            serviceCollection.AddScoped<IUserRegistrationStrategyService, PatientUserRegistrationStrategyService>();
+            serviceCollection.AddScoped<IUserRegistrationStrategyService, VisitorAppointmentUserRegistrationStrategyService>();
         }
     }
 }

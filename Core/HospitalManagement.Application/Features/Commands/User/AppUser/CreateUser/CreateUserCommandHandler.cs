@@ -5,13 +5,16 @@
         private readonly IUserService _userService;
         private readonly ICryptographyService _cryptoHelperService;
         private readonly IMapper _mapper;
-        public CreateUserCommandHandler(IUserService userService, ICryptographyService cryptoHelperService, IMapper mapper)
+        private readonly UserRegistrationStrategyFactoryService _strategyFactory;
+
+        public CreateUserCommandHandler(IUserService userService, ICryptographyService cryptoHelperService, IMapper mapper, UserRegistrationStrategyFactoryService strategyFactory)
         {
             _userService = userService;
             _cryptoHelperService = cryptoHelperService;
             _mapper = mapper;
+            _strategyFactory = strategyFactory;
         }
-       
+
         public async Task<OptResult<CreateUserCommandResponse>> Handle(CreateUserCommandRequest request, CancellationToken cancellationToken)
         {
             OptResult<CreateUserCommandResponse> response = new OptResult<CreateUserCommandResponse>();
@@ -23,6 +26,10 @@
                 var createdUser = await _userService.CreateAsync(createUserDto);
                 if (createdUser.Succeeded)
                 {
+                    var appUser = _mapper.Map<Domain.Entities.Identity.AppUser>(createdUser.Data);
+                    var strategy = _strategyFactory.GetRegisterStrategy(appUser.UserType);
+                    await strategy.ExecuteAsync(appUser);
+
                     response.Succeeded = true;
                     response.Data = _mapper.Map<CreateUserCommandResponse>(createdUser.Data);
                 }

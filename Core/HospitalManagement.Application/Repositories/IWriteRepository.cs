@@ -15,6 +15,6 @@
         Task<int> SqlCommandAsync(string sql, params object[]? parameters);
         int SqlCommand(string sql, params object[]? parameters);
         
-        Task<int> SaveChanges();
+        Task<int> SaveChanges(CancellationToken cancellationToken = default);
     }
 }

@@ -8,6 +8,7 @@ using HospitalManagement.Application.Settings;
 using HospitalManagement.Domain.Entities.Management;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq.Expressions;
+using System.Threading;
 
 namespace HospitalManagement.Persistence.Services.Management
 {
@@ -39,7 +40,7 @@ namespace HospitalManagement.Persistence.Services.Management
                 ParentId = create_Department.ParentId,
                 SortOrderNo = create_Department.SortOrderNo,
                 UpdatedDate = DateTime.UtcNow,
-                UpdatedUser = Guid.NewGuid() //
+                UpdatedUser = Guid.NewGuid() //jwt'den al kullanıcıyı
             };
 
             await _writeRepository.AddAsync(newDepartment);
