@@ -1,5 +1,17 @@
 ﻿namespace HospitalManagement.Application.Common.DTOs.Management
 {
+    public class GetAllPaged_Index_Dto
+    {
+        public int PageIndex { get; set; } = 1;
+        public string? SearchText { get; set; }
+        public int ParentID { get; set; } = -99;
+        public int ManagerMemberID { get; set; }
+        public int ActiveStatus { get; set; } = 1;
+        public string? IDsColumn { get; set; }
+        public string? IDsList { get; set; }
+        public int Take { get; set; } = 25;
+        public string? OrderBy { get; set; } = "Id ASC";
+    }
     public class GetAll_Department_Dto
     {
         //public int PageIndex { get; set; } = 1;

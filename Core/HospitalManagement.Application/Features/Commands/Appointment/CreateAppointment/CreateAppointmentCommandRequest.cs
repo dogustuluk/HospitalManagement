@@ -1,5 +1,6 @@
 ﻿namespace HospitalManagement.Application.Features.Commands.Appointment.CreateAppointment
 {
+    [CommandRequestMapping]
     public class CreateAppointmentCommandRequest : IRequest<OptResult<CreateAppointmentCommandResponse>>
     {
         public Guid CreatedUser { get; set; }

@@ -27,7 +27,10 @@ namespace HospitalManagement.Application.Common.Mappings
 
             #region Department
             CreateMap<Department, GetAllDepartmentQueryResponse>();
+            
             CreateMap<Department, GetDataPagedListQueryResponse>();
+            CreateMap<GetDataPagedListQueryRequest, GetAllPaged_Index_Dto>();
+            
             CreateMap(typeof(PaginatedList<>), typeof(PaginatedList<>)).ConvertUsing(typeof(PaginatedListConverter<,>));
             CreateMap<Department, GetSingleEntityQueryResponse>();
             CreateMap<Department, GetByEntityQueryResponse>();
@@ -55,6 +58,7 @@ namespace HospitalManagement.Application.Common.Mappings
 
             CreateMap<CreateAppointmentCommandRequest, CreateAppointment_Dto>();
             CreateMap<CreateAppointment_Dto, CreateAppointmentCommandResponse>();
+
             #endregion
         }
     }

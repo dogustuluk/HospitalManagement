@@ -9,8 +9,7 @@
             serviceCollection.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly()); 
             serviceCollection.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
             serviceCollection.AddAutoMapper(Assembly.GetExecutingAssembly());
-            
-            
+
             //otomatize et -->
             serviceCollection.AddScoped<DepartmentSpecifications>();
             serviceCollection.AddScoped<UserRegistrationStrategyFactoryService>();

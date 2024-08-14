@@ -7,7 +7,6 @@ using HospitalManagement.Application.Repositories.Appointment;
 using HospitalManagement.Application.Settings;
 using HospitalManagement.Domain.Entities.Appointment;
 using Microsoft.Extensions.DependencyInjection;
-using System.Threading;
 
 namespace HospitalManagement.Persistence.Services.Appointment
 {
@@ -37,7 +36,6 @@ namespace HospitalManagement.Persistence.Services.Appointment
             appointment.Guid = Guid.NewGuid();
             appointment.CreatedUser = Guid.NewGuid();
             appointment.CreatedDate = DateTime.UtcNow;
-            //appointment.AppointmentDate = Model.AppointmentDate;
 
             await _writeRepository.AddAsync(appointment);
             await _writeRepository.SaveChanges();

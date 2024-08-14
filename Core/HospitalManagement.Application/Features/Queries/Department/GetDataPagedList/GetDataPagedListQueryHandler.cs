@@ -2,29 +2,24 @@
 {
     public class GetDataPagedListQueryHandler : IRequestHandler<GetDataPagedListQueryRequest, OptResult<PaginatedList<GetDataPagedListQueryResponse>>>
     {
-        private readonly IDepartmentReadRepository _departmentReadRepository;
-        private readonly DepartmentSpecifications _departmentSpecifications;
+        private readonly IDepartmentService _departmentService;
         private readonly IMapper _mapper;
 
-        public GetDataPagedListQueryHandler(IMapper mapper, DepartmentSpecifications departmentSpecifications, IDepartmentReadRepository departmentReadRepository)
+        public GetDataPagedListQueryHandler(IDepartmentService departmentService, IMapper mapper)
         {
+            _departmentService = departmentService;
             _mapper = mapper;
-            _departmentSpecifications = departmentSpecifications;
-            _departmentReadRepository = departmentReadRepository;
         }
 
         public async Task<OptResult<PaginatedList<GetDataPagedListQueryResponse>>> Handle(GetDataPagedListQueryRequest request, CancellationToken cancellationToken)
         {
-            var predicate = _departmentSpecifications.GetDataPagedListPredicate(request);
+            var model = _mapper.Map<GetAllPaged_Index_Dto>(request);
 
-            if (string.IsNullOrEmpty(request.OrderBy))
-                request.OrderBy = "DepartmentName ASC";
+            var result = await _departmentService.GetDataPagedForDepartment(model);
 
-            var pagedDepartments = await _departmentReadRepository.GetDataPagedAsync(predicate, "", request.PageIndex, request.Take, request.OrderBy);
+            var response = _mapper.Map<PaginatedList<GetDataPagedListQueryResponse>>(result.Data);
 
-            var responsePagedDataList = _mapper.Map<PaginatedList<GetDataPagedListQueryResponse>>(pagedDepartments);
-
-            return await OptResult<PaginatedList<GetDataPagedListQueryResponse>>.SuccessAsync(responsePagedDataList, Messages.Successfull);
+            return await OptResult<PaginatedList<GetDataPagedListQueryResponse>>.SuccessAsync(response, Messages.Successfull);
 
         }
     }

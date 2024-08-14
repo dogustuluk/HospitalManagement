@@ -23,7 +23,7 @@
 
             return predicate1;
         }
-        public Expression<Func<Department, bool>> GetDataPagedListPredicate(GetDataPagedListQueryRequest getDataPagedListRequest)
+        public Expression<Func<Department, bool>> GetDataPagedListPredicate(GetAllPaged_Index_Dto getDataPagedListRequest)
         {
             var predicate1 = PredicateBuilder.New<Department>(true);
 
