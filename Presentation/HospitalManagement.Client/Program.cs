@@ -1,4 +1,6 @@
 using HospitalManagement.Client.Extensions.StartupExtensions;
+using HospitalManagement.Client.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -7,6 +9,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AuthOptionsStartupExtension();
 builder.Services.IISOptionsStartupExtension();
 builder.Services.HttpClientOptionsStartupExtension(builder.Configuration);
+builder.Services.AddScoped<AAAService>();
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.

@@ -85,7 +85,13 @@ namespace HospitalManagement.Persistence.Services.Management
             var predicate = _departmentSpecifications.GetDataPagedListPredicate(model);
             if (string.IsNullOrEmpty(model.OrderBy)) model.OrderBy = "DepartmentName ASC";
 
-            var pagedDepartments = await _redisCacheService.GetPaginatedListAsync("departments", model.PageIndex, async pageIndex => await _readRepository.GetDataPagedAsync(predicate, "", pageIndex, model.Take, model.OrderBy));
+            PaginatedList<Department> pagedDepartments;
+
+            if (_redisCacheService.IsConnected)
+                pagedDepartments = await _redisCacheService.GetPaginatedListAsync("departments", model.PageIndex, async pageIndex => await _readRepository.GetDataPagedAsync(predicate, "", pageIndex, model.Take, model.OrderBy));
+
+            else
+                pagedDepartments = await _readRepository.GetDataPagedAsync(predicate, "", model.PageIndex, model.Take, model.OrderBy);
 
             return await OptResult<PaginatedList<Department>>.SuccessAsync(pagedDepartments, Messages.Successfull);
         }

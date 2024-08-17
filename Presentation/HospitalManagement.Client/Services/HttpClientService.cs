@@ -63,12 +63,23 @@ namespace HospitalManagement.Client.Services
             return request;
         }
 
-        public async Task<T> GetAsync<T>(RequestParameters requestParameters, string id = null)
+        public async Task<OptResult<T>> GetAsync<T>(RequestParameters requestParameters, string id = null)
         {
             var url = BuildUrl(requestParameters, id);
             var request = CreateRequest(HttpMethod.Get, url, headers: requestParameters.Headers);
             var response = await SendRequestAsync(request);
-            return await DeserializeResponse<T>(response);
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            var optResult = JsonSerializer.Deserialize<OptResult<T>>(jsonResponse, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+
+            if (optResult == null)
+                throw new Exception("Deserialization failed or response was null.");
+            if (!optResult.Succeeded)
+                throw new Exception($"Request failed with message: {optResult.Message}");
+
+            return optResult;
         }
 
         //public async Task<string> PostAsync(RequestParameters requestParameters, object body)

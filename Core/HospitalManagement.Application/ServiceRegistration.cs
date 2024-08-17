@@ -1,9 +1,12 @@
-﻿namespace HospitalManagement.Application
+﻿using HospitalManagement.Application.Services;
+
+namespace HospitalManagement.Application
 {
     public static class ServiceRegistration
     {
         public static void AddApplicationServices(this IServiceCollection serviceCollection)
         {
+
             serviceCollection.AddMediatR(typeof(ServiceRegistration));
             serviceCollection.AddHttpClient();
             serviceCollection.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly()); 

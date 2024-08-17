@@ -1,5 +1,7 @@
-﻿@*@model Pagination
-@inject _AAAService _AAAService;
+﻿@using HospitalManagement.Application.Services;
+@using HospitalManagement.Client.Services;
+@model Pagination
+@inject AAAService _AAAService;
 @{
 	int LastPage = ((Model.TotalRecords - 1) / Model.PageSize);
 }
@@ -69,4 +71,4 @@
 			</div>
 		</div>
 	}
-</div>*@
+</div>

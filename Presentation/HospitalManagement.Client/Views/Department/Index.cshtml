@@ -1,0 +1,54 @@
+﻿@using HospitalManagement.Application.Services;
+@using HospitalManagement.Client.Models.Management;
+@using HospitalManagement.Client.Services;
+@model Department_Index_ViewModel
+@inject AAAService _AAAService
+
+<!DOCTYPE html>
+<div class="page-body">
+    <div class="container-fluid basic_table">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Departman Listesi</h4>
+                    </div>
+                    <div class="table-responsive theme-scrollbar">
+                        <table class="table table-lg table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">isActive</th>
+                                    <th scope="col">DepartmentName	</th>
+                                    <th scope="col">DepartmentCode</th>
+                                    <th scope="col">SortOrderNo</th>
+                                    <th scope="col">ParentId</th>
+                                    <th scope="col">ManagerMemberId</th>
+                                </tr>
+                            </thead>
+                            <tbody> 
+                                @foreach (var item in Model.MyGridData)
+                                {
+                                    <tr>
+                                        <th scope="row">@item.Id</th>
+                                        <td>@item.isActive</td>
+                                        <td>@item.DepartmentName</td>
+                                        <td>@item.DepartmentCode</td>
+                                        <td>@item.SortOrderNo</td>
+                                        <td>@item.ParentId</td>
+                                        <td>@item.ManagerMemberId</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @if (Model.MyPagination != null)
+        {
+            <partial name="~/Views/Shared/Pagination.cshtml" model=@Model.MyPagination />
+        }
+    </div>
+</div>
+

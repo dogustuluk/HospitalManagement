@@ -8,11 +8,15 @@ namespace HospitalManagement.Infrastructure.Services
     public class RedisCacheService : IRedisCacheService
     {
         private readonly IDatabase _database;
+        private readonly IConnectionMultiplexer _connectionMultiplexer;
 
         public RedisCacheService(IConnectionMultiplexer connectionMultiplexer)
         {
             _database = connectionMultiplexer.GetDatabase();
+            _connectionMultiplexer = connectionMultiplexer;
+
         }
+        public bool IsConnected => _connectionMultiplexer.IsConnected;
 
         public async Task DeleteAsync(string key)
         {
@@ -29,49 +33,51 @@ namespace HospitalManagement.Infrastructure.Services
             var value = await _database.StringGetAsync(key);
             if (value.IsNullOrEmpty)
                 return default;
+            //1 saat ekle erişim olduğunda
+            // await _database.KeyExpireAsync(key, TimeSpan.FromHours(1), CommandFlags.FireAndForget);
             return JsonConvert.DeserializeObject<T>(value);
         }
 
         public async Task SetAsync<T>(string key, T value, TimeSpan? expiration = null)
         {
             var serializedValue = JsonConvert.SerializeObject(value);
-            await _database.StringSetAsync(key, serializedValue, expiration);
+            await _database.StringSetAsync(key, serializedValue, expiration ?? TimeSpan.FromHours(3));
         }
 
         public async Task<PaginatedList<T>> GetPaginatedListAsync<T>(string cachePrefixName, int pageIndex, Func<int, Task<PaginatedList<T>>> data) where T : class
         {
-            if (pageIndex > 3)
+            int minPageIndex = pageIndex;
+            int maxPageIndex = pageIndex + 2;
+
+            if (pageIndex >= 1)
             {
-                string currentPage = $"{cachePrefixName}_{pageIndex}";
-                string oldPage1 = $"{cachePrefixName}_{pageIndex - 2}";
-                string oldPage2 = $"{cachePrefixName}_{pageIndex - 1}";
+                int prevMaxPageIndex = minPageIndex - 1;
+                int prevMinPageIndex = minPageIndex - 2;
 
-                await DeleteAsync(currentPage);
-                await DeleteAsync(oldPage1);
-                await DeleteAsync(oldPage2);
+                for (int i = prevMinPageIndex; i <= prevMaxPageIndex; i++)
+                {
+                    if (i >= 1)
+                    {
+                        string oldPageKey = $"{cachePrefixName}_{i}";
+                        await DeleteAsync(oldPageKey);
+                    }
+                }
             }
-
-            string currentPagePrefix = $"{cachePrefixName}_{pageIndex}";
-            string nextPagePrefix1 = $"{cachePrefixName}_{pageIndex + 1}";
-            string nextPagePrefix2 = $"{cachePrefixName}_{pageIndex + 2}";
-
-
-            var cachedData = await GetAsync<PaginatedList<T>>(currentPagePrefix);
-            if (cachedData != null) return cachedData;
-
-            var currentPageCachedata = await data(pageIndex);
-            if (currentPageCachedata.Data.Count > 0)
+            for (int i = minPageIndex; i <= maxPageIndex; i++)
             {
-                await SetAsync(currentPagePrefix, currentPageCachedata);
-
-                var nextPage1Data = await data(pageIndex + 1);
-                if (nextPage1Data.Data.Count > 0) await SetAsync(nextPagePrefix1, nextPage1Data);
-
-                var nextPage2Data = await data(pageIndex + 2);
-                if (nextPage2Data.Data.Count > 0) await SetAsync(nextPagePrefix2, nextPage2Data);
-
+                string pageKey = $"{cachePrefixName}_{i}";
+                var cachedData = await GetAsync<PaginatedList<T>>(pageKey);
+                if (cachedData == null)
+                {
+                    var pageData = await data(i);
+                    if (pageData.Data.Count > 0)
+                    {
+                        await SetAsync(pageKey, pageData, TimeSpan.FromHours(3));//2 saat
+                    }
+                }
             }
-            return currentPageCachedata;
+            string currentPageKey = $"{cachePrefixName}_{pageIndex}";
+            return await GetAsync<PaginatedList<T>>(currentPageKey);
         }
     }
 }

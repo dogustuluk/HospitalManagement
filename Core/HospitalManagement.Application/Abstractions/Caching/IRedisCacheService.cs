@@ -2,6 +2,7 @@
 {
     public interface IRedisCacheService
     {
+        bool IsConnected { get; }
         Task<T> GetAsync<T>(string key);
         Task SetAsync<T>(string key, T value, TimeSpan? expiration = null);
         Task DeleteAsync(string key);
