@@ -12,9 +12,14 @@
 
         public async Task<OptResult<GetValueQueryResponse>> Handle(GetValueQueryRequest request, CancellationToken cancellationToken)
         {
-            var data = await _readRepository.GetValueAsync("Departments", request.ColumnName, $"\"Id\" = {request.DataId}", 1);
-            var mappedData = _mapper.Map<GetValueQueryResponse>(data);
-            return await OptResult<GetValueQueryResponse>.SuccessAsync(mappedData, Messages.Successfull);
+            return await ExceptionHandler.HandleOptResultAsync(async () =>
+            {
+                var data = await _readRepository.GetValueAsync("Departments", request.ColumnName, $"\"Id\" = {request.DataId}", 1);
+                var mappedData = _mapper.Map<GetValueQueryResponse>(data);
+                if(mappedData != null) 
+                    return await OptResult<GetValueQueryResponse>.SuccessAsync(mappedData, Messages.Successfull);
+                return await OptResult<GetValueQueryResponse>.FailureAsync(Messages.UnSuccessfull);
+            });
         }
     }
 }

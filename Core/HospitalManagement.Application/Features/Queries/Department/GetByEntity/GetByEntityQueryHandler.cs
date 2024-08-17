@@ -13,15 +13,18 @@
 
         public async Task<OptResult<GetByEntityQueryResponse>> Handle(GetByEntityQueryRequest request, CancellationToken cancellationToken)
         {
-            var data = await _readRepository.GetByEntityAsync(request.Value, request.FieldName);
-            var mappedData = _mapper.Map<GetByEntityQueryResponse>(data);
-            var response = new GetByEntityQueryResponse
+            return await ExceptionHandler.HandleOptResultAsync(async () =>
             {
-                Properties = data.GetType()
-                    .GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                    .ToDictionary(prop => prop.Name, prop => prop.GetValue(data))
-            };
-            return OptResult<GetByEntityQueryResponse>.Success(response, Messages.Successfull);
+                var data = await _readRepository.GetByEntityAsync(request.Value, request.FieldName);
+                var mappedData = _mapper.Map<GetByEntityQueryResponse>(data);
+                var response = new GetByEntityQueryResponse
+                {
+                    Properties = data.GetType()
+                        .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                        .ToDictionary(prop => prop.Name, prop => prop.GetValue(data))
+                };
+                return OptResult<GetByEntityQueryResponse>.Success(response, Messages.Successfull);
+            });
         }
     }
 }

@@ -13,14 +13,18 @@
 
         public async Task<OptResult<PaginatedList<GetDataPagedListQueryResponse>>> Handle(GetDataPagedListQueryRequest request, CancellationToken cancellationToken)
         {
-            var model = _mapper.Map<GetAllPaged_Index_Dto>(request);
+            return await ExceptionHandler.HandleOptResultAsync(async () =>
+            {
+                var model = _mapper.Map<GetAllPaged_Index_Dto>(request);
 
-            var result = await _departmentService.GetDataPagedForDepartment(model);
+                var result = await _departmentService.GetDataPagedForDepartment(model);
 
-            var response = _mapper.Map<PaginatedList<GetDataPagedListQueryResponse>>(result.Data);
+                var response = _mapper.Map<PaginatedList<GetDataPagedListQueryResponse>>(result.Data);
 
-            return await OptResult<PaginatedList<GetDataPagedListQueryResponse>>.SuccessAsync(response, Messages.Successfull);
-
+                if (response != null) 
+                    return await OptResult<PaginatedList<GetDataPagedListQueryResponse>>.SuccessAsync(response, Messages.Successfull);
+                return await OptResult<PaginatedList<GetDataPagedListQueryResponse>>.FailureAsync(Messages.UnSuccessfull);
+            });
         }
     }
 }

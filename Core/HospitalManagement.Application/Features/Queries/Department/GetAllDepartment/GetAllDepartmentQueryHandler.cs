@@ -15,16 +15,19 @@
 
         public async Task<OptResult<IQueryable<GetAllDepartmentQueryResponse>>> Handle(GetAllDepartmentQueryRequest request, CancellationToken cancellationToken)
         {
-            var predicate = _departmentSpecifications.GetAllPredicate(request);
-            
-            var departments = await _departmentService.GetAllDepartment(predicate, "");
+            return await ExceptionHandler.HandleOptResultAsync(async () =>
+            {
+                var predicate = _departmentSpecifications.GetAllPredicate(request);
 
-            if (string.IsNullOrEmpty(request.OrderBy))
-                request.OrderBy = "SortOrderNo ASC";
+                var departments = await _departmentService.GetAllDepartment(predicate, "");
 
-            var responseList = _mapper.ProjectTo<GetAllDepartmentQueryResponse>(departments.AsQueryable().OrderBy(request.OrderBy));
+                if (string.IsNullOrEmpty(request.OrderBy))
+                    request.OrderBy = "SortOrderNo ASC";
 
-            return await OptResult<IQueryable<GetAllDepartmentQueryResponse>>.SuccessAsync(responseList, Messages.Successfull);
+                var responseList = _mapper.ProjectTo<GetAllDepartmentQueryResponse>(departments.AsQueryable().OrderBy(request.OrderBy));
+
+                return await OptResult<IQueryable<GetAllDepartmentQueryResponse>>.SuccessAsync(responseList, Messages.Successfull);
+            });
         }
     }
 }

@@ -10,6 +10,4 @@ namespace HospitalManagement.Domain.Entities.Appointment
         public DateTime AppointmentDate { get; set; }        
         public int Status { get; set; }
     }
-
-    
 }

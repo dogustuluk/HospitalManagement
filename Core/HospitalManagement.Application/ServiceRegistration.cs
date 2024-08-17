@@ -1,6 +1,4 @@
-﻿using HospitalManagement.Application.Services;
-
-namespace HospitalManagement.Application
+﻿namespace HospitalManagement.Application
 {
     public static class ServiceRegistration
     {
@@ -14,6 +12,7 @@ namespace HospitalManagement.Application
             serviceCollection.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             //otomatize et -->
+            serviceCollection.AddScoped<AppointmentSpecifications>();
             serviceCollection.AddScoped<DepartmentSpecifications>();
             serviceCollection.AddScoped<UserRegistrationStrategyFactoryService>();
             serviceCollection.AddScoped<ICryptographyService,CryptographyService>();
@@ -21,6 +20,8 @@ namespace HospitalManagement.Application
             serviceCollection.AddScoped<IUserRegistrationStrategyService, DoctorUserRegistrationStrategyService>();
             serviceCollection.AddScoped<IUserRegistrationStrategyService, PatientUserRegistrationStrategyService>();
             serviceCollection.AddScoped<IUserRegistrationStrategyService, VisitorAppointmentUserRegistrationStrategyService>();
+
+
         }
     }
 }

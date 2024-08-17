@@ -13,11 +13,14 @@
 
         public async Task<OptResult<GetByGuidQueryResponse>> Handle(GetByGuidQueryRequest request, CancellationToken cancellationToken)
         {
-            var data = await _readRepository.GetByGuidAsync(request.Guid);
-            var mappedData = _mapper.Map<GetByGuidQueryResponse>(data);
-            if (mappedData.Id > 0)
-                return await OptResult<GetByGuidQueryResponse>.SuccessAsync(mappedData);
-            return await OptResult<GetByGuidQueryResponse>.FailureAsync(mappedData);
+            return await ExceptionHandler.HandleOptResultAsync(async () =>
+            {
+                var data = await _readRepository.GetByGuidAsync(request.Guid);
+                var mappedData = _mapper.Map<GetByGuidQueryResponse>(data);
+                if (mappedData.Id > 0)
+                    return await OptResult<GetByGuidQueryResponse>.SuccessAsync(mappedData);
+                return await OptResult<GetByGuidQueryResponse>.FailureAsync(mappedData);
+            });
         }
     }
 }

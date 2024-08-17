@@ -14,18 +14,20 @@ namespace HospitalManagement.Application.Features.Queries.Department.GetSingleEn
 
         public async Task<OptResult<GetSingleEntityQueryResponse>> Handle(GetSingleEntityQueryRequest request, CancellationToken cancellationToken)
         {
-            var predicate = PredicateHelper.BuildPredicate<Domain.Entities.Management.Department>(request.Filters);
-
-            var data = await _readRepository.GetSingleEntityAsync(predicate);
-            
-            var response = new GetSingleEntityQueryResponse
+            return await ExceptionHandler.HandleOptResultAsync(async () =>
             {
-                Properties = data.GetType()
-                    .GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                    .ToDictionary(prop => prop.Name, prop => prop.GetValue(data))
-            };
+                var predicate = PredicateHelper.BuildPredicate<Domain.Entities.Management.Department>(request.Filters);
 
-            return OptResult<GetSingleEntityQueryResponse>.Success(response, Messages.Successfull);
+                var data = await _readRepository.GetSingleEntityAsync(predicate);
+
+                var response = new GetSingleEntityQueryResponse
+                {
+                    Properties = data.GetType()
+                        .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                        .ToDictionary(prop => prop.Name, prop => prop.GetValue(data))
+                };
+                return OptResult<GetSingleEntityQueryResponse>.Success(response, Messages.Successfull);
+            });
         }
     }
 }

@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalManagement.Client",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{C0C9D270-66AB-4E7A-ABF4-8F0EE91E6404}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NamespaceGenerator", "Common\NamespaceGenerator\NamespaceGenerator\NamespaceGenerator.csproj", "{F7BABAA5-7E62-41A3-835C-A930D7D45F39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NamespaceGenerator", "Common\NamespaceGenerator\NamespaceGenerator\NamespaceGenerator.csproj", "{F7BABAA5-7E62-41A3-835C-A930D7D45F39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

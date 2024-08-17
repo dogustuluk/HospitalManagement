@@ -1,11 +1,13 @@
 ﻿using HospitalManagement.Application.Common.DTOs.Appointment;
 using HospitalManagement.Application.Features.Commands.Appointment.CreateAppointment;
+using HospitalManagement.Application.Features.Queries.Appointment.GetAllAppointment;
 using HospitalManagement.Application.Features.Queries.Department.GetByEntity;
 using HospitalManagement.Application.Features.Queries.Department.GetByGuid;
 using HospitalManagement.Application.Features.Queries.Department.GetById;
 using HospitalManagement.Application.Features.Queries.Department.GetSingleEntity;
 using HospitalManagement.Application.Features.Queries.Department.GetValue;
 using HospitalManagement.Application.Utilities.Converters;
+using HospitalManagement.Domain.Entities.Appointment;
 
 namespace HospitalManagement.Application.Common.Mappings
 {
@@ -58,6 +60,7 @@ namespace HospitalManagement.Application.Common.Mappings
 
             CreateMap<CreateAppointmentCommandRequest, CreateAppointment_Dto>();
             CreateMap<CreateAppointment_Dto, CreateAppointmentCommandResponse>();
+            CreateMap<Appointment, GetAllAppointmentQueryResponse>();
 
             #endregion
         }

@@ -7,6 +7,7 @@ using HospitalManagement.Application.Repositories.Appointment;
 using HospitalManagement.Application.Settings;
 using HospitalManagement.Domain.Entities.Appointment;
 using Microsoft.Extensions.DependencyInjection;
+using System.Linq.Expressions;
 
 namespace HospitalManagement.Persistence.Services.Appointment
 {
@@ -44,6 +45,12 @@ namespace HospitalManagement.Persistence.Services.Appointment
 
             return await OptResult<CreateAppointment_Dto>.SuccessAsync(createAppointmentResponse, Messages.SuccessfullyAdded);
 
+        }
+
+        public async Task<List<Domain.Entities.Appointment.Appointment>> GetAllAppointment(Expression<Func<Domain.Entities.Appointment.Appointment, bool>>? predicate, string? include)
+        {
+            var appointments = await _readRepository.GetAllAsync(predicate, include);
+            return appointments.ToList();
         }
     }
 }

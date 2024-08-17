@@ -2,7 +2,6 @@ using HospitalManagement.API.Extensions.StartupExtensions;
 using HospitalManagement.Application;
 using HospitalManagement.Infrastructure;
 using HospitalManagement.Persistence;
-using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.

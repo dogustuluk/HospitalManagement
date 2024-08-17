@@ -5,5 +5,6 @@ namespace HospitalManagement.Application.Abstractions.Services.Appointment
     public interface IAppointmentService
     {
         Task<OptResult<CreateAppointment_Dto>> CreateAppointmentAsync(CreateAppointment_Dto Model);
+        Task<List<Domain.Entities.Appointment.Appointment>> GetAllAppointment(Expression<Func<Domain.Entities.Appointment.Appointment, bool>>? predicate, string? include); 
     }
 }

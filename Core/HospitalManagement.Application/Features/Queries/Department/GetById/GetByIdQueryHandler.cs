@@ -14,9 +14,14 @@ namespace HospitalManagement.Application.Features.Queries.Department.GetById
 
         public async Task<OptResult<GetByIdQueryResponse>> Handle(GetByIdQueryRequest request, CancellationToken cancellationToken)
         {
-            var data = await _readRepository.GetByIdAsync(request.Id);
-            var mappedData = _mapper.Map<GetByIdQueryResponse>(data);
-            return await OptResult<GetByIdQueryResponse>.SuccessAsync(mappedData, Messages.Successfull);
+            return await ExceptionHandler.HandleOptResultAsync(async () =>
+            {
+                var data = await _readRepository.GetByIdAsync(request.Id);
+                var mappedData = _mapper.Map<GetByIdQueryResponse>(data);
+                if(mappedData != null)
+                    return await OptResult<GetByIdQueryResponse>.SuccessAsync(mappedData, Messages.Successfull);
+                return await OptResult<GetByIdQueryResponse>.FailureAsync(Messages.UnSuccessfull);
+            });
         }
     }
 }
