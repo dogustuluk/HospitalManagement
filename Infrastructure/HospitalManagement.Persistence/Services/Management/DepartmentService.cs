@@ -81,35 +81,12 @@ namespace HospitalManagement.Persistence.Services.Management
         }
 
         public async Task<OptResult<PaginatedList<Department>>> GetDataPagedForDepartment(GetAllPaged_Index_Dto model)
-        {//cache işleminde bug var, düzeltilecek.
-            string cacheKeyCurrentPage = $"departments_{model.PageIndex}";
-            string cacheKeyNextPage1 = $"departments_{model.PageIndex + 1}";
-            string cacheKeyNextPage2 = $"departments_{model.PageIndex + 2}";
+        {
+            var predicate = _departmentSpecifications.GetDataPagedListPredicate(model);
+            if (string.IsNullOrEmpty(model.OrderBy)) model.OrderBy = "DepartmentName ASC";
 
-            if (model.PageIndex > 3)
-            {
-                string cacheKeyOldPage1 = $"departments_{model.PageIndex - 2}";
-                string cacheKeyOldPage2 = $"departments_{model.PageIndex - 1}";
-                await _redisCacheService.DeleteAsync(cacheKeyOldPage1);
-                await _redisCacheService.DeleteAsync(cacheKeyOldPage2);
-            }
+            var pagedDepartments = await _redisCacheService.GetPaginatedListAsync("departments", model.PageIndex, async pageIndex => await _readRepository.GetDataPagedAsync(predicate, "", pageIndex, model.Take, model.OrderBy));
 
-            var pagedDepartments = await _redisCacheService.GetAsync<PaginatedList<Department>>(cacheKeyCurrentPage);
-
-            if (pagedDepartments == null)
-            {
-                var predicate = _departmentSpecifications.GetDataPagedListPredicate(model);
-                if (string.IsNullOrEmpty(model.OrderBy)) model.OrderBy = "DepartmentName ASC";
-
-                pagedDepartments = await _readRepository.GetDataPagedAsync(predicate, "", model.PageIndex, model.Take, model.OrderBy);
-                await _redisCacheService.SetAsync(cacheKeyCurrentPage, pagedDepartments);
-
-                var nextPage1 = await _readRepository.GetDataPagedAsync(predicate, "", model.PageIndex + 1, model.Take, model.OrderBy);
-                if (nextPage1.Data.Count > 0) await _redisCacheService.SetAsync(cacheKeyNextPage1, nextPage1);
-
-                var nextPage2 = await _readRepository.GetDataPagedAsync(predicate, "", model.PageIndex + 2, model.Take, model.OrderBy);
-                if (nextPage2.Data.Count > 0) await _redisCacheService.SetAsync(cacheKeyNextPage2, nextPage2);
-            }
             return await OptResult<PaginatedList<Department>>.SuccessAsync(pagedDepartments, Messages.Successfull);
         }
     }
