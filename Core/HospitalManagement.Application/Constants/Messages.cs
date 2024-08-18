@@ -15,6 +15,9 @@
         public static string DataExists = "Eklenmek istenen kayıt veya kaydın güncel hali daha önceden sisteme kayıt edilmiş";
         public static string DataNotFound = "Kayıt bulunamadı.";
         public static string UserNotFound = "Kulllanıcı bulunamadı";
+
+        public static string NullValue = "Parametre null!";
+        public static string NullData = "Data null!";
        
         public static string SuccessfullyAdded = "Kayıt ekleme işlemi başarıyla gerçekleştirildi.";
         public static string SuccessfullyUpdated = "Kayıt güncelleme işlemi başarıyla gerçekleştirildi.";

@@ -32,6 +32,7 @@
     <Folder Include="Abstractions\Storage\" />
     <Folder Include="Exceptions\Commands\" />
     <Folder Include="Exceptions\Queries\" />
+    <Folder Include="Features\Queries\Appointment\GetDataPagedListAppointment\" />
     <Folder Include="Repositories\HR\" />
     <Folder Include="Repositories\Commerce\" />
     <Folder Include="Repositories\Payment\" />

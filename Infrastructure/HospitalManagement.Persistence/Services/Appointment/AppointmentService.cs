@@ -5,9 +5,13 @@ using HospitalManagement.Application.Common.GenericObjects;
 using HospitalManagement.Application.Constants;
 using HospitalManagement.Application.Repositories.Appointment;
 using HospitalManagement.Application.Settings;
-using HospitalManagement.Domain.Entities.Appointment;
+using app = HospitalManagement.Domain.Entities.Appointment;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq.Expressions;
+using HospitalManagement.Domain.Entities.Appointment;
+using MediatR;
+using HospitalManagement.Domain.Entities.Management;
+using LinqKit;
 
 namespace HospitalManagement.Persistence.Services.Appointment
 {
@@ -47,10 +51,54 @@ namespace HospitalManagement.Persistence.Services.Appointment
 
         }
 
-        public async Task<List<Domain.Entities.Appointment.Appointment>> GetAllAppointment(Expression<Func<Domain.Entities.Appointment.Appointment, bool>>? predicate, string? include)
+        public async Task<List<app.Appointment>> GetAllAppointment(Expression<Func<app.Appointment, bool>>? predicate, string? include)
         {
             var appointments = await _readRepository.GetAllAsync(predicate, include);
             return appointments.ToList();
+        }
+
+        public async Task<OptResult<app.Appointment>> GetByIdOrGuid(object criteria)
+        {
+            if (criteria == null)
+                return await OptResult<app.Appointment>.FailureAsync(Messages.NullValue);
+
+            app.Appointment myAppointment = null;
+
+            if (criteria is Guid guid)
+                myAppointment = await _readRepository.GetByGuidAsync(guid);
+            else if (criteria is int id)
+                myAppointment = await _readRepository.GetByIdAsync(id);
+
+            if (myAppointment == null)
+                return await OptResult<app.Appointment>.FailureAsync(Messages.NullData);
+
+            return myAppointment switch
+            {
+                VisitorAppointment visitorAppointment => await OptResult<app.Appointment>.SuccessAsync(visitorAppointment),
+                ExaminationAppointment examinationAppointment => await OptResult<app.Appointment>.SuccessAsync(examinationAppointment),
+                _ => await OptResult<app.Appointment>.SuccessAsync(myAppointment)
+            };
+        }
+
+        public async Task<List<DataList1>> GetDataListAsync()
+        {
+            List<DataList1> returnDataList = new();
+            int currentYear = DateTime.Now.Year;
+            //var predicate1 = PredicateBuilder.New<app.Appointment>(a => a.AppointmentDate.Year == currentYear);
+
+            var datas = await _readRepository.GetDataAsync(a => a.Id > 0, "", 10000, "NameSurname ASC");
+            foreach (var data in datas)
+            {
+                returnDataList.Add(new DataList1() { Guid = "", Id = data.Id.ToString(), Name = data.NameSurname });
+            }
+            return returnDataList;
+        }
+
+        public async Task<string> GetValue(string? table, string column, string sqlQuery, int? dbType)
+        {
+            var data = await _readRepository.GetValueAsync("Appointments", column, sqlQuery, 1);
+            if (data != null) return data;
+            return null;
         }
     }
 }

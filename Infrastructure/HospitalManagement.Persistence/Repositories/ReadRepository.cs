@@ -209,7 +209,6 @@ namespace HospitalManagement.Persistence.Repositories
         {
             string sql;
 
-            // Determine the SQL query based on the database type
             if (dbType == 1) // postgreSql
             {
                 // PostgreSQL query
@@ -218,7 +217,7 @@ namespace HospitalManagement.Persistence.Repositories
             }
             else if (dbType == 2) //sql server
             {
-                // SQL Server query
+                // SQLServer query
                 sql = $"SELECT TOP 1 {column} as [Value] FROM {table} WHERE {sqlQuery}";
             }
             else

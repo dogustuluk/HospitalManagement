@@ -1,13 +1,15 @@
 ﻿using HospitalManagement.Application.Common.DTOs.Appointment;
 using HospitalManagement.Application.Features.Commands.Appointment.CreateAppointment;
 using HospitalManagement.Application.Features.Queries.Appointment.GetAllAppointment;
+using HospitalManagement.Application.Features.Queries.Appointment.GetByIdAppointment;
+using HospitalManagement.Application.Features.Queries.Appointment.GetDataListAppointment;
+using HospitalManagement.Application.Features.Queries.Appointment.GetValueAppointment;
 using HospitalManagement.Application.Features.Queries.Department.GetByEntity;
 using HospitalManagement.Application.Features.Queries.Department.GetByGuid;
 using HospitalManagement.Application.Features.Queries.Department.GetById;
 using HospitalManagement.Application.Features.Queries.Department.GetSingleEntity;
 using HospitalManagement.Application.Features.Queries.Department.GetValue;
 using HospitalManagement.Application.Utilities.Converters;
-using HospitalManagement.Domain.Entities.Appointment;
 
 namespace HospitalManagement.Application.Common.Mappings
 {
@@ -61,7 +63,18 @@ namespace HospitalManagement.Application.Common.Mappings
             CreateMap<CreateAppointmentCommandRequest, CreateAppointment_Dto>();
             CreateMap<CreateAppointment_Dto, CreateAppointmentCommandResponse>();
             CreateMap<Appointment, GetAllAppointmentQueryResponse>();
+            CreateMap<OptResult<Appointment>, GetByIdOrGuidAppointmentQueryResponse>().ReverseMap();
+            
+            CreateMap<Appointment, GetByIdOrGuidAppointmentQueryResponse>()
+            .Include<VisitorAppointment, GetByIdOrGuidVisitorAppointmentResponse>()
+            .Include<ExaminationAppointment, GetByIdOrGuidExaminationAppointmentResponse>();
+            CreateMap<VisitorAppointment, GetByIdOrGuidVisitorAppointmentResponse>();
+            CreateMap<ExaminationAppointment, GetByIdOrGuidExaminationAppointmentResponse>();
 
+            CreateMap<string, GetValueAppointmentQueryResponse>()
+                .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src));
+
+            CreateMap<DataList1, GetDataListAppointmentQueryResponse>();
             #endregion
         }
     }
