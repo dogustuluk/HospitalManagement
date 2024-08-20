@@ -189,10 +189,8 @@ namespace HospitalManagement.Persistence.Repositories
 
         public async Task<IQueryable<T>> GetSortedDataAsync(IQueryable<T> query, string orderBy)
         {
-            IQueryable<T> queryData = Table.AsQueryable();
-            queryData = queryData.OrderBy(orderBy);
-            if (queryData != null) return queryData;
-            else throw new NullReferenceException();
+            query = query.OrderBy(orderBy);
+            return query ?? throw new NullReferenceException();
         }
 
         public string? GetValue(string table, string column, string sqlQuery)

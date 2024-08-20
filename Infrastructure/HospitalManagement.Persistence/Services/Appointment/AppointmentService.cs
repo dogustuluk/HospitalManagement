@@ -12,6 +12,7 @@ using HospitalManagement.Domain.Entities.Appointment;
 using MediatR;
 using HospitalManagement.Domain.Entities.Management;
 using LinqKit;
+using HospitalManagement.Application.Common.Specifications;
 
 namespace HospitalManagement.Persistence.Services.Appointment
 {
@@ -21,12 +22,14 @@ namespace HospitalManagement.Persistence.Services.Appointment
         private readonly IAppointmentReadRepository _readRepository;
         private readonly IAppointmentWriteRepository _writeRepository;
         private readonly IMapper _mapper;
+        private readonly AppointmentSpecifications _appointmentSpecifications;
 
-        public AppointmentService(IAppointmentReadRepository readRepository, IAppointmentWriteRepository writeRepository, IMapper mapper)
+        public AppointmentService(IAppointmentReadRepository readRepository, IAppointmentWriteRepository writeRepository, IMapper mapper, AppointmentSpecifications appointmentSpecifications)
         {
             _readRepository = readRepository;
             _writeRepository = writeRepository;
             _mapper = mapper;
+            _appointmentSpecifications = appointmentSpecifications;
         }
 
         public async Task<OptResult<CreateAppointment_Dto>> CreateAppointmentAsync(CreateAppointment_Dto Model)
@@ -55,6 +58,12 @@ namespace HospitalManagement.Persistence.Services.Appointment
         {
             var appointments = await _readRepository.GetAllAsync(predicate, include);
             return appointments.ToList();
+        }
+
+        public Task<OptResult<PaginatedList<app.Appointment>>> GetAllPagedListAsync(GetAllPagedAppointment_Index_Dto model)
+        {
+            //var predicate = _appointmentSpecifications.(model);
+            return null;
         }
 
         public async Task<OptResult<app.Appointment>> GetByIdOrGuid(object criteria)

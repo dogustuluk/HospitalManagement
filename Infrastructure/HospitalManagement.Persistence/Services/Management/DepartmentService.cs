@@ -8,6 +8,7 @@ using HospitalManagement.Application.Repositories.Management;
 using HospitalManagement.Application.Settings;
 using HospitalManagement.Domain.Entities.Management;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
 
 namespace HospitalManagement.Persistence.Services.Management
@@ -87,11 +88,11 @@ namespace HospitalManagement.Persistence.Services.Management
 
             PaginatedList<Department> pagedDepartments;
 
-            if (_redisCacheService.IsConnected)
-                pagedDepartments = await _redisCacheService.GetPaginatedListAsync("departments", model.PageIndex, async pageIndex => await _readRepository.GetDataPagedAsync(predicate, "", pageIndex, model.Take, model.OrderBy));
-
-            else
+            if (!string.IsNullOrEmpty(model.SearchText) || model.OrderBy != "Id ASC" || model.ParentID != -99 || model.ManagerMemberID > 0 ||!_redisCacheService.IsConnected)
                 pagedDepartments = await _readRepository.GetDataPagedAsync(predicate, "", model.PageIndex, model.Take, model.OrderBy);
+            else
+                pagedDepartments = await _redisCacheService.GetPaginatedListAsync("departments", model.PageIndex, async pageIndex =>
+                   await _readRepository.GetDataPagedAsync(predicate, "", pageIndex, model.Take, model.OrderBy));
 
             return await OptResult<PaginatedList<Department>>.SuccessAsync(pagedDepartments, Messages.Successfull);
         }

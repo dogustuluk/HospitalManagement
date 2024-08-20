@@ -8,5 +8,6 @@
         Task DeleteAsync(string key);
         Task<bool> ExistsAsync(string key);
         Task<PaginatedList<T>> GetPaginatedListAsync<T>(string cachePrefixName, int pageIndex, Func<int, Task<PaginatedList<T>>> data) where T : class;
+        //string GetPredicateHash<T>(Expression<Func<T, bool>> predicate);
     }
 }

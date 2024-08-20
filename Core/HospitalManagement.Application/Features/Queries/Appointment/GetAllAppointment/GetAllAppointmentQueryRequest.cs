@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace HospitalManagement.Application.Features.Queries.Appointment.GetAllAppointment
+﻿namespace HospitalManagement.Application.Features.Queries.Appointment.GetAllAppointment
 {
     public class GetAllAppointmentQueryRequest : IRequest<OptResult<List<GetAllAppointmentQueryResponse>>>
     {

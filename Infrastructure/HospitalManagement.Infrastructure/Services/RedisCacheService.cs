@@ -2,6 +2,9 @@
 using Newtonsoft.Json;
 using HospitalManagement.Application.Abstractions.Caching;
 using HospitalManagement.Application.Common.GenericObjects;
+using System.Linq.Expressions;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace HospitalManagement.Infrastructure.Services
 {
@@ -72,7 +75,7 @@ namespace HospitalManagement.Infrastructure.Services
                     var pageData = await data(i);
                     if (pageData.Data.Count > 0)
                     {
-                        await SetAsync(pageKey, pageData, TimeSpan.FromHours(3));//2 saat
+                        await SetAsync(pageKey, pageData, TimeSpan.FromHours(3));
                     }
                 }
             }

@@ -2,17 +2,13 @@
 {
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommandRequest, OptResult<UpdateUserCommandResponse>>
     {
-        public readonly IUserService _userService;
         public readonly IAppUserReadRepository _appUserReadRepository;
         public readonly IAppUserWriteRepository _appUserWriteRepository;
         public readonly IMapper _mapper;
-        private readonly ICryptographyService _cryptoHelperService;
 
-        public UpdateUserCommandHandler(IUserService userService, IMapper mapper, ICryptographyService cryptoHelperService, IAppUserReadRepository appUserReadRepository, IAppUserWriteRepository appUserWriteRepository)
+        public UpdateUserCommandHandler(IMapper mapper, IAppUserReadRepository appUserReadRepository, IAppUserWriteRepository appUserWriteRepository)
         {
-            _userService = userService;
             _mapper = mapper;
-            _cryptoHelperService = cryptoHelperService;
             _appUserReadRepository = appUserReadRepository;
             _appUserWriteRepository = appUserWriteRepository;
         }
@@ -30,7 +26,6 @@
                 }
 
                 _mapper.Map(updatedUserDto, myUser);
-                //myUser.NameSurname = request.NameSurname;
                 var result = await _appUserWriteRepository.SaveChanges();
                 if (result > 0)
                 {

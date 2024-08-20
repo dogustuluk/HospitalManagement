@@ -1,5 +1,8 @@
 ﻿using HospitalManagement.Application.Common.DTOs.Appointment;
+using HospitalManagement.Application.Common.DTOs.Common;
 using HospitalManagement.Application.Features.Commands.Appointment.CreateAppointment;
+using HospitalManagement.Application.Features.Commands.Hospital.CreateHospital;
+using HospitalManagement.Application.Features.Commands.Hospital.UpdateHospital;
 using HospitalManagement.Application.Features.Queries.Appointment.GetAllAppointment;
 using HospitalManagement.Application.Features.Queries.Appointment.GetByIdAppointment;
 using HospitalManagement.Application.Features.Queries.Appointment.GetDataListAppointment;
@@ -9,7 +12,12 @@ using HospitalManagement.Application.Features.Queries.Department.GetByGuid;
 using HospitalManagement.Application.Features.Queries.Department.GetById;
 using HospitalManagement.Application.Features.Queries.Department.GetSingleEntity;
 using HospitalManagement.Application.Features.Queries.Department.GetValue;
+using HospitalManagement.Application.Features.Queries.Hospital.GetAllHospital;
+using HospitalManagement.Application.Features.Queries.Hospital.GetAllPagedHospital;
+using HospitalManagement.Application.Features.Queries.Hospital.GetByIdorGuidHospital;
+using HospitalManagement.Application.Features.Queries.Hospital.GetDataListHospital;
 using HospitalManagement.Application.Utilities.Converters;
+using HospitalManagement.Domain.Entities.Common;
 
 namespace HospitalManagement.Application.Common.Mappings
 {
@@ -75,6 +83,26 @@ namespace HospitalManagement.Application.Common.Mappings
                 .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src));
 
             CreateMap<DataList1, GetDataListAppointmentQueryResponse>();
+            #endregion
+
+            #region Hospital
+            CreateMap<Hospital, CreateHospital_Dto>().ReverseMap();
+            CreateMap<Hospital,CreateHospitalCommandResponse>();
+            CreateMap<CreateHospitalCommandRequest,CreateHospital_Dto>();
+
+            CreateMap<Hospital, GetAllHospitalQueryResponse>();
+            CreateMap<Hospital, GetByIdOrGuidHospitalQueryResponse>();
+            CreateMap<DataList1, GetDataListHospitalQueryResponse>();
+
+            CreateMap<Hospital, GetAllPagedHospitalQueryRequest>();
+            CreateMap<GetAllPagedHospitalQueryRequest, GetAllPagedHospital_Index_Dto>();
+            CreateMap<Hospital, GetAllPagedHospitalQueryResponse>();
+
+
+            CreateMap<UpdateHospitalCommandRequest, UpdateHospital_Dto>();
+            CreateMap<Hospital, UpdateHospitalCommandResponse>();
+            CreateMap<Hospital, UpdateHospital_Dto>().ReverseMap();
+
             #endregion
         }
     }

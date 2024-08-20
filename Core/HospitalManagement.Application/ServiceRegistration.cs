@@ -1,4 +1,7 @@
-﻿namespace HospitalManagement.Application
+﻿using HospitalManagement.Application.Common.Specifications;
+using HospitalManagement.Domain.Entities.Management;
+
+namespace HospitalManagement.Application
 {
     public static class ServiceRegistration
     {
@@ -12,6 +15,8 @@
             serviceCollection.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             //otomatize et -->
+           // serviceCollection.AddScoped<GenericSpecification<Department>>();
+            serviceCollection.AddScoped<HospitalSpecifications>();
             serviceCollection.AddScoped<AppointmentSpecifications>();
             serviceCollection.AddScoped<DepartmentSpecifications>();
             serviceCollection.AddScoped<UserRegistrationStrategyFactoryService>();
