@@ -1,5 +1,6 @@
 ﻿using HospitalManagement.Application.Common.Specifications;
 using HospitalManagement.Domain.Entities.Management;
+using Microsoft.Extensions.Hosting;
 
 namespace HospitalManagement.Application
 {
@@ -15,7 +16,8 @@ namespace HospitalManagement.Application
             serviceCollection.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             //otomatize et -->
-           // serviceCollection.AddScoped<GenericSpecification<Department>>();
+            // serviceCollection.AddScoped<GenericSpecification<Department>>();
+            serviceCollection.AddSingleton<IHostedService, CityCacheHostedService>();
             serviceCollection.AddScoped<AnnouncementSpecifications>();
             serviceCollection.AddScoped<HospitalSpecifications>();
             serviceCollection.AddScoped<AppointmentSpecifications>();

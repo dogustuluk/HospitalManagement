@@ -7,7 +7,6 @@ using HospitalManagement.Application.Common.Specifications;
 using HospitalManagement.Application.Constants;
 using HospitalManagement.Application.Repositories.Management;
 using HospitalManagement.Application.Settings;
-using HospitalManagement.Domain.Entities.Common;
 using HospitalManagement.Domain.Entities.Management;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -97,6 +96,13 @@ namespace HospitalManagement.Persistence.Services.Management
         {
             var datas = await _readRepository.GetAllAsync(predicate, include);
             return await datas.ToListAsync();
+        }
+
+        public async Task<string> GetValue(string? table, string column, string sqlQuery, int? dbType)
+        {
+            var data = await _readRepository.GetValueAsync("Announcements", column, sqlQuery, 1);
+            if (data != null) return data;
+            return Messages.NullData;
         }
     }
 }

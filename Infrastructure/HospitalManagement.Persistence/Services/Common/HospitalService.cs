@@ -109,6 +109,11 @@ namespace HospitalManagement.Persistence.Services.Common
             return returnDataList;
         }
 
-
+        public async Task<string> GetValue(string? table, string column, string sqlQuery, int? dbType)
+        {
+            var data = await _readRepository.GetValueAsync("Hospitals", column, sqlQuery, 1);
+            if (data != null) return data;
+            return Messages.NullData;
+        }
     }
 }

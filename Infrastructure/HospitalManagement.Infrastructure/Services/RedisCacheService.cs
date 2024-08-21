@@ -1,10 +1,7 @@
-﻿using StackExchange.Redis;
-using Newtonsoft.Json;
-using HospitalManagement.Application.Abstractions.Caching;
+﻿using HospitalManagement.Application.Abstractions.Caching;
 using HospitalManagement.Application.Common.GenericObjects;
-using System.Linq.Expressions;
-using System.Security.Cryptography;
-using System.Text;
+using Newtonsoft.Json;
+using StackExchange.Redis;
 
 namespace HospitalManagement.Infrastructure.Services
 {
@@ -81,6 +78,15 @@ namespace HospitalManagement.Infrastructure.Services
             }
             string currentPageKey = $"{cachePrefixName}_{pageIndex}";
             return await GetAsync<PaginatedList<T>>(currentPageKey);
+        }
+
+        public async Task<List<T>> GetDataListAsync<T>(string cacheName)
+        {
+            var cachedData = await GetAsync<List<T>>(cacheName);
+            if (cachedData != null)
+                return cachedData;
+
+            return null;
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using HospitalManagement.Application.Common.GenericObjects;
+using HospitalManagement.Application.Features.Commands.Announcement.UpdateAnnouncement;
 using HospitalManagement.Application.Features.Commands.Department.CreateDepartment;
+using HospitalManagement.Application.Features.Commands.Department.UpdateDepartment;
 using HospitalManagement.Application.Features.Queries.Department.GetAllDepartment;
 using HospitalManagement.Application.Features.Queries.Department.GetByEntity;
 using HospitalManagement.Application.Features.Queries.Department.GetByGuid;
@@ -88,6 +90,13 @@ namespace HospitalManagement.API.Controllers
         public async Task<IActionResult> Create(CreateDepartmentCommandRequest request)
         {
             OptResult<CreateDepartmentCommandResponse> response = await _mediator.Send(request);
+            return Ok(response);
+        }
+        [HttpPut]
+        [Route("UpdateDepartment")]
+        public async Task<IActionResult> UpdateDepartment(UpdateDepartmentCommandRequest request)
+        {
+            OptResult<UpdateDepartmentCommandResponse> response = await _mediator.Send(request);
             return Ok(response);
         }
     }

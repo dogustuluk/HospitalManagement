@@ -1,6 +1,8 @@
-﻿namespace HospitalManagement.Domain.Entities.Medical
+﻿using HospitalManagement.Application.Common.DTOs.Medical;
+
+namespace HospitalManagement.Application.Features.Commands.Medicine.CreateMedicine
 {
-    public class Medicine : BaseEntity
+    public class CreateMedicineCommandResponse
     {
         public string Name { get; set; }
         public string? Desc { get; set; }
@@ -12,8 +14,6 @@
         public DateTime ExpiryDate { get; set; }
         public int Stock { get; set; }
 
-        public int MedicineDetailId { get; set; }
-
-        public virtual MedicineDetail? MedicineDetail { get; set; }
+        public Create_MedicineDetail_Dto MedicineDetail { get; set; }
     }
 }

@@ -70,5 +70,12 @@ namespace HospitalManagement.Persistence.Repositories
 
         public Task<int> SaveChanges(CancellationToken cancellationToken = default)
             => _context.SaveChangesAsync(cancellationToken);
+
+        public async Task<T> AddAsyncReturnEntity(T model)
+        {
+            EntityEntry<T> entityEntry = await Table.AddAsync(model);
+            await SaveChanges();
+            return entityEntry.Entity;
+        }
     }
 }

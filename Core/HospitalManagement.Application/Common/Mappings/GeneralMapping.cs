@@ -1,15 +1,21 @@
 ﻿using HospitalManagement.Application.Common.DTOs.Appointment;
 using HospitalManagement.Application.Common.DTOs.Common;
+using HospitalManagement.Application.Common.DTOs.Medical;
 using HospitalManagement.Application.Features.Commands.Announcement.CrearteAnnouncement;
 using HospitalManagement.Application.Features.Commands.Announcement.UpdateAnnouncement;
 using HospitalManagement.Application.Features.Commands.Appointment.CreateAppointment;
+using HospitalManagement.Application.Features.Commands.Department.UpdateDepartment;
 using HospitalManagement.Application.Features.Commands.Hospital.CreateHospital;
 using HospitalManagement.Application.Features.Commands.Hospital.UpdateHospital;
+using HospitalManagement.Application.Features.Commands.Medicine.CreateMedicine;
 using HospitalManagement.Application.Features.Queries.Announcement.GetAllPagedAnnouncement;
+using HospitalManagement.Application.Features.Queries.Announcement.GetByIdorGuidAnnouncement;
+using HospitalManagement.Application.Features.Queries.Announcement.GetValueAnnouncement;
 using HospitalManagement.Application.Features.Queries.Appointment.GetAllAppointment;
 using HospitalManagement.Application.Features.Queries.Appointment.GetByIdAppointment;
 using HospitalManagement.Application.Features.Queries.Appointment.GetDataListAppointment;
 using HospitalManagement.Application.Features.Queries.Appointment.GetValueAppointment;
+using HospitalManagement.Application.Features.Queries.Citiy.GetDataListCity;
 using HospitalManagement.Application.Features.Queries.Department.GetByEntity;
 using HospitalManagement.Application.Features.Queries.Department.GetByGuid;
 using HospitalManagement.Application.Features.Queries.Department.GetById;
@@ -19,8 +25,8 @@ using HospitalManagement.Application.Features.Queries.Hospital.GetAllHospital;
 using HospitalManagement.Application.Features.Queries.Hospital.GetAllPagedHospital;
 using HospitalManagement.Application.Features.Queries.Hospital.GetByIdorGuidHospital;
 using HospitalManagement.Application.Features.Queries.Hospital.GetDataListHospital;
+using HospitalManagement.Application.Features.Queries.Hospital.GetValueHospital;
 using HospitalManagement.Application.Utilities.Converters;
-using HospitalManagement.Domain.Entities.Common;
 
 namespace HospitalManagement.Application.Common.Mappings
 {
@@ -106,6 +112,8 @@ namespace HospitalManagement.Application.Common.Mappings
             CreateMap<Hospital, UpdateHospitalCommandResponse>();
             CreateMap<Hospital, UpdateHospital_Dto>().ReverseMap();
 
+            CreateMap<string, GetValueHospitalQueryResponse>()
+                .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src));
             #endregion
 
             #region ANNOUNCEMENT
@@ -120,6 +128,42 @@ namespace HospitalManagement.Application.Common.Mappings
             CreateMap<Announcement, Update_Announcemnet_Dto>().ReverseMap();
             CreateMap<UpdateAnnouncementCommandRequest, Update_Announcemnet_Dto>();
             CreateMap<Announcement, UpdateAnnouncementCommandResponse>();
+            
+            CreateMap<Announcement, GetByIdOrGuidAnnouncementQueryResponse>();
+
+            CreateMap<string, GetValueAnnouncementQueryResponse>()
+                .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src));
+
+            CreateMap<UpdateDepartmentCommandRequest,Update_Department_Dto>();
+            CreateMap<Department,UpdateDepartmentCommandResponse>();
+            CreateMap<Update_Department_Dto,Department>().ReverseMap();
+            #endregion
+
+            #region CITIES
+            CreateMap<DataList1, GetDataListCityQueryResponse>();
+
+            #endregion
+
+            #region MEDICINE
+            CreateMap<Create_Medicine_Dto, Medicine>()
+           .ForMember(dest => dest.MedicineDetail, opt => opt.MapFrom(src => src.MedicineDetail))
+           .ReverseMap();
+
+            CreateMap<Create_MedicineDetail_Dto, MedicineDetail>()
+                .ReverseMap();
+
+            CreateMap<CreateMedicineCommandRequest, Create_Medicine_Dto>()
+                .ForMember(dest => dest.MedicineDetail, opt => opt.MapFrom(src => src.MedicineDetail))
+                .ReverseMap();
+
+            CreateMap<Medicine, CreateMedicineCommandResponse>()
+                .ForMember(dest => dest.MedicineDetail, opt => opt.MapFrom(src => src.MedicineDetail))
+                .ReverseMap();
+
+            CreateMap<OptResult<Medicine>, CreateMedicineCommandResponse>()
+                .ForMember(dest => dest.MedicineDetail, opt => opt.MapFrom(src => src.Data.MedicineDetail))
+                .ReverseMap();
+
             #endregion
         }
     }

@@ -2,11 +2,13 @@
 using HospitalManagement.Application.Common.GenericObjects;
 using HospitalManagement.Application.Features.Commands.Hospital.CreateHospital;
 using HospitalManagement.Application.Features.Commands.Hospital.UpdateHospital;
+using HospitalManagement.Application.Features.Queries.Announcement.GetValueAnnouncement;
 using HospitalManagement.Application.Features.Queries.Department.GetDataPagedList;
 using HospitalManagement.Application.Features.Queries.Hospital.GetAllHospital;
 using HospitalManagement.Application.Features.Queries.Hospital.GetAllPagedHospital;
 using HospitalManagement.Application.Features.Queries.Hospital.GetByIdorGuidHospital;
 using HospitalManagement.Application.Features.Queries.Hospital.GetDataListHospital;
+using HospitalManagement.Application.Features.Queries.Hospital.GetValueHospital;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -65,6 +67,13 @@ namespace HospitalManagement.API.Controllers
         {
             OptResult<PaginatedList<GetAllPagedHospitalQueryResponse>> responsePaginatedData = await _mediator.Send(request);
             return Ok(responsePaginatedData);
+        }
+        [HttpGet]
+        [Route("GetValueHospital")]
+        public async Task<IActionResult> GetValueHospital([FromQuery] GetValueHospitalQueryRequest request)
+        {
+            OptResult<GetValueHospitalQueryResponse> response = await _mediator.Send(request);
+            return Ok(response);
         }
     }
 }

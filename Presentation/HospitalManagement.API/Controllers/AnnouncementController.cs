@@ -3,6 +3,8 @@ using HospitalManagement.Application.Features.Commands.Announcement.CrearteAnnou
 using HospitalManagement.Application.Features.Commands.Announcement.UpdateAnnouncement;
 using HospitalManagement.Application.Features.Queries.Announcement.GetAllAnnouncement;
 using HospitalManagement.Application.Features.Queries.Announcement.GetAllPagedAnnouncement;
+using HospitalManagement.Application.Features.Queries.Announcement.GetByIdorGuidAnnouncement;
+using HospitalManagement.Application.Features.Queries.Announcement.GetValueAnnouncement;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -45,6 +47,20 @@ namespace HospitalManagement.API.Controllers
         public async Task<IActionResult> GetAllPagedAnnouncement([FromQuery]GetAllPagedAnnouncementQueryRequest request)
         {
             OptResult<PaginatedList<GetAllPagedAnnouncementQueryResponse>> response = await _mediator.Send(request);
+            return Ok(response);
+        }
+        [HttpGet]
+        [Route("GetByIdOrGuidAnnouncement")]
+        public async Task<IActionResult> GetByIdOrGuidAnnouncement([FromQuery] GetByIdOrGuidAnnouncementQueryRequest request)
+        {
+            OptResult<GetByIdOrGuidAnnouncementQueryResponse> response = await _mediator.Send(request);
+            return Ok(response);
+        }
+        [HttpGet]
+        [Route("GetValueAnnouncement")]
+        public async Task<IActionResult> GetValueAnnouncement([FromQuery] GetValueAnnouncementQueryRequest request)
+        {
+            OptResult<GetValueAnnouncementQueryResponse> response = await _mediator.Send(request);
             return Ok(response);
         }
     }

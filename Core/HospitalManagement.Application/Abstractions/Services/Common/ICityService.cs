@@ -2,5 +2,6 @@
 {
     public interface ICityService
     {
+        Task<List<DataList1>> GetDataListAsync();
     }
 }

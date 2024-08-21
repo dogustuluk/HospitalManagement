@@ -10,5 +10,6 @@ namespace HospitalManagement.Application.Abstractions.Services.Common
         Task<List<DataList1>> GetDataListAsync();
         Task<OptResult<Hospital>> GetByIdOrGuid(object criteria);
         Task<OptResult<PaginatedList<Hospital>>> GetAllPagedListAsync(GetAllPagedHospital_Index_Dto model);
+        Task<string> GetValue(string? table, string column, string sqlQuery, int? dbType);
     }
 }

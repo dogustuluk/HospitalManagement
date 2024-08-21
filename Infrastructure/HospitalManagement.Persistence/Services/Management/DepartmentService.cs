@@ -1,6 +1,8 @@
-﻿using HospitalManagement.Application.Abstractions.Caching;
+﻿using AutoMapper;
+using HospitalManagement.Application.Abstractions.Caching;
 using HospitalManagement.Application.Abstractions.Services.Management;
 using HospitalManagement.Application.Common.DTOs.Management;
+using HospitalManagement.Application.Common.Extensions;
 using HospitalManagement.Application.Common.GenericObjects;
 using HospitalManagement.Application.Common.Specifications;
 using HospitalManagement.Application.Constants;
@@ -20,13 +22,15 @@ namespace HospitalManagement.Persistence.Services.Management
         private readonly IDepartmentWriteRepository _writeRepository;
         private readonly DepartmentSpecifications _departmentSpecifications;
         private readonly IRedisCacheService _redisCacheService;
+        private readonly IMapper _mapper;
 
-        public DepartmentService(IDepartmentReadRepository readRepository, IDepartmentWriteRepository writeRepository, DepartmentSpecifications departmentSpecifications, IRedisCacheService redisCacheService)
+        public DepartmentService(IDepartmentReadRepository readRepository, IDepartmentWriteRepository writeRepository, DepartmentSpecifications departmentSpecifications, IRedisCacheService redisCacheService, IMapper mapper)
         {
             _readRepository = readRepository;
             _writeRepository = writeRepository;
             _departmentSpecifications = departmentSpecifications;
             _redisCacheService = redisCacheService;
+            _mapper = mapper;
         }
 
         public async Task<OptResult<Create_Department_Dto>> CreateDepartment(Create_Department_Dto create_Department)
@@ -95,6 +99,26 @@ namespace HospitalManagement.Persistence.Services.Management
                    await _readRepository.GetDataPagedAsync(predicate, "", pageIndex, model.Take, model.OrderBy));
 
             return await OptResult<PaginatedList<Department>>.SuccessAsync(pagedDepartments, Messages.Successfull);
+        }
+
+        public async Task<OptResult<Department>> UpdateDepartmentAsync(Update_Department_Dto model)
+        {
+            return await ExceptionHandler.HandleOptResultAsync(async () =>
+            {
+                Department myDepartment = await _readRepository.GetByGuidAsync(model.Guid);
+                if (myDepartment == null) return await OptResult<Department>.FailureAsync(Messages.NullData);
+                
+                Department mappedDepartment = _mapper.Map(model, myDepartment);
+                mappedDepartment.UpdatedDate = DateTime.UtcNow;
+                mappedDepartment.UpdatedUser = Guid.NewGuid();//test
+
+                var updatedDepartment = _writeRepository.Update(mappedDepartment);
+                var result = await _writeRepository.SaveChanges();
+                if (result > 0)
+                    return await OptResult<Department>.SuccessAsync(mappedDepartment, Messages.SuccessfullyUpdated);
+                
+                return await OptResult<Department>.FailureAsync(Messages.UnSuccessfull);
+            });
         }
     }
 }

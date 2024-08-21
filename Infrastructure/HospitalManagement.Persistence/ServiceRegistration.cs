@@ -36,7 +36,8 @@ namespace HospitalManagement.Persistence
             using (var scope = serviceProvider.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<HospitalManagementDbContext>();
-                SeedDataHelper.SeedDepartments(dbContext);
+              //  SeedDataHelper.SeedDepartments(dbContext);
+              //  SeedDataHelper.SeedCities(dbContext);
             }
         }
 

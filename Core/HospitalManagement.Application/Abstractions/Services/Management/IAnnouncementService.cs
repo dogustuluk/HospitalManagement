@@ -7,5 +7,6 @@
         Task<OptResult<Announcement>> GetByIdOrGuid(object criteria);
         Task<List<Announcement>> GetAllAnnouncementAsync(Expression<Func<Announcement, bool>>? predicate, string? include);
         Task<OptResult<PaginatedList<Announcement>>> GetAllPagedAnnouncementAsync(GetAllPaged_Announcement_Dto model);
+        Task<string> GetValue(string? table, string column, string sqlQuery, int? dbType);
     }
 }

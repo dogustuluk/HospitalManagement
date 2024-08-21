@@ -1,4 +1,5 @@
-﻿using HospitalManagement.Domain.Entities.Management;
+﻿using HospitalManagement.Domain.Entities.Common;
+using HospitalManagement.Domain.Entities.Management;
 using HospitalManagement.Persistence.Context;
 
 namespace HospitalManagement.Domain
@@ -18,6 +19,26 @@ namespace HospitalManagement.Domain
             "Romatoloji", "Ortopedi ve Travmatoloji", "Üreme Endokrinolojisi", "Kadın Ürolojisi",
             "Hepatoloji", "Nefroloji", "Perinatoloji", "Psikiyatrik Rehberlik", "Tıbbi Genetik",
             "Adli Tıp", "Fertilite ve İnfertilite", "Onkolojik Cerrahi", "Moleküler Patoloji"
+        };
+        private static readonly string[] CityNames =
+        {
+            "ADANA", "ADIYAMAN", "AFYONKARAHİSAR", "Ağrı", "Amasya",
+            "Ankara", "Antalya", "Artvin", "Aydın", "Balıkesir",
+            "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur",
+            "Bursa", "Çanakkale", "Çankırı", "Çorum", "Denizli",
+            "Diyarbakır", "Edirne", "Elazığ", "Erzincan", "Erzurum",
+            "Eskişehir", "Gaziantep", "Giresun", "Gümüşhane", "Hakkari",
+            "Hatay", "Isparta", "Mersin", "İstanbul", "İzmir",
+            "Kars", "Kastamonu", "Kayseri", "Kırklareli", "Kırşehir",
+            "Kocaeli", "Konya", "Kütahya", "Malatya", "Manisa",
+            "Kahramanmaraş", "Mardin", "Muğla", "Muş", "Nevşehir",
+            "Niğde", "Ordu", "Rize", "Sakarya", "Samsun",
+            "Siirt", "Sinop", "Sivas", "Tekirdağ", "Tokat",
+            "Trabzon", "Tunceli", "Şanlıurfa", "Uşak", "Van",
+            "Yozgat", "Zonguldak", "Aksaray", "Bayburt", "Karaman",
+            "Kırıkkale", "Batman", "Şırnak", "Bartın", "Ardahan",
+            "Iğdır", "Yalova", "Karabük", "Kilis", "Osmaniye",
+            "Düzce"
         };
 
         private static string GenerateDepartmentCode(string departmentName)
@@ -62,6 +83,36 @@ namespace HospitalManagement.Domain
                 }
 
                 context.Departments.AddRange(departments);
+                context.SaveChanges();
+            }
+        }
+        public static void SeedCities(HospitalManagementDbContext context)
+        {
+            if (!context.Cities.Any())
+            {
+                var Cities = new List<City>();
+
+                foreach (var cityName in CityNames)
+                {
+                    var GUIDuser = Guid.NewGuid();
+                    var cityIndex = Array.IndexOf(CityNames, cityName);
+                    var city = new City
+                    {
+                        CityName = cityName,
+                        CountryID = 1,
+                        SortOrderNo = 10 * cityIndex,
+                        isActive = true,
+                        CreatedDate = DateTime.UtcNow,
+                        UpdatedDate = DateTime.UtcNow,
+                        Guid = Guid.NewGuid(),
+                        CreatedUser = GUIDuser,
+                        UpdatedUser = GUIDuser
+                    };
+
+                    Cities.Add(city);
+                }
+
+                context.Cities.AddRange(Cities);
                 context.SaveChanges();
             }
         }
