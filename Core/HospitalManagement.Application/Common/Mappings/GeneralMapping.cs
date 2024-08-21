@@ -1,8 +1,11 @@
 ﻿using HospitalManagement.Application.Common.DTOs.Appointment;
 using HospitalManagement.Application.Common.DTOs.Common;
+using HospitalManagement.Application.Features.Commands.Announcement.CrearteAnnouncement;
+using HospitalManagement.Application.Features.Commands.Announcement.UpdateAnnouncement;
 using HospitalManagement.Application.Features.Commands.Appointment.CreateAppointment;
 using HospitalManagement.Application.Features.Commands.Hospital.CreateHospital;
 using HospitalManagement.Application.Features.Commands.Hospital.UpdateHospital;
+using HospitalManagement.Application.Features.Queries.Announcement.GetAllPagedAnnouncement;
 using HospitalManagement.Application.Features.Queries.Appointment.GetAllAppointment;
 using HospitalManagement.Application.Features.Queries.Appointment.GetByIdAppointment;
 using HospitalManagement.Application.Features.Queries.Appointment.GetDataListAppointment;
@@ -37,7 +40,7 @@ namespace HospitalManagement.Application.Common.Mappings
             CreateMap<UpdateUser_Dto, AppUser>().ReverseMap();
             #endregion
 
-            #region Department
+            #region DEPARTMENT
             CreateMap<Department, GetAllDepartmentQueryResponse>();
             
             CreateMap<Department, GetDataPagedListQueryResponse>();
@@ -54,7 +57,7 @@ namespace HospitalManagement.Application.Common.Mappings
             CreateMap<CreateDepartmentCommandRequest, Create_Department_Dto>();
             #endregion
 
-            #region Appointment
+            #region APPOINTMENT
             CreateMap<CreateAppointment_Dto, VisitorAppointment>()
             .ForMember(dest => dest.PatientId, opt => opt.MapFrom(src => src.PatientId))
             .ForMember(dest => dest.RoomId, opt => opt.MapFrom(src => src.RoomId))
@@ -85,7 +88,7 @@ namespace HospitalManagement.Application.Common.Mappings
             CreateMap<DataList1, GetDataListAppointmentQueryResponse>();
             #endregion
 
-            #region Hospital
+            #region HOSPITAL
             CreateMap<Hospital, CreateHospital_Dto>().ReverseMap();
             CreateMap<Hospital,CreateHospitalCommandResponse>();
             CreateMap<CreateHospitalCommandRequest,CreateHospital_Dto>();
@@ -103,6 +106,20 @@ namespace HospitalManagement.Application.Common.Mappings
             CreateMap<Hospital, UpdateHospitalCommandResponse>();
             CreateMap<Hospital, UpdateHospital_Dto>().ReverseMap();
 
+            #endregion
+
+            #region ANNOUNCEMENT
+            CreateMap<CreateAnnouncementCommandRequest, Create_Announcemnet_Dto>();
+            CreateMap<Announcement, Create_Announcemnet_Dto>().ReverseMap();
+            CreateMap<Announcement, CreateAnnouncementCommandResponse>();
+            
+            
+            CreateMap<GetAllPagedAnnouncementQueryRequest, GetAllPaged_Announcement_Dto>();
+            CreateMap<Announcement, GetAllPagedAnnouncementQueryResponse>();
+
+            CreateMap<Announcement, Update_Announcemnet_Dto>().ReverseMap();
+            CreateMap<UpdateAnnouncementCommandRequest, Update_Announcemnet_Dto>();
+            CreateMap<Announcement, UpdateAnnouncementCommandResponse>();
             #endregion
         }
     }

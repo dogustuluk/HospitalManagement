@@ -1,13 +1,6 @@
-﻿using HospitalManagement.Domain.Entities.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HospitalManagement.Domain.Entities.Management
+﻿namespace HospitalManagement.Application.Features.Commands.Announcement.CrearteAnnouncement
 {
-    public class Announcement : BaseEntity
+    public class CreateAnnouncementCommandRequest : IRequest<OptResult<CreateAnnouncementCommandResponse>>
     {
         public string UserTypeIds { get; set; }
         public string AnnouncementTitle { get; set; }

@@ -1,8 +1,4 @@
-﻿using HospitalManagement.Application.Features.Queries.Appointment.GetAllAppointment;
-using HospitalManagement.Domain.Entities.Appointment;
-using Microsoft.IdentityModel.Tokens;
-
-namespace HospitalManagement.Application.Features.Queries.Hospital.GetAllHospital
+﻿namespace HospitalManagement.Application.Features.Queries.Hospital.GetAllHospital
 {
     public class GetAllHospitalQueryHandler : IRequestHandler<GetAllHospitalQueryRequest, OptResult<List<GetAllHospitalQueryResponse>>>
     {

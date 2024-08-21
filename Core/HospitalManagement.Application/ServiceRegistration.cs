@@ -16,6 +16,7 @@ namespace HospitalManagement.Application
 
             //otomatize et -->
            // serviceCollection.AddScoped<GenericSpecification<Department>>();
+            serviceCollection.AddScoped<AnnouncementSpecifications>();
             serviceCollection.AddScoped<HospitalSpecifications>();
             serviceCollection.AddScoped<AppointmentSpecifications>();
             serviceCollection.AddScoped<DepartmentSpecifications>();

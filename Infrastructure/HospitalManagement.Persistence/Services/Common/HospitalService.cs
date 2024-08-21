@@ -50,34 +50,21 @@ namespace HospitalManagement.Persistence.Services.Common
                 mappedModel.UpdatedUser = Guid.NewGuid(); //test
 
                 var updatedModel = _writeRepository.Update(mappedModel);
-                if (updatedModel == null) 
+                if (updatedModel == null)
                     return await OptResult<Hospital>.FailureAsync(Messages.UnSuccessfull);
 
-                try
-                {
-                    var result = await _writeRepository.SaveChanges();
-                    if (result > 0)
-                        return await OptResult<Hospital>.SuccessAsync(mappedModel);
-                    else
-                        return await OptResult<Hospital>.FailureAsync(Messages.UnSuccessfull);
-                }
-                catch (Exception ex)
-                {
-                    return await OptResult<Hospital>.FailureAsync(ex.Message);
-                }
 
-                //var result = await _writeRepository.SaveChanges();
-                //if(result > 0)
-                //    return await OptResult<Hospital>.SuccessAsync(mappedModel);
-                //else
-                //    return await OptResult<Hospital>.FailureAsync(Messages.UnSuccessfull);
+                var result = await _writeRepository.SaveChanges();
+                if (result > 0)
+                    return await OptResult<Hospital>.SuccessAsync(mappedModel);
+                else
+                    return await OptResult<Hospital>.FailureAsync(Messages.UnSuccessfull);
             });
         }
         public async Task<List<Hospital>> GetAllHospital(Expression<Func<Hospital, bool>>? predicate, string? include)
         {
             var hospitals = await _readRepository.GetAllAsync(predicate, include);
             return await hospitals.ToListAsync();
-
         }
 
         public async Task<OptResult<PaginatedList<Hospital>>> GetAllPagedListAsync(GetAllPagedHospital_Index_Dto model)
@@ -86,9 +73,9 @@ namespace HospitalManagement.Persistence.Services.Common
             if (string.IsNullOrEmpty(model.OrderBy)) model.OrderBy = "HospitalName ASC";
 
             PaginatedList<Hospital> pagedDepartments;
-            
+
             pagedDepartments = await _readRepository.GetDataPagedAsync(predicate, "", model.PageIndex, model.Take, model.OrderBy);
-            
+
             return await OptResult<PaginatedList<Hospital>>.SuccessAsync(pagedDepartments, Messages.Successfull);
         }
 
@@ -122,6 +109,6 @@ namespace HospitalManagement.Persistence.Services.Common
             return returnDataList;
         }
 
-        
+
     }
 }

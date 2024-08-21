@@ -82,13 +82,11 @@ namespace HospitalManagement.Persistence.Repositories
             T entity = null;
 
             if (int.TryParse(value.ToString(), out int id))
-            {
                 entity = await Table.FirstOrDefaultAsync(x => x.Id == id);
-            }
+            
             else if (Guid.TryParse(value.ToString(), out Guid guid))
-            {
                 entity = await Table.FirstOrDefaultAsync(x => x.Guid == guid);
-            }
+            
             else if (!string.IsNullOrEmpty(fieldName))
             {
                 var parameter = Expression.Parameter(typeof(T), "x");
@@ -102,13 +100,11 @@ namespace HospitalManagement.Persistence.Repositories
             }
 
             if (entity != null)
-            {
                 return entity;
-            }
+            
             else
-            {
                 throw new ArgumentNullException($"{fieldName ?? "Belirtilen değer"} bulunamadı");
-            }
+            
         }
 
         public async Task<IQueryable<T>> GetDataAsync(Expression<Func<T, bool>> predicate, string? include, int take, string orderBy)

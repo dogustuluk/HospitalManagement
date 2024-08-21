@@ -134,7 +134,7 @@
 
         #region Success 
 
-        public static Task<OptResult<T>> SuccessAsync(List<Features.Queries.Appointment.GetDataListAppointment.GetDataListAppointmentQueryRequest> response)
+        public static Task<OptResult<T>> SuccessAsync(List<Features.Queries.Announcement.GetAllAnnouncement.GetAllAnnouncementQueryResponse> response1, List<Features.Queries.Appointment.GetDataListAppointment.GetDataListAppointmentQueryRequest> response)
         {
             return Task.FromResult(Success());
         }

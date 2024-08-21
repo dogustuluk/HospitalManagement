@@ -18,6 +18,8 @@ namespace HospitalManagement.Application.Common.Specifications
         {
             var predicate1 = PredicateBuilder.New<Hospital>(true);
 
+            if (!string.IsNullOrEmpty(hospitalRequestParameters.SearchText))
+                predicate1 = predicate1.And(a => a.HospitalName.Contains(hospitalRequestParameters.SearchText));
 
             return predicate1;
         }
