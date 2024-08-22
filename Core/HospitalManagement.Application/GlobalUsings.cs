@@ -48,7 +48,7 @@ global using HospitalManagement.Application.Repositories.Common;
 global using HospitalManagement.Application.Repositories.Management;
 global using HospitalManagement.Application.Repositories.Medical;
 global using HospitalManagement.Application.Services;
-global using HospitalManagement.Application.Settings;
+global using HospitalManagement.Application.Attributes;
 global using HospitalManagement.Application.Utilities.Security.Encryption;
 global using HospitalManagement.Application.Utilities.Security.JWT;
 

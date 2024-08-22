@@ -1,6 +1,6 @@
 ﻿using HospitalManagement.Application.Abstractions.Services.Appointment;
 using HospitalManagement.Application.Repositories.Appointment;
-using HospitalManagement.Application.Settings;
+using HospitalManagement.Application.Attributes;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HospitalManagement.Persistence.Services.Appointment

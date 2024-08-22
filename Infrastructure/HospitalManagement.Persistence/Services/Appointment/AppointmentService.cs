@@ -4,7 +4,7 @@ using HospitalManagement.Application.Common.DTOs.Appointment;
 using HospitalManagement.Application.Common.GenericObjects;
 using HospitalManagement.Application.Constants;
 using HospitalManagement.Application.Repositories.Appointment;
-using HospitalManagement.Application.Settings;
+using HospitalManagement.Application.Attributes;
 using app = HospitalManagement.Domain.Entities.Appointment;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq.Expressions;

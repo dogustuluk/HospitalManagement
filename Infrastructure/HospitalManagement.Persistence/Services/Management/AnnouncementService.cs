@@ -6,7 +6,7 @@ using HospitalManagement.Application.Common.GenericObjects;
 using HospitalManagement.Application.Common.Specifications;
 using HospitalManagement.Application.Constants;
 using HospitalManagement.Application.Repositories.Management;
-using HospitalManagement.Application.Settings;
+using HospitalManagement.Application.Attributes;
 using HospitalManagement.Domain.Entities.Management;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

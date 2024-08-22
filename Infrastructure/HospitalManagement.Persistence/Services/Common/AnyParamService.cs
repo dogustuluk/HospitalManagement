@@ -1,6 +1,6 @@
 ﻿using HospitalManagement.Application.Abstractions.Services.Common;
+using HospitalManagement.Application.Attributes;
 using HospitalManagement.Application.Repositories.Common;
-using HospitalManagement.Application.Settings;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HospitalManagement.Persistence.Services.Common

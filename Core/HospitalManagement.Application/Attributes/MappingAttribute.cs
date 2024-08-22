@@ -1,4 +1,4 @@
-﻿namespace HospitalManagement.Application.Settings
+﻿namespace HospitalManagement.Application.Attributes
 {
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public class CommandRequestMappingAttribute : Attribute

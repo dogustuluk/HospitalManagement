@@ -1,4 +1,5 @@
 ﻿using HospitalManagement.Application.Common.Specifications;
+using HospitalManagement.Application.Utilities.Security.Resiliance;
 using HospitalManagement.Domain.Entities.Management;
 using Microsoft.Extensions.Hosting;
 
@@ -13,6 +14,8 @@ namespace HospitalManagement.Application
             serviceCollection.AddHttpClient();
             serviceCollection.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly()); 
             serviceCollection.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
+            serviceCollection.AddTransient<IResiliencePolicyProvider, ResiliencePolicyProvider>();
+            serviceCollection.AddTransient(typeof(IPipelineBehavior<,>), typeof(ResilianceBehavior<,>));
             serviceCollection.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             //otomatize et -->

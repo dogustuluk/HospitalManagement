@@ -1,16 +1,15 @@
 ﻿using AutoMapper;
 using HospitalManagement.Application.Abstractions.Caching;
 using HospitalManagement.Application.Abstractions.Services.Management;
+using HospitalManagement.Application.Attributes;
 using HospitalManagement.Application.Common.DTOs.Management;
 using HospitalManagement.Application.Common.Extensions;
 using HospitalManagement.Application.Common.GenericObjects;
 using HospitalManagement.Application.Common.Specifications;
 using HospitalManagement.Application.Constants;
 using HospitalManagement.Application.Repositories.Management;
-using HospitalManagement.Application.Settings;
 using HospitalManagement.Domain.Entities.Management;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
 
 namespace HospitalManagement.Persistence.Services.Management

@@ -2,7 +2,7 @@
 using HospitalManagement.Application.Abstractions.Services.Common;
 using HospitalManagement.Application.Common.GenericObjects;
 using HospitalManagement.Application.Repositories.Common;
-using HospitalManagement.Application.Settings;
+using HospitalManagement.Application.Attributes;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
