@@ -33,6 +33,7 @@
     <Folder Include="Abstractions\Storage\" />
     <Folder Include="Features\Commands\Announcement\DeleteAnnouncement\" />
     <Folder Include="Features\Commands\Hospital\DeleteHospital\" />
+    <Folder Include="Features\Commands\Medicine\UpdateMedicine\" />
     <Folder Include="Repositories\HR\" />
     <Folder Include="Repositories\Commerce\" />
     <Folder Include="Repositories\Payment\" />

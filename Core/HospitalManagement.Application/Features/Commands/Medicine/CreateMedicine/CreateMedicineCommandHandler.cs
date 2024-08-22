@@ -21,7 +21,7 @@ namespace HospitalManagement.Application.Features.Commands.Medicine.CreateMedici
                 var createdMedicine = await _medicineService.CreateMedicineAsync(mappedDto);
                 if (createdMedicine == null)
                     return await OptResult<CreateMedicineCommandResponse>.FailureAsync(Messages.NullValue);
-                var mappedData = _mapper.Map<CreateMedicineCommandResponse>(createdMedicine);
+                var mappedData = _mapper.Map<CreateMedicineCommandResponse>(createdMedicine.Data);
                 return await OptResult<CreateMedicineCommandResponse>.SuccessAsync(mappedData);
             });
         }

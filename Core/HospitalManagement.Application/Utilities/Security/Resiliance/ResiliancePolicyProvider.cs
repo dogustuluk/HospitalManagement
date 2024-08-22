@@ -30,7 +30,6 @@ namespace HospitalManagement.Application.Utilities.Security.Resiliance
 
                 ResilienceStrategy.Bulkhead => Policy.BulkheadAsync(options.BulkheadMaxParallelization, options.BulkheadMaxQueuingActions),
 
-
                 ResilienceStrategy.Fallback => Policy.Handle<Exception>()
                 .FallbackAsync(_ => options.FallbackActionWithException(default)),
 

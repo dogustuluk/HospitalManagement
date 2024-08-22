@@ -26,6 +26,11 @@ using HospitalManagement.Application.Features.Queries.Hospital.GetAllPagedHospit
 using HospitalManagement.Application.Features.Queries.Hospital.GetByIdorGuidHospital;
 using HospitalManagement.Application.Features.Queries.Hospital.GetDataListHospital;
 using HospitalManagement.Application.Features.Queries.Hospital.GetValueHospital;
+using HospitalManagement.Application.Features.Queries.Medicine.GetAllMedicine;
+using HospitalManagement.Application.Features.Queries.Medicine.GetAllPagedMedicine;
+using HospitalManagement.Application.Features.Queries.Medicine.GetByIdOrGuidMedicine;
+using HospitalManagement.Application.Features.Queries.Medicine.GetDataListMedicine;
+using HospitalManagement.Application.Features.Queries.Medicine.GetValueMedicine;
 using HospitalManagement.Application.Utilities.Converters;
 
 namespace HospitalManagement.Application.Common.Mappings
@@ -48,10 +53,10 @@ namespace HospitalManagement.Application.Common.Mappings
 
             #region DEPARTMENT
             CreateMap<Department, GetAllDepartmentQueryResponse>();
-            
+
             CreateMap<Department, GetDataPagedListQueryResponse>();
             CreateMap<GetDataPagedListQueryRequest, GetAllPaged_Index_Dto>();
-            
+
             CreateMap(typeof(PaginatedList<>), typeof(PaginatedList<>)).ConvertUsing(typeof(PaginatedListConverter<,>));
             CreateMap<Department, GetSingleEntityQueryResponse>();
             CreateMap<Department, GetByEntityQueryResponse>();
@@ -81,7 +86,7 @@ namespace HospitalManagement.Application.Common.Mappings
             CreateMap<CreateAppointment_Dto, CreateAppointmentCommandResponse>();
             CreateMap<Appointment, GetAllAppointmentQueryResponse>();
             CreateMap<OptResult<Appointment>, GetByIdOrGuidAppointmentQueryResponse>().ReverseMap();
-            
+
             CreateMap<Appointment, GetByIdOrGuidAppointmentQueryResponse>()
             .Include<VisitorAppointment, GetByIdOrGuidVisitorAppointmentResponse>()
             .Include<ExaminationAppointment, GetByIdOrGuidExaminationAppointmentResponse>();
@@ -96,8 +101,8 @@ namespace HospitalManagement.Application.Common.Mappings
 
             #region HOSPITAL
             CreateMap<Hospital, CreateHospital_Dto>().ReverseMap();
-            CreateMap<Hospital,CreateHospitalCommandResponse>();
-            CreateMap<CreateHospitalCommandRequest,CreateHospital_Dto>();
+            CreateMap<Hospital, CreateHospitalCommandResponse>();
+            CreateMap<CreateHospitalCommandRequest, CreateHospital_Dto>();
 
             CreateMap<Hospital, GetAllHospitalQueryResponse>();
             CreateMap<Hospital, GetByIdOrGuidHospitalQueryResponse>();
@@ -120,23 +125,23 @@ namespace HospitalManagement.Application.Common.Mappings
             CreateMap<CreateAnnouncementCommandRequest, Create_Announcemnet_Dto>();
             CreateMap<Announcement, Create_Announcemnet_Dto>().ReverseMap();
             CreateMap<Announcement, CreateAnnouncementCommandResponse>();
-            
-            
+
+
             CreateMap<GetAllPagedAnnouncementQueryRequest, GetAllPaged_Announcement_Dto>();
             CreateMap<Announcement, GetAllPagedAnnouncementQueryResponse>();
 
             CreateMap<Announcement, Update_Announcemnet_Dto>().ReverseMap();
             CreateMap<UpdateAnnouncementCommandRequest, Update_Announcemnet_Dto>();
             CreateMap<Announcement, UpdateAnnouncementCommandResponse>();
-            
+
             CreateMap<Announcement, GetByIdOrGuidAnnouncementQueryResponse>();
 
             CreateMap<string, GetValueAnnouncementQueryResponse>()
                 .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src));
 
-            CreateMap<UpdateDepartmentCommandRequest,Update_Department_Dto>();
-            CreateMap<Department,UpdateDepartmentCommandResponse>();
-            CreateMap<Update_Department_Dto,Department>().ReverseMap();
+            CreateMap<UpdateDepartmentCommandRequest, Update_Department_Dto>();
+            CreateMap<Department, UpdateDepartmentCommandResponse>();
+            CreateMap<Update_Department_Dto, Department>().ReverseMap();
             #endregion
 
             #region CITIES
@@ -145,25 +150,34 @@ namespace HospitalManagement.Application.Common.Mappings
             #endregion
 
             #region MEDICINE
-            CreateMap<Create_Medicine_Dto, Medicine>()
-           .ForMember(dest => dest.MedicineDetail, opt => opt.MapFrom(src => src.MedicineDetail))
-           .ReverseMap();
-
-            CreateMap<Create_MedicineDetail_Dto, MedicineDetail>()
-                .ReverseMap();
 
             CreateMap<CreateMedicineCommandRequest, Create_Medicine_Dto>()
                 .ForMember(dest => dest.MedicineDetail, opt => opt.MapFrom(src => src.MedicineDetail))
                 .ReverseMap();
-
             CreateMap<Medicine, CreateMedicineCommandResponse>()
                 .ForMember(dest => dest.MedicineDetail, opt => opt.MapFrom(src => src.MedicineDetail))
                 .ReverseMap();
-
             CreateMap<OptResult<Medicine>, CreateMedicineCommandResponse>()
                 .ForMember(dest => dest.MedicineDetail, opt => opt.MapFrom(src => src.Data.MedicineDetail))
                 .ReverseMap();
+            CreateMap<Create_Medicine_Dto, Medicine>()
+                .ForMember(dest => dest.MedicineDetail, opt => opt.MapFrom(src => src.MedicineDetail))
+                .ReverseMap();
+            CreateMap<Create_MedicineDetail_Dto, MedicineDetail>()
+                .ReverseMap();
 
+            CreateMap<GetAllPagedMedicineQueryRequest, GetAllPaged_Medicine_Index_Dto>();
+            CreateMap<Medicine, GetAllPagedMedicineQueryResponse>();
+            
+            CreateMap<Medicine, GetByIdOrGuidAnnouncementQueryResponse>();
+
+            CreateMap<DataList1, GetDataListMedicineQueryResponse>();
+
+            CreateMap<string, GetValueMedicineQueryResponse>()
+                .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src));
+
+            CreateMap<Medicine, GetAllMedicineQueryResponse>();
+            CreateMap<Medicine, GetByIdOrGuidMedicineQueryResponse>();
             #endregion
         }
     }

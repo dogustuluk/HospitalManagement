@@ -22,6 +22,7 @@ namespace HospitalManagement.Application
             // serviceCollection.AddScoped<GenericSpecification<Department>>();
             serviceCollection.AddSingleton<IHostedService, CityCacheHostedService>();
             serviceCollection.AddScoped<AnnouncementSpecifications>();
+            serviceCollection.AddScoped<MedicineSpecifications>();
             serviceCollection.AddScoped<HospitalSpecifications>();
             serviceCollection.AddScoped<AppointmentSpecifications>();
             serviceCollection.AddScoped<DepartmentSpecifications>();
