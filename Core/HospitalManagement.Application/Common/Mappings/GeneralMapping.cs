@@ -30,6 +30,7 @@ using HospitalManagement.Application.Features.Queries.Medicine.GetAllMedicine;
 using HospitalManagement.Application.Features.Queries.Medicine.GetAllPagedMedicine;
 using HospitalManagement.Application.Features.Queries.Medicine.GetByIdOrGuidMedicine;
 using HospitalManagement.Application.Features.Queries.Medicine.GetDataListMedicine;
+using HospitalManagement.Application.Features.Queries.Medicine.GetMedicineDetail;
 using HospitalManagement.Application.Features.Queries.Medicine.GetValueMedicine;
 using HospitalManagement.Application.Utilities.Converters;
 
@@ -146,11 +147,9 @@ namespace HospitalManagement.Application.Common.Mappings
 
             #region CITIES
             CreateMap<DataList1, GetDataListCityQueryResponse>();
-
             #endregion
 
             #region MEDICINE
-
             CreateMap<CreateMedicineCommandRequest, Create_Medicine_Dto>()
                 .ForMember(dest => dest.MedicineDetail, opt => opt.MapFrom(src => src.MedicineDetail))
                 .ReverseMap();
@@ -178,6 +177,8 @@ namespace HospitalManagement.Application.Common.Mappings
 
             CreateMap<Medicine, GetAllMedicineQueryResponse>();
             CreateMap<Medicine, GetByIdOrGuidMedicineQueryResponse>();
+            
+            CreateMap<MedicineDetail, GetMedicineDetailQueryResponse>();
             #endregion
         }
     }

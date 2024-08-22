@@ -10,6 +10,7 @@ using HospitalManagement.Application.Features.Queries.Medicine.GetAllMedicine;
 using HospitalManagement.Application.Features.Queries.Medicine.GetAllPagedMedicine;
 using HospitalManagement.Application.Features.Queries.Medicine.GetByIdOrGuidMedicine;
 using HospitalManagement.Application.Features.Queries.Medicine.GetDataListMedicine;
+using HospitalManagement.Application.Features.Queries.Medicine.GetMedicineDetail;
 using HospitalManagement.Application.Features.Queries.Medicine.GetValueMedicine;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -75,6 +76,13 @@ namespace HospitalManagement.API.Controllers
         public async Task<IActionResult> GetValueMedicine([FromQuery] GetValueMedicineQueryRequest request)
         {
             OptResult<GetValueMedicineQueryResponse> response = await _mediator.Send(request);
+            return Ok(response);
+        }
+        [HttpGet]
+        [Route("GetMedicineDetail")]
+        public async Task<IActionResult> GetMedicineDetail([FromQuery] GetMedicineDetailQueryRequest request)
+        {
+            OptResult<GetMedicineDetailQueryResponse> response = await _mediator.Send(request);
             return Ok(response);
         }
     }
