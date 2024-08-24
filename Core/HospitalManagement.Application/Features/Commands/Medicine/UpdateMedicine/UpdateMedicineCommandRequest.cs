@@ -1,11 +1,10 @@
-﻿using HospitalManagement.Domain.Enums;
+﻿using HospitalManagement.Application.Common.DTOs.Medical;
 
-namespace HospitalManagement.Domain.Entities.Medical
+namespace HospitalManagement.Application.Features.Commands.Medicine.UpdateMedicine
 {
-    public class Medicine : BaseEntity
+    public class UpdateMedicineCommandRequest : IRequest<OptResult<UpdateMedicineCommandResponse>>
     {
-        public int MedicineDetailId { get; set; }
-
+        public Guid Guid { get; set; }
         public string Name { get; set; }
         public string? Desc { get; set; }
         public string? Manufacturer { get; set; }
@@ -17,7 +16,6 @@ namespace HospitalManagement.Domain.Entities.Medical
         public int Stock { get; set; }
         public MedicineType MedicineType { get; set; }
         public int MedicineCategory { get; set; }
-
-        public virtual MedicineDetail? MedicineDetail { get; set; }
+        public Update_MedicineDetail_Dto MedicineDetail { get; set; }
     }
 }

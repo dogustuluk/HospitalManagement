@@ -1,4 +1,6 @@
-﻿namespace HospitalManagement.Application.Common.GenericObjects
+﻿using System;
+
+namespace HospitalManagement.Application.Common.GenericObjects
 {
     public class OptResultClient
     {

@@ -1,6 +1,5 @@
 ﻿using HospitalManagement.Application.Common.Extensions;
 using HospitalManagement.Application.Repositories.Appointment;
-using HospitalManagement.Domain;
 using HospitalManagement.Domain.Entities.Identity;
 using HospitalManagement.Persistence.Context;
 using HospitalManagement.Persistence.Repositories.Common;
@@ -29,6 +28,7 @@ namespace HospitalManagement.Persistence
 
             services.RegisterRepositories(typeof(IAppointmentReadRepository).Assembly, typeof(ErrorReadRepository).Assembly);
             services.AddServicesInDbContextFromAttributes(Assembly.GetExecutingAssembly());
+
         }
 
         public static void InitializeSeedData(this IServiceProvider serviceProvider)

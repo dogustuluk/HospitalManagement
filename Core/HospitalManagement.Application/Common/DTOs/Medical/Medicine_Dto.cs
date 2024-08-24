@@ -48,8 +48,9 @@
         public DateTime ManufactureDate { get; set; }
         public DateTime ExpiryDate { get; set; }
         public int Stock { get; set; }
-
-        public Create_MedicineDetail_Dto MedicineDetail { get; set; }
+        public MedicineType MedicineType { get; set; }
+        public int MedicineCategory { get; set; }
+        public Update_MedicineDetail_Dto MedicineDetail { get; set; }
     }
     public class Update_MedicineDetail_Dto
     {

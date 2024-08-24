@@ -8,6 +8,7 @@ using HospitalManagement.Application.Common.Extensions;
 using HospitalManagement.Application.Constants;
 using HospitalManagement.Application.Common.DTOs.Medical;
 using AutoMapper;
+using HospitalManagement.Domain.Entities.Management;
 
 namespace HospitalManagement.Persistence.Services.Medical
 {
@@ -30,6 +31,14 @@ namespace HospitalManagement.Persistence.Services.Medical
             return await ExceptionHandler.HandleOptResultAsync(async () =>
             {
                 var mappedModel = _mapper.Map<MedicineDetail>(model);
+
+                bool isExist = await _readRepository.ExistsAsync(
+                    a => a.Ingredients == mappedModel.Ingredients &&
+                    a.SideEffects == mappedModel.SideEffects && a.SpecialInstructionsForUse == mappedModel.SpecialInstructionsForUse);
+                if (isExist)
+                    return await OptResult<MedicineDetail>.FailureAsync(Messages.AddedDataIsAlready);
+
+
                 await _writeRepository.AddAsyncReturnEntity(mappedModel);
                 await _writeRepository.SaveChanges();
                 return await OptResult<MedicineDetail>.SuccessAsync(mappedModel);

@@ -40,15 +40,15 @@
     public class Update_Department_Dto
     {
         public Guid Guid { get; set; }
-        //public int ParentId { get; set; }
+        public int ParentId { get; set; }
         public string? DepartmentCode { get; set; }
-        //public string? DepartmentName { get; set; }
-        //public int SortOrderNo { get; set; }
-        //public int ManagerMemberId { get; set; }
-        //public string? Param1 { get; set; }
-        //public string? Param2 { get; set; }
-        //public bool isActive { get; set; }
-        //public int UpdatedBy { get; set; }
-        //public DateTime UpdatedDate { get; set; }
+        public string? DepartmentName { get; set; }
+        public int SortOrderNo { get; set; }
+        public int ManagerMemberId { get; set; }
+        public string? Param1 { get; set; }
+        public string? Param2 { get; set; }
+        public bool isActive { get; set; }
+        public int UpdatedBy { get; set; }
+        public DateTime UpdatedDate { get; set; }
     }
 }

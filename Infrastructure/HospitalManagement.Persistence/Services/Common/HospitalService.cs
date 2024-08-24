@@ -12,6 +12,8 @@ using HospitalManagement.Domain.Entities.Management;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq.Expressions;
+using HospitalManagement.Domain.Entities.Medical;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HospitalManagement.Persistence.Services.Common
 {
@@ -48,6 +50,14 @@ namespace HospitalManagement.Persistence.Services.Common
 
                 Hospital mappedModel = _mapper.Map(model, myHospital);
                 mappedModel.UpdatedUser = Guid.NewGuid(); //test
+
+                var duplicateDatas = await _readRepository.GetAllSpecificPropertiesAsync(null, a => a.Id != myHospital.Id && a.HospitalName == model.HospitalName, "", selector: x => new { x.Id });
+
+                if (duplicateDatas != null && duplicateDatas.Any())
+                {
+                    return await OptResult<Hospital>.FailureAsync(Messages.UpdatedDataIsAlready);
+
+                }
 
                 var updatedModel = _writeRepository.Update(mappedModel);
                 if (updatedModel == null)

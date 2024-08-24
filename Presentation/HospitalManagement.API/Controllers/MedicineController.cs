@@ -1,6 +1,7 @@
 ﻿using HospitalManagement.Application.Common.GenericObjects;
 using HospitalManagement.Application.Features.Commands.Hospital.UpdateHospital;
 using HospitalManagement.Application.Features.Commands.Medicine.CreateMedicine;
+using HospitalManagement.Application.Features.Commands.Medicine.UpdateMedicine;
 using HospitalManagement.Application.Features.Queries.Announcement.GetAllPagedAnnouncement;
 using HospitalManagement.Application.Features.Queries.Hospital.GetAllHospital;
 using HospitalManagement.Application.Features.Queries.Hospital.GetByIdorGuidHospital;
@@ -34,6 +35,13 @@ namespace HospitalManagement.API.Controllers
         public async Task<IActionResult> CreateMedicine(CreateMedicineCommandRequest request)
         {
             OptResult<CreateMedicineCommandResponse> response = await _mediator.Send(request);
+            return Ok(response);
+        }
+        [HttpPut]
+        [Route("UpdateMedicine")]
+        public async Task<IActionResult> UpdateHospital(UpdateMedicineCommandRequest request)
+        {
+            OptResult<UpdateMedicineCommandResponse> response = await _mediator.Send(request);
             return Ok(response);
         }
         [HttpGet]

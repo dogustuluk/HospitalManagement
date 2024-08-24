@@ -20,7 +20,7 @@ namespace HospitalManagement.Application.Features.Commands.Announcement.CrearteA
                 var mappedDto = _mapper.Map<Create_Announcemnet_Dto>(request);
                 var data = await _announcementService.CreateAnnouncementAsync(mappedDto);
                 if (!data.Succeeded)
-                    return await OptResult<CreateAnnouncementCommandResponse>.FailureAsync(Messages.UnSuccessfull);
+                    return await OptResult<CreateAnnouncementCommandResponse>.FailureAsync(data.Messages);
                 var response = _mapper.Map<CreateAnnouncementCommandResponse>(data.Data);
                 return await OptResult<CreateAnnouncementCommandResponse>.SuccessAsync(response);
             });

@@ -20,7 +20,7 @@
                     var updatedAnnouncement = await _announcementService.UpdateAnnouncementAsync(updateAnnouncementDto);
 
                     if (!updatedAnnouncement.Succeeded)
-                        return await OptResult<UpdateAnnouncementCommandResponse>.FailureAsync(Messages.UnSuccessfull);
+                        return await OptResult<UpdateAnnouncementCommandResponse>.FailureAsync(updatedAnnouncement.Message);
 
                     var response = _mapper.Map<UpdateAnnouncementCommandResponse>(updatedAnnouncement.Data);
                     return await OptResult<UpdateAnnouncementCommandResponse>.SuccessAsync(response, Messages.SuccessfullyUpdated);

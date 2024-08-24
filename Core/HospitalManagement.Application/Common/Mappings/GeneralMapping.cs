@@ -5,9 +5,11 @@ using HospitalManagement.Application.Features.Commands.Announcement.CrearteAnnou
 using HospitalManagement.Application.Features.Commands.Announcement.UpdateAnnouncement;
 using HospitalManagement.Application.Features.Commands.Appointment.CreateAppointment;
 using HospitalManagement.Application.Features.Commands.Department.UpdateDepartment;
+using HospitalManagement.Application.Features.Commands.Error.AddError;
 using HospitalManagement.Application.Features.Commands.Hospital.CreateHospital;
 using HospitalManagement.Application.Features.Commands.Hospital.UpdateHospital;
 using HospitalManagement.Application.Features.Commands.Medicine.CreateMedicine;
+using HospitalManagement.Application.Features.Commands.Medicine.UpdateMedicine;
 using HospitalManagement.Application.Features.Queries.Announcement.GetAllPagedAnnouncement;
 using HospitalManagement.Application.Features.Queries.Announcement.GetByIdorGuidAnnouncement;
 using HospitalManagement.Application.Features.Queries.Announcement.GetValueAnnouncement;
@@ -21,6 +23,7 @@ using HospitalManagement.Application.Features.Queries.Department.GetByGuid;
 using HospitalManagement.Application.Features.Queries.Department.GetById;
 using HospitalManagement.Application.Features.Queries.Department.GetSingleEntity;
 using HospitalManagement.Application.Features.Queries.Department.GetValue;
+using HospitalManagement.Application.Features.Queries.Error.GetAllPagedError;
 using HospitalManagement.Application.Features.Queries.Hospital.GetAllHospital;
 using HospitalManagement.Application.Features.Queries.Hospital.GetAllPagedHospital;
 using HospitalManagement.Application.Features.Queries.Hospital.GetByIdorGuidHospital;
@@ -165,6 +168,19 @@ namespace HospitalManagement.Application.Common.Mappings
             CreateMap<Create_MedicineDetail_Dto, MedicineDetail>()
                 .ReverseMap();
 
+            CreateMap<Update_MedicineDetail_Dto, MedicineDetail>().ReverseMap();
+
+            CreateMap<Update_Medicine_Dto, UpdateMedicineCommandRequest>().ForMember(dest => dest.MedicineDetail, opt => opt.MapFrom(src => src.MedicineDetail))
+                .ReverseMap(); ;
+           
+            CreateMap<Medicine, UpdateMedicineCommandResponse>().ReverseMap();
+            
+            CreateMap<Update_Medicine_Dto, Medicine>()
+                .ForMember(dest => dest.MedicineDetail, opt => opt.MapFrom(src => src.MedicineDetail))
+                .ReverseMap();
+
+
+
             CreateMap<GetAllPagedMedicineQueryRequest, GetAllPaged_Medicine_Index_Dto>();
             CreateMap<Medicine, GetAllPagedMedicineQueryResponse>();
             
@@ -179,6 +195,16 @@ namespace HospitalManagement.Application.Common.Mappings
             CreateMap<Medicine, GetByIdOrGuidMedicineQueryResponse>();
             
             CreateMap<MedicineDetail, GetMedicineDetailQueryResponse>();
+            #endregion
+
+            #region ERROR
+            CreateMap<AddErrorCommandRequest, Create_Error_Dto>().ReverseMap();
+            CreateMap<Create_Error_Dto, Error>().ReverseMap();
+            CreateMap<AddErrorCommandResponse, Error>().ReverseMap();
+
+
+            CreateMap<GetAllPagedErrorQueryRequest, GetAllPaged_Error_Dto>();
+            CreateMap<Error, GetAllPagedErrorQueryResponse>();
             #endregion
         }
     }

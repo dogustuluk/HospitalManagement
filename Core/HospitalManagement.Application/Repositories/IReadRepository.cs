@@ -4,7 +4,10 @@
     {
         //queryable
         Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>>? predicate, string? include);
+        IQueryable<T> GetAll(Expression<Func<T, bool>>? predicate, string? include);
         Task<List<T>> GetAllSqlAsync(string table, string sqlQuery, string? include);
+        Task<IQueryable<TResult>> GetAllSpecificPropertiesAsync<TResult>(IQueryable<T>? prefilteredQuery, Expression<Func<T, bool>>? predicate, string? include, Expression<Func<T, TResult>> selector);
+
 
         Task<IQueryable<T>> GetDataAsync(Expression<Func<T, bool>> predicate, string? include, int take, string orderBy);
         Task<List<T>> GetDataSqlAsync(string table, string sqlQuery, string? include, int pageIndex, int take, string orderBy);

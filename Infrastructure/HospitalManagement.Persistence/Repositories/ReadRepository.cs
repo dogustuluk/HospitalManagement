@@ -160,7 +160,9 @@ namespace HospitalManagement.Persistence.Repositories
 
         public async Task<List<T>> GetDataSqlAsync(string table, string sqlQuery, string? include, int pageIndex, int take, string orderBy)
         {
-            string queryString = $"SELECT * FROM {table} WHERE {sqlQuery} ORDER BY {orderBy} OFFSET {pageIndex * take} ROWS FETCH NEXT {take} ROWS ONLY";
+            // string queryString = $"SELECT * FROM {table} WHERE {sqlQuery} ORDER BY {orderBy} OFFSET {pageIndex * take} ROWS FETCH NEXT {take} ROWS ONLY";
+            string queryString = $"SELECT * FROM \"{table}\" WHERE {sqlQuery} ORDER BY {orderBy} OFFSET {pageIndex * take} LIMIT {take}";
+
             if (!string.IsNullOrEmpty(include))
                 return await Table.FromSqlRaw(queryString).Include(include).ToListAsync();
             else
@@ -250,6 +252,34 @@ namespace HospitalManagement.Persistence.Repositories
                 query = query.AsNoTracking();
             if (query != null) return query;
             else throw new InvalidOperationException("Bulunamadı");
+        }
+
+        public async Task<IQueryable<TResult>> GetAllSpecificPropertiesAsync<TResult>(IQueryable<T>? prefilteredQuery,
+Expression<Func<T, bool>>? predicate, string? include, Expression<Func<T, TResult>> selector)
+        {
+            IQueryable<T> query = prefilteredQuery ?? Table.AsQueryable();
+
+            if (!string.IsNullOrEmpty(include))
+                query = query.Include(include);
+
+            if (predicate != null)
+                query = query.Where(predicate);
+
+            return query.Select(selector);
+        }
+
+        public IQueryable<T> GetAll(Expression<Func<T, bool>>? predicate, string? include)
+        {
+            IQueryable<T> query = Table.AsQueryable();
+            if (!string.IsNullOrEmpty(include))
+                query = query.Include(include);
+            if (predicate != null)
+                query = query.Where(predicate);
+            //if (query.Count() > 0)
+            //    return query;
+            //else
+            //    throw new ArgumentNullException();
+            return query;
         }
     }
 }

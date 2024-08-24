@@ -22,7 +22,7 @@ namespace HospitalManagement.Application.Features.Commands.Hospital.UpdateHospit
                 var updatedHospital = await _hospitalService.UpdateHospitalAsync(updateHospitalDto);
                 
                 if (!updatedHospital.Succeeded)
-                    return await OptResult<UpdateHospitalCommandResponse>.FailureAsync(Messages.UnSuccessfull);
+                    return await OptResult<UpdateHospitalCommandResponse>.FailureAsync(updatedHospital.Messages);
                 
                 var response = _mapper.Map<UpdateHospitalCommandResponse>(updatedHospital.Data);
                 return await OptResult<UpdateHospitalCommandResponse>.SuccessAsync(response, Messages.SuccessfullyUpdated);

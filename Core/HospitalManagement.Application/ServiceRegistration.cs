@@ -1,6 +1,4 @@
-﻿using HospitalManagement.Application.Common.Specifications;
-using HospitalManagement.Application.Utilities.Security.Resiliance;
-using HospitalManagement.Domain.Entities.Management;
+﻿using HospitalManagement.Application.Utilities.Security.Resiliance;
 using Microsoft.Extensions.Hosting;
 
 namespace HospitalManagement.Application
@@ -32,7 +30,6 @@ namespace HospitalManagement.Application
             serviceCollection.AddScoped<IUserRegistrationStrategyService, DoctorUserRegistrationStrategyService>();
             serviceCollection.AddScoped<IUserRegistrationStrategyService, PatientUserRegistrationStrategyService>();
             serviceCollection.AddScoped<IUserRegistrationStrategyService, VisitorAppointmentUserRegistrationStrategyService>();
-
 
         }
     }

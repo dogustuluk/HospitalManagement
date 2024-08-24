@@ -8,6 +8,7 @@ using HospitalManagement.Application.Common.Specifications;
 using HospitalManagement.Application.Constants;
 using HospitalManagement.Application.Repositories.Medical;
 using HospitalManagement.Domain.Entities.Common;
+using HospitalManagement.Domain.Entities.Management;
 using HospitalManagement.Domain.Entities.Medical;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -55,11 +56,36 @@ namespace HospitalManagement.Persistence.Services.Medical
                     return await OptResult<Medicine>.FailureAsync(Messages.UnSuccessfull);
 
                 Medicine mappedModel = _mapper.Map(model, myMedicine);
-               
+
+                var targetMedicines = await _readRepository.GetAllAsync(a => a.Id != myMedicine.Id && a.MedicineCategory == model.MedicineCategory && a.MedicineType == model.MedicineType, "");
+                
+                //---------------------------------hatalı suan
+                if (targetMedicines != null)
+                {
+                    var duplicateDatas = await _readRepository.GetAllSpecificPropertiesAsync(
+                    targetMedicines,
+                    predicate:
+                        a => a.Id != myMedicine.Id &&
+                        a.Name == model.Name &&
+                        //a.IsPrescriptionRequired == model.IsPrescriptionRequired &&
+                        a.MedicineDetail.Ingredients == model.MedicineDetail.Ingredients //&&
+                        //a.MedicineDetail.SideEffects == model.MedicineDetail.SideEffects &&
+                        //a.MedicineDetail.SpecialInstructionsForUse == model.MedicineDetail.SpecialInstructionsForUse
+                        ,
+                    "",
+                    selector: x => new { x.Id });
+                    var isExist = await duplicateDatas.ToListAsync();
+
+                    if (duplicateDatas != null && duplicateDatas.Any())
+                        return await OptResult<Medicine>.FailureAsync(Messages.UpdatedDataIsAlready);
+                    
+                }
+                
+
                 var guid = Guid.NewGuid();
                 mappedModel.UpdatedUser = guid; //test
                 mappedModel.MedicineDetail.UpdatedUser = guid; //test
-                
+
                 var updatedModel = _writeRepository.Update(mappedModel);
                 if (updatedModel == null)
                     return await OptResult<Medicine>.FailureAsync(Messages.UnSuccessfull);
@@ -85,7 +111,7 @@ namespace HospitalManagement.Persistence.Services.Medical
 
             PaginatedList<Medicine> pagedMedicines;
 
-            pagedMedicines = await _readRepository.GetDataPagedAsync(predicate, "", model.PageIndex, model.Take, model.OrderBy,true);
+            pagedMedicines = await _readRepository.GetDataPagedAsync(predicate, "", model.PageIndex, model.Take, model.OrderBy, true);
 
             return await OptResult<PaginatedList<Medicine>>.SuccessAsync(pagedMedicines, Messages.Successfull);
         }

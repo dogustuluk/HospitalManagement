@@ -66,7 +66,7 @@ namespace HospitalManagement.Persistence.Context
         #endregion
 
         #region Users
-        
+
         #endregion
 
 
@@ -77,10 +77,10 @@ namespace HospitalManagement.Persistence.Context
                 entity.HasKey(e => e.Id);
                 entity.Property(a => a.Id)
                 .ValueGeneratedOnAdd();
-                
+
             });
 
-            
+
 
 
             builder.Entity<City>()
@@ -94,7 +94,7 @@ namespace HospitalManagement.Persistence.Context
 
             builder.Entity<Room>()
                 .HasKey(a => a.Id);
-            
+
 
 
             builder.Entity<Medicine>()
@@ -132,10 +132,35 @@ namespace HospitalManagement.Persistence.Context
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            var datas = ChangeTracker
-                .Entries<BaseEntity>();
+            var datas = ChangeTracker.Entries<BaseEntity>();
+         //   var guid = Guid.NewGuid();
             foreach (var data in datas)
             {
+                //if (data.Entity is BaseEntity entity)
+                //{
+                //    Action action = data.State switch
+                //    {
+                //        EntityState.Added => () =>
+                //        {
+                //            entity.CreatedDate = DateTime.UtcNow;
+                //            entity.CreatedUser = guid; //test
+                //            entity.Guid = Guid.NewGuid();
+                //            entity.UpdatedDate = DateTime.UtcNow;
+                //            entity.UpdatedUser = guid;
+                //        }
+                //        ,
+                //        EntityState.Modified => () =>
+                //        {
+                //            entity.UpdatedDate = DateTime.UtcNow;
+                //            entity.UpdatedUser = Guid.NewGuid();
+                //        }
+                //        ,
+                //        _ => () => {  }
+                //    };
+
+                //    // Action'ı çağır
+                //    action();
+                //}
                 _ = data.State switch
                 {
                     EntityState.Added => data.Entity.CreatedDate = DateTime.UtcNow,

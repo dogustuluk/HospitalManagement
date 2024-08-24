@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using HospitalManagement.Application.Abstractions.Services.Management;
+using HospitalManagement.Application.Attributes;
 using HospitalManagement.Application.Common.DTOs.Management;
 using HospitalManagement.Application.Common.Extensions;
 using HospitalManagement.Application.Common.GenericObjects;
 using HospitalManagement.Application.Common.Specifications;
 using HospitalManagement.Application.Constants;
 using HospitalManagement.Application.Repositories.Management;
-using HospitalManagement.Application.Attributes;
 using HospitalManagement.Domain.Entities.Management;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +21,7 @@ namespace HospitalManagement.Persistence.Services.Management
         private readonly IAnnouncementWriteRepository _writeRepository;
         private readonly IMapper _mapper;
         private readonly AnnouncementSpecifications _announcementSpecifications;
+
         public AnnouncementService(IAnnouncementReadRepository readRepository, IAnnouncementWriteRepository writeRepository, IMapper mapper, AnnouncementSpecifications announcementSpecifications)
         {
             _readRepository = readRepository;
@@ -34,6 +35,14 @@ namespace HospitalManagement.Persistence.Services.Management
             return await ExceptionHandler.HandleOptResultAsync(async () =>
             {
                 var mappedModel = _mapper.Map<Announcement>(model);
+
+                bool isExist = await _readRepository.ExistsAsync(
+                    a => a.AnnouncementTitle == mappedModel.AnnouncementTitle &&
+                    a.AnnouncementContent == mappedModel.AnnouncementContent);
+
+                if (isExist) 
+                    return await OptResult<Announcement>.FailureAsync(Messages.AddedDataIsAlready);
+
                 await _writeRepository.AddAsync(mappedModel);
                 await _writeRepository.SaveChanges();
                 return await OptResult<Announcement>.SuccessAsync(mappedModel);
@@ -46,6 +55,10 @@ namespace HospitalManagement.Persistence.Services.Management
                 var myAnnouncement = await _readRepository.GetByGuidAsync(model.Guid);
                 if (myAnnouncement == null)
                     return await OptResult<Announcement>.FailureAsync(Messages.NullData);
+
+                var myExistDatas = await _readRepository.GetAllAsync(a => a.AnnouncementTitle == model.AnnouncementTitle && a.AnnouncementContent == model.AnnouncementContent, "");
+                if (myExistDatas.Any()) 
+                    return await OptResult<Announcement>.FailureAsync(Messages.UpdatedDataIsAlready);
 
                 Announcement mappedModel = _mapper.Map(model, myAnnouncement);
                 mappedModel.UpdatedUser = Guid.NewGuid(); //test

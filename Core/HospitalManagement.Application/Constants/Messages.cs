@@ -18,6 +18,8 @@
 
         public static string NullValue = "Parametre null!";
         public static string NullData = "Data null!";
+        public static string AddedDataIsAlready = "Eklenmek istenen veri daha önceden kayıt edilmiş, lütfen eklemek istediğiniz bilgileri kontrol ediniz.";
+        public static string UpdatedDataIsAlready = "Güncellenmek istenen veri başka bir kayıt ile eşleşmektedir, lütfen girilen bilgileri kontrol ediniz.";
        
         public static string SuccessfullyAdded = "Kayıt ekleme işlemi başarıyla gerçekleştirildi.";
         public static string SuccessfullyUpdated = "Kayıt güncelleme işlemi başarıyla gerçekleştirildi.";
