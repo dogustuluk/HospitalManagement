@@ -1,6 +1,8 @@
-﻿using HospitalManagement.Application.Common.DTOs.Appointment;
+﻿using HospitalManagement.Application.Common.DTOs._0RequestResponse;
+using HospitalManagement.Application.Common.DTOs.Appointment;
 using HospitalManagement.Application.Common.DTOs.Common;
 using HospitalManagement.Application.Common.DTOs.Medical;
+using HospitalManagement.Application.Common.DTOs.User;
 using HospitalManagement.Application.Features.Commands.Announcement.CrearteAnnouncement;
 using HospitalManagement.Application.Features.Commands.Announcement.UpdateAnnouncement;
 using HospitalManagement.Application.Features.Commands.Appointment.CreateAppointment;
@@ -35,6 +37,9 @@ using HospitalManagement.Application.Features.Queries.Medicine.GetByIdOrGuidMedi
 using HospitalManagement.Application.Features.Queries.Medicine.GetDataListMedicine;
 using HospitalManagement.Application.Features.Queries.Medicine.GetMedicineDetail;
 using HospitalManagement.Application.Features.Queries.Medicine.GetValueMedicine;
+using HospitalManagement.Application.Features.Queries.User.GetAllPagedUser;
+using HospitalManagement.Application.Features.Queries.User.GetAllUser;
+using HospitalManagement.Application.Features.Queries.User.GetByUserIdOrGuidUser;
 using HospitalManagement.Application.Utilities.Converters;
 
 namespace HospitalManagement.Application.Common.Mappings
@@ -48,11 +53,23 @@ namespace HospitalManagement.Application.Common.Mappings
             .ForMember(dest => dest.Guid, opt => opt.Ignore());
             CreateMap<CreateUser_Dto, CreateUserCommandResponse>()
                 .ForMember(dest => dest.Guid, opt => opt.MapFrom(src => src.Guid));
-            CreateMap<UpdateUserCommandRequest, UpdateUser_Dto>().ReverseMap();
-            CreateMap<AppUser, UpdateUserCommandResponse>().ReverseMap();
             CreateMap<AppUser, CreateUser_Dto>().ReverseMap();
+
+
+            CreateMap<UpdateUserCommandRequest, UpdateUser_Dto>().ReverseMap();            
+            CreateMap<AppUser, UpdateUserCommandResponse>().ReverseMap();           
             CreateMap<UpdateUser_Dto, UpdateUserCommandResponse>();
             CreateMap<UpdateUser_Dto, AppUser>().ReverseMap();
+
+            CreateMap<GetAllPagedUserQueryRequest, GetAllPagedUser_Index_Dto>();
+            CreateMap<AppUser, GetAllPagedUserQueryResponse>();
+
+            CreateMap<AppUser, GetByIdOrGuidUserQueryResponse>();
+           
+            CreateMap<DataList1, GetDataListXQueryResponse>();
+
+            CreateMap<AppUser, GetAllUserQueryResponse>();
+
             #endregion
 
             #region DEPARTMENT
@@ -188,7 +205,7 @@ namespace HospitalManagement.Application.Common.Mappings
 
             CreateMap<DataList1, GetDataListMedicineQueryResponse>();
 
-            CreateMap<string, GetValueMedicineQueryResponse>()
+            CreateMap<string, GetValueXQueryResponse>()
                 .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src));
 
             CreateMap<Medicine, GetAllMedicineQueryResponse>();

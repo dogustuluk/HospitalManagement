@@ -1,15 +1,16 @@
-﻿using HospitalManagement.Application.Common.DTOs._0RequestResponse;
+﻿using HospitalManagement.Application.Abstractions.Services.Medical;
+using HospitalManagement.Application.Common.DTOs._0RequestResponse;
 
-namespace HospitalManagement.Application.Features.Queries.Medicine.GetValueMedicine
+namespace HospitalManagement.Application.Features.Queries.User.GetValueUser
 {
-    public class GetValueMedicineQueryHandler : IRequestHandler<GetValueXQueryRequest, OptResult<GetValueXQueryResponse>>
+    public class GetValueUserHandler : IRequestHandler<GetValueXQueryRequest, OptResult<GetValueXQueryResponse>>
     {
-        private readonly IMedicineService _medicineService;
+        private readonly IUserService _userService;
         private readonly IMapper _mapper;
 
-        public GetValueMedicineQueryHandler(IMedicineService medicineService, IMapper mapper)
+        public GetValueUserHandler(IUserService userService, IMapper mapper)
         {
-            _medicineService = medicineService;
+            _userService = userService;
             _mapper = mapper;
         }
 
@@ -17,7 +18,7 @@ namespace HospitalManagement.Application.Features.Queries.Medicine.GetValueMedic
         {
             return await ExceptionHandler.HandleOptResultAsync(async () =>
             {
-                var data = await _medicineService.GetValue("", request.ColumnName, $"\"Id\" = {request.DataId}", 1);
+                var data = await _userService.GetValue("", request.ColumnName, $"\"Id\" = {request.DataId}", 1);
                 var mappedData = _mapper.Map<GetValueXQueryResponse>(data);
                 if (data == null)
                     return await OptResult<GetValueXQueryResponse>.FailureAsync(Messages.NullData);

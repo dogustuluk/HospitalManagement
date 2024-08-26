@@ -130,10 +130,8 @@ namespace HospitalManagement.Persistence.Repositories
             if (predicate != null)
                 query = query.Where(predicate);
 
-            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
-
             if (!string.IsNullOrEmpty(orderBy))
-                query = await GetSortedDataAsync(query, orderBy);
+                query = query.OrderBy(orderBy);
 
             if (isTrack == true)
                 query = query.AsNoTracking();
@@ -195,8 +193,12 @@ namespace HospitalManagement.Persistence.Repositories
 
         public async Task<IQueryable<T>> GetSortedDataAsync(IQueryable<T> query, string orderBy)
         {
-            query = query.OrderBy(orderBy);
-            return query ?? throw new NullReferenceException();
+            //query = query.OrderBy(orderBy);
+            //return query ?? throw new NullReferenceException();
+            IQueryable<T> queryData = Table.AsQueryable();
+            queryData = queryData.OrderBy(orderBy);
+            if (queryData != null) return queryData;
+            else throw new NullReferenceException();
         }
 
         public string? GetValue(string table, string column, string sqlQuery)

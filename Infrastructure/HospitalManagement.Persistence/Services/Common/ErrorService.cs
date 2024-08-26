@@ -1,15 +1,14 @@
-﻿using HospitalManagement.Application.Abstractions.Services.Common;
-using HospitalManagement.Application.Repositories.Common;
+﻿using AutoMapper;
+using HospitalManagement.Application.Abstractions.Services.Common;
 using HospitalManagement.Application.Attributes;
-using Microsoft.Extensions.DependencyInjection;
-using HospitalManagement.Application.Common.GenericObjects;
-using HospitalManagement.Domain.Entities.Common;
 using HospitalManagement.Application.Common.DTOs.Common;
-using AutoMapper;
 using HospitalManagement.Application.Common.Extensions;
+using HospitalManagement.Application.Common.GenericObjects;
 using HospitalManagement.Application.Common.Specifications;
 using HospitalManagement.Application.Constants;
-using HospitalManagement.Domain.Entities.Medical;
+using HospitalManagement.Application.Repositories.Common;
+using HospitalManagement.Domain.Entities.Common;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace HospitalManagement.Persistence.Services.Common
 {

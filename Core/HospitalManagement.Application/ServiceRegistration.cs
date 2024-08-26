@@ -19,6 +19,8 @@ namespace HospitalManagement.Application
             //otomatize et -->
             // serviceCollection.AddScoped<GenericSpecification<Department>>();
             serviceCollection.AddSingleton<IHostedService, CityCacheHostedService>();
+            serviceCollection.AddScoped<UserSpecifications>();
+            serviceCollection.AddScoped<ErrorSpecifications>();
             serviceCollection.AddScoped<AnnouncementSpecifications>();
             serviceCollection.AddScoped<MedicineSpecifications>();
             serviceCollection.AddScoped<HospitalSpecifications>();

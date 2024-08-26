@@ -1,4 +1,5 @@
-﻿using HospitalManagement.Application.Common.GenericObjects;
+﻿using HospitalManagement.Application.Common.DTOs._0RequestResponse;
+using HospitalManagement.Application.Common.GenericObjects;
 using HospitalManagement.Application.Features.Commands.Hospital.UpdateHospital;
 using HospitalManagement.Application.Features.Commands.Medicine.CreateMedicine;
 using HospitalManagement.Application.Features.Commands.Medicine.UpdateMedicine;
@@ -81,9 +82,9 @@ namespace HospitalManagement.API.Controllers
         }
         [HttpGet]
         [Route("GetValueMedicine")]
-        public async Task<IActionResult> GetValueMedicine([FromQuery] GetValueMedicineQueryRequest request)
+        public async Task<IActionResult> GetValueMedicine([FromQuery] GetValueXQueryRequest request)
         {
-            OptResult<GetValueMedicineQueryResponse> response = await _mediator.Send(request);
+            OptResult<GetValueXQueryResponse> response = await _mediator.Send(request);
             return Ok(response);
         }
         [HttpGet]

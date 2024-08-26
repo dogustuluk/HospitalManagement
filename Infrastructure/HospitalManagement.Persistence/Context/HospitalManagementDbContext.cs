@@ -80,9 +80,6 @@ namespace HospitalManagement.Persistence.Context
 
             });
 
-
-
-
             builder.Entity<City>()
                 .HasKey(a => a.Id);
             builder.Entity<County>()
@@ -94,8 +91,6 @@ namespace HospitalManagement.Persistence.Context
 
             builder.Entity<Room>()
                 .HasKey(a => a.Id);
-
-
 
             builder.Entity<Medicine>()
                 .HasKey(a => a.Id);

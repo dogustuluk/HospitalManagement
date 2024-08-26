@@ -120,7 +120,7 @@ namespace HospitalManagement.Persistence.Repositories
             return query;
         }
 
-        public async Task<PaginatedList<AppUser>> GetDataPagedAsync(Expression<Func<AppUser, bool>> predicate, string? include, int pageIndex, int take, string orderBy)
+        public async Task<PaginatedList<AppUser>> GetDataPagedAsync(Expression<Func<AppUser, bool>> predicate, string? include, int pageIndex, int take, string orderBy, bool? isTrack = false)
         {
             var query = Table.AsQueryable();
 
@@ -131,9 +131,10 @@ namespace HospitalManagement.Persistence.Repositories
                 query = query.Where(predicate);
 
             if (!string.IsNullOrEmpty(orderBy))
-                query = await GetSortedDataAsync(query, orderBy);
+                query = query.OrderBy(orderBy);
 
-            query = query.Take(take);
+            if (isTrack == true)
+                query = query.AsNoTracking();
 
             return await CreatePaginatedList.CreateAsync<AppUser>(query, pageIndex, take);
         }
@@ -187,6 +188,8 @@ namespace HospitalManagement.Persistence.Repositories
 
         public async Task<IQueryable<AppUser>> GetSortedDataAsync(IQueryable<AppUser> query, string orderBy)
         {
+            //query = query.OrderBy(orderBy);
+            //return query ?? throw new NullReferenceException();
             IQueryable<AppUser> queryData = Table.AsQueryable();
             queryData = queryData.OrderBy(orderBy);
             if (queryData != null) return queryData;
@@ -203,9 +206,25 @@ namespace HospitalManagement.Persistence.Repositories
             else throw new ArgumentNullException();
         }
 
-        public async Task<string?> GetValueAsync(string table, string column, string sqlQuery)
+        public async Task<string?> GetValueAsync(string table, string column, string sqlQuery, int dbType)
         {
-            string sql = $"SELECT TOP 1 CONVERT(nvarchar, {column}) as [Value] FROM {table} WHERE {sqlQuery}";
+            string sql;
+
+            if (dbType == 1) // postgreSql
+            {
+                // PostgreSQL query
+                sql = $"SELECT \"{column}\" as \"Value\" FROM \"{table}\" WHERE {sqlQuery} LIMIT 1";
+
+            }
+            else if (dbType == 2) //sql server
+            {
+                // SQLServer query
+                sql = $"SELECT TOP 1 {column} as [Value] FROM {table} WHERE {sqlQuery}";
+            }
+            else
+            {
+                throw new ArgumentException("Invalid database type.");
+            }
 
             FormattableString formattedSqlQuery = FormattableStringFactory.Create(sql);
 
@@ -223,5 +242,7 @@ namespace HospitalManagement.Persistence.Repositories
             if (query != null) return query;
             else throw new InvalidOperationException("Bulunamadı"); //custom yap
         }
+
+        
     }
 }
