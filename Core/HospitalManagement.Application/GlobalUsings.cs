@@ -57,5 +57,4 @@ global using HospitalManagement.Domain.Entities.Common;
 global using HospitalManagement.Domain.Entities.Identity;
 global using HospitalManagement.Domain.Entities.Management;
 global using HospitalManagement.Domain.Entities.Medical;
-global using HospitalManagement.Domain.Entities.User;
 global using HospitalManagement.Domain.Enums;

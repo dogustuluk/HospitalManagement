@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using HospitalManagement.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalManagement.Persistence.Migrations
 {
     [DbContext(typeof(HospitalManagementDbContext))]
-    partial class HospitalManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240826110319_mig_6")]
+    partial class mig_6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -779,10 +782,6 @@ namespace HospitalManagement.Persistence.Migrations
 
                     b.Property<int>("HospitalId")
                         .HasColumnType("integer");
-
-                    b.Property<List<string>>("PatientIds")
-                        .IsRequired()
-                        .HasColumnType("text[]");
 
                     b.Property<int>("RoomNumber")
                         .HasColumnType("integer");

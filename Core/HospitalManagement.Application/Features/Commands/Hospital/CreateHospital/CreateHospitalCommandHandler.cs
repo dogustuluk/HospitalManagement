@@ -16,8 +16,6 @@ namespace HospitalManagement.Application.Features.Commands.Hospital.CreateHospit
 
         public async Task<OptResult<CreateHospitalCommandResponse>> Handle(CreateHospitalCommandRequest request, CancellationToken cancellationToken)
         {
-           // OptResult<CreateHospitalCommandResponse> response = new OptResult<CreateHospitalCommandResponse>();
-
             return await ExceptionHandler.HandleOptResultAsync(async () =>
             {
                 var createHospitalDto = _mapper.Map<CreateHospital_Dto>(request);

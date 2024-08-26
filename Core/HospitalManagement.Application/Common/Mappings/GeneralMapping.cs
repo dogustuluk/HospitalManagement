@@ -12,6 +12,7 @@ using HospitalManagement.Application.Features.Commands.Hospital.CreateHospital;
 using HospitalManagement.Application.Features.Commands.Hospital.UpdateHospital;
 using HospitalManagement.Application.Features.Commands.Medicine.CreateMedicine;
 using HospitalManagement.Application.Features.Commands.Medicine.UpdateMedicine;
+using HospitalManagement.Application.Features.Commands.Room.CreateRoom;
 using HospitalManagement.Application.Features.Queries.Announcement.GetAllPagedAnnouncement;
 using HospitalManagement.Application.Features.Queries.Announcement.GetByIdorGuidAnnouncement;
 using HospitalManagement.Application.Features.Queries.Announcement.GetValueAnnouncement;
@@ -37,6 +38,10 @@ using HospitalManagement.Application.Features.Queries.Medicine.GetByIdOrGuidMedi
 using HospitalManagement.Application.Features.Queries.Medicine.GetDataListMedicine;
 using HospitalManagement.Application.Features.Queries.Medicine.GetMedicineDetail;
 using HospitalManagement.Application.Features.Queries.Medicine.GetValueMedicine;
+using HospitalManagement.Application.Features.Queries.Room.GetAllPagedRoom;
+using HospitalManagement.Application.Features.Queries.Room.GetAllPagedRoom;
+using HospitalManagement.Application.Features.Queries.Room.GetAllRoom;
+using HospitalManagement.Application.Features.Queries.Room.GetByIdOrGuidRoom;
 using HospitalManagement.Application.Features.Queries.User.GetAllPagedUser;
 using HospitalManagement.Application.Features.Queries.User.GetAllUser;
 using HospitalManagement.Application.Features.Queries.User.GetByUserIdOrGuidUser;
@@ -222,6 +227,24 @@ namespace HospitalManagement.Application.Common.Mappings
 
             CreateMap<GetAllPagedErrorQueryRequest, GetAllPaged_Error_Dto>();
             CreateMap<Error, GetAllPagedErrorQueryResponse>();
+            #endregion
+
+            #region ROOM
+            CreateMap<CreateRoomCommandRequest, Create_Room_Dto>();
+            CreateMap<Create_Room_Dto, Room>();
+            CreateMap<Room, CreateRoomCommandResponse>();
+
+
+            CreateMap<Room, GetAllPagedRoomQueryRequest>();
+            CreateMap<GetAllPagedRoomQueryRequest, GetAllPaged_Room_Index_Dto>();
+            CreateMap<Room, GetAllPagedRoomQueryResponse>();
+
+            CreateMap<Room, GetAllRoomQueryResponse>();
+
+            CreateMap<Room, GetByIdOrGuidRoomQueryResponse>();
+
+            CreateMap<string, GetValueXQueryResponse>()
+                .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src));
             #endregion
         }
     }

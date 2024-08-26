@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using HospitalManagement.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalManagement.Persistence.Migrations
 {
     [DbContext(typeof(HospitalManagementDbContext))]
-    partial class HospitalManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240826105055_mig_5")]
+    partial class mig_5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -780,10 +783,6 @@ namespace HospitalManagement.Persistence.Migrations
                     b.Property<int>("HospitalId")
                         .HasColumnType("integer");
 
-                    b.Property<List<string>>("PatientIds")
-                        .IsRequired()
-                        .HasColumnType("text[]");
-
                     b.Property<int>("RoomNumber")
                         .HasColumnType("integer");
 
@@ -896,6 +895,9 @@ namespace HospitalManagement.Persistence.Migrations
                     b.Property<int>("AppRoleId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("AppUserId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -935,6 +937,8 @@ namespace HospitalManagement.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AppRoleId");
+
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("AppRoleAuthority");
                 });
@@ -1000,6 +1004,12 @@ namespace HospitalManagement.Persistence.Migrations
 
                     b.Property<string>("Address")
                         .HasColumnType("text");
+
+                    b.Property<int>("AppPermissionId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("AppRoleId")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime?>("BirthDate")
                         .HasColumnType("timestamp with time zone");
@@ -2043,6 +2053,10 @@ namespace HospitalManagement.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("HospitalManagement.Domain.Entities.Identity.AppUser", null)
+                        .WithMany("RoleAuthorities")
+                        .HasForeignKey("AppUserId");
+
                     b.Navigation("AppRole");
                 });
 
@@ -2202,6 +2216,8 @@ namespace HospitalManagement.Persistence.Migrations
 
             modelBuilder.Entity("HospitalManagement.Domain.Entities.Identity.AppUser", b =>
                 {
+                    b.Navigation("RoleAuthorities");
+
                     b.Navigation("UserRoles");
                 });
 
