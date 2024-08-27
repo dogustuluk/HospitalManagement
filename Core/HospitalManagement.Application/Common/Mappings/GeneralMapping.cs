@@ -42,6 +42,7 @@ using HospitalManagement.Application.Features.Queries.Room.GetAllPagedRoom;
 using HospitalManagement.Application.Features.Queries.Room.GetAllPagedRoom;
 using HospitalManagement.Application.Features.Queries.Room.GetAllRoom;
 using HospitalManagement.Application.Features.Queries.Room.GetByIdOrGuidRoom;
+using HospitalManagement.Application.Features.Queries.Room.GetRoomAvailability;
 using HospitalManagement.Application.Features.Queries.User.GetAllPagedUser;
 using HospitalManagement.Application.Features.Queries.User.GetAllUser;
 using HospitalManagement.Application.Features.Queries.User.GetByUserIdOrGuidUser;
@@ -232,7 +233,12 @@ namespace HospitalManagement.Application.Common.Mappings
             #region ROOM
             CreateMap<CreateRoomCommandRequest, Create_Room_Dto>();
             CreateMap<Create_Room_Dto, Room>();
-            CreateMap<Room, CreateRoomCommandResponse>();
+            CreateMap<Room, CreateRoomCommandResponse>()
+                .ForMember(dest => dest.TotalBedNumber, opt => opt.MapFrom(src => src.Beds.Count));
+            CreateMap<Bed, BedResponse>();
+           
+            CreateMap<AvailabilityBedIn_Room_Dto, GetRoomAvailabilityQueryResponse>()
+            .ForMember(dest => dest.RoomBedNumber, opt => opt.MapFrom(src => src.RoomBedNumber));
 
 
             CreateMap<Room, GetAllPagedRoomQueryRequest>();

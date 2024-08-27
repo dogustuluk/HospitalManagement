@@ -1,17 +1,16 @@
-﻿using HospitalManagement.Application.Abstractions.Services.Common;
-using HospitalManagement.Application.Repositories.Common;
+﻿using AutoMapper;
+using HospitalManagement.Application.Abstractions.Services.Common;
 using HospitalManagement.Application.Attributes;
-using Microsoft.Extensions.DependencyInjection;
-using HospitalManagement.Application.Common.GenericObjects;
-using HospitalManagement.Domain.Entities.Common;
 using HospitalManagement.Application.Common.DTOs.Common;
-using System.Linq.Expressions;
-using AutoMapper;
 using HospitalManagement.Application.Common.Extensions;
-using HospitalManagement.Application.Constants;
-using Microsoft.EntityFrameworkCore;
+using HospitalManagement.Application.Common.GenericObjects;
 using HospitalManagement.Application.Common.Specifications;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using HospitalManagement.Application.Constants;
+using HospitalManagement.Application.Repositories.Common;
+using HospitalManagement.Domain.Entities.Common;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using System.Linq.Expressions;
 
 namespace HospitalManagement.Persistence.Services.Common
 {
@@ -20,14 +19,16 @@ namespace HospitalManagement.Persistence.Services.Common
     {
         private readonly IRoomReadRepository _readRepository;
         private readonly IRoomWriteRepository _writeRepository;
+        private readonly IBedWriteRepository _bedWriteRepository;
         private readonly IMapper _mapper;
         private readonly RoomSpecifications _roomSpecifications;
-        public RoomService(IRoomReadRepository readRepository, IRoomWriteRepository writeRepository, IMapper mapper, RoomSpecifications roomSpecifications)
+        public RoomService(IRoomReadRepository readRepository, IRoomWriteRepository writeRepository, IMapper mapper, RoomSpecifications roomSpecifications, IBedWriteRepository bedWriteRepository)
         {
             _readRepository = readRepository;
             _writeRepository = writeRepository;
             _mapper = mapper;
             _roomSpecifications = roomSpecifications;
+            _bedWriteRepository = bedWriteRepository;
         }
 
         public async Task<OptResult<Room>> CreateRoomAsync(Create_Room_Dto model)
@@ -35,8 +36,28 @@ namespace HospitalManagement.Persistence.Services.Common
             return await ExceptionHandler.HandleOptResultAsync(async () =>
             {
                 Room mappedModel = _mapper.Map<Room>(model);
+                mappedModel.Guid = Guid.NewGuid();
+                mappedModel.UpdatedUser = Guid.NewGuid();
+                mappedModel.UpdatedDate = DateTime.UtcNow;
                 await _writeRepository.AddAsync(mappedModel);
                 await _writeRepository.SaveChanges();
+
+                int bedCount = model.RoomType + 1;
+                for (int i = 1; i <= bedCount; i++)
+                {
+                    Bed newBed = new Bed
+                    {
+                        RoomBedNumber = i,
+                        IsOccupied = false,
+                        RoomId = mappedModel.Id,
+                        Room = mappedModel
+                    };
+
+                    mappedModel.Beds.Add(newBed);
+                    await _bedWriteRepository.AddAsync(newBed);
+                }
+                await _bedWriteRepository.SaveChanges();
+
                 return await OptResult<Room>.SuccessAsync(mappedModel);
             });
         }
@@ -151,9 +172,28 @@ namespace HospitalManagement.Persistence.Services.Common
             });
         }
 
-        public Task<OptResult<bool>> GetRoomAvailabilityAsync(int roomId)
+        public async Task<OptResult<Tuple<AvailabilityBedIn_Room_Dto, bool>>> GetRoomAvailabilityAsync(int roomId)
         {
-            throw new NotImplementedException();
+            return await ExceptionHandler.HandleOptResultAsync(async () =>
+            {
+                //var targetRoom = await _readRepository.GetByIdAsync(roomId);
+                var targetRoom = await _readRepository.GetEntityWithIncludeAsync(room => room.Id == roomId, include: "Beds");
+                if (targetRoom == null)
+                    return await OptResult<Tuple<AvailabilityBedIn_Room_Dto, bool>>.FailureAsync(Messages.NullData);
+
+                bool isAvailableBedInRoom = targetRoom.Beds.Any(bed => !bed.IsOccupied);
+
+                var roomDto = new AvailabilityBedIn_Room_Dto
+                {
+                    RoomNumber = targetRoom.RoomNumber,
+                    Floor = targetRoom.Floor,
+                    RoomBedNumber = targetRoom.Beds.Where(bed => !bed.IsOccupied).Select(bed => bed.RoomBedNumber).ToList()
+                };
+
+                var result = new Tuple<AvailabilityBedIn_Room_Dto, bool>(roomDto, isAvailableBedInRoom);
+
+                return await OptResult<Tuple<AvailabilityBedIn_Room_Dto, bool>>.SuccessAsync(result);
+            });
         }
 
         public async Task<string> GetValue(string? table, string column, string sqlQuery, int? dbType)

@@ -1,6 +1,4 @@
-﻿using HospitalManagement.Application.Abstractions.Services.Common;
-using HospitalManagement.Application.Common.DTOs.Common;
-using HospitalManagement.Application.Features.Commands.Hospital.CreateHospital;
+﻿using HospitalManagement.Application.Common.DTOs.Common;
 
 namespace HospitalManagement.Application.Features.Commands.Room.CreateRoom
 {
@@ -25,6 +23,8 @@ namespace HospitalManagement.Application.Features.Commands.Room.CreateRoom
                     return await OptResult<CreateRoomCommandResponse>.FailureAsync(data.Messages);
 
                 var response = _mapper.Map<CreateRoomCommandResponse>(data.Data);
+                response.Beds = _mapper.Map<List<BedResponse>>(data.Data.Beds);
+
                 return await OptResult<CreateRoomCommandResponse>.SuccessAsync(response, Messages.SuccessfullyAdded);
             });
         }

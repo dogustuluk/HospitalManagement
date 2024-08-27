@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using HospitalManagement.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalManagement.Persistence.Migrations
 {
     [DbContext(typeof(HospitalManagementDbContext))]
-    partial class HospitalManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240827122651_mig_8")]
+    partial class mig_8
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -234,6 +237,9 @@ namespace HospitalManagement.Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("BedNumber")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -248,9 +254,6 @@ namespace HospitalManagement.Persistence.Migrations
 
                     b.Property<string>("PatientId")
                         .HasColumnType("text");
-
-                    b.Property<int>("RoomBedNumber")
-                        .HasColumnType("integer");
 
                     b.Property<int>("RoomId")
                         .HasColumnType("integer");

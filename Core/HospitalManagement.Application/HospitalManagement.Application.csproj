@@ -38,7 +38,6 @@
     <Folder Include="Features\Commands\Room\RemovePatientFromRoom\" />
     <Folder Include="Features\Commands\Room\UpdateRoom\" />
     <Folder Include="Features\Queries\Room\GetEmptyRoomOrBedCount\" />
-    <Folder Include="Features\Queries\Room\GetRoomAvailability\" />
     <Folder Include="Features\Queries\Room\GetCheckRoomCapacity\" />
     <Folder Include="Features\Queries\Room\GetAvailableRooms\" />
     <Folder Include="Repositories\HR\" />

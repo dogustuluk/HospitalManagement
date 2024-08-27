@@ -35,6 +35,7 @@ namespace HospitalManagement.Persistence.Context
         public DbSet<Domain.Entities.Common.File> Files { get; set; }
         public DbSet<Hospital> Hospitals { get; set; }
         public DbSet<ItemType> ItemTypes { get; set; }
+        public DbSet<Bed> Beds { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Status> Statuses { get; set; }
         #endregion

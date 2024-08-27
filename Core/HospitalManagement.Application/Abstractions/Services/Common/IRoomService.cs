@@ -15,7 +15,7 @@ namespace HospitalManagement.Application.Abstractions.Services.Common
         Task<OptResult<PaginatedList<Room>>> GetAllPagedListAsync(GetAllPaged_Room_Index_Dto model);
         Task<string> GetValue(string? table, string column, string sqlQuery, int? dbType);
         Task<int> EmptyRoomOrBedCountAsync();
-        Task<OptResult<bool>> GetRoomAvailabilityAsync(int roomId);
+        Task<OptResult<Tuple<AvailabilityBedIn_Room_Dto, bool>>> GetRoomAvailabilityAsync(int roomId);
         Task<OptResult<int>> CheckRoomCapacityAsync(int roomId);
         Task<List<Room>> GetAvailableRoomsAsync(DateTime startDate, DateTime endDate);
 

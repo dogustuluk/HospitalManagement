@@ -1,4 +1,6 @@
-﻿namespace HospitalManagement.Application.Features.Commands.Room.CreateRoom
+﻿using HospitalManagement.Application.Common.DTOs.Common;
+
+namespace HospitalManagement.Application.Features.Commands.Room.CreateRoom
 {
     public class CreateRoomCommandResponse
     {
@@ -7,6 +9,8 @@
         public int Floor { get; set; }
         public int DepartmentId { get; set; }
         public int RoomType { get; set; }
-        public List<string> PatientIds { get; set; }
+        public int TotalBedNumber { get; set; }
+        public List<BedResponse>? Beds { get; set; }
+
     }
 }

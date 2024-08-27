@@ -4,6 +4,7 @@ using HospitalManagement.Application.Features.Commands.Room.CreateRoom;
 using HospitalManagement.Application.Features.Queries.Room.GetAllPagedRoom;
 using HospitalManagement.Application.Features.Queries.Room.GetAllRoom;
 using HospitalManagement.Application.Features.Queries.Room.GetByIdOrGuidRoom;
+using HospitalManagement.Application.Features.Queries.Room.GetRoomAvailability;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -61,12 +62,18 @@ namespace RoomManagement.API.Controllers
             OptResult<List<GetDataListXQueryResponse>> response = await _mediator.Send(request);
             return Ok(response);
         }
-
         [HttpGet]
         [Route("GetValueRoom")]
         public async Task<IActionResult> GetValueRoom([FromQuery] GetValueXQueryRequest request)
         {
             OptResult<GetValueXQueryResponse> response = await _mediator.Send(request);
+            return Ok(response);
+        }
+        [HttpGet]
+        [Route("GetRoomAvailability")]
+        public async Task<IActionResult> GetRoomAvailability([FromQuery] GetRoomAvailabilityQueryRequest request)
+        {
+            OptResult<GetRoomAvailabilityQueryResponse> response = await _mediator.Send(request);
             return Ok(response);
         }
     }
