@@ -1,4 +1,4 @@
-﻿namespace HospitalManagement.Domain.Entities.Common
+﻿namespace HospitalManagement.Domain.Entities.Management
 {
     public class DbParameterType : BaseEntity
     {

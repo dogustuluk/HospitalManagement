@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using HospitalManagement.Domain.Entities.Users;
+using Microsoft.AspNetCore.Identity;
 
 namespace HospitalManagement.Domain.Entities.Identity
 {
@@ -26,6 +27,8 @@ namespace HospitalManagement.Domain.Entities.Identity
         public DateTime? RefreshTokenEndDate { get; set; }
 
         public virtual ICollection<AppUserRole> UserRoles { get; set; }
+        public virtual Patient? Patient { get; set; }
+        public virtual Doctor? Doctor { get; set; }
 
     }
 }

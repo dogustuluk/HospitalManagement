@@ -2,6 +2,6 @@
 {
     public interface IUserRegistrationStrategyService
     {
-        Task ExecuteAsync(AppUser user);
+        Task ExecuteAsync(AppUser user, Create_Patient_Dto? patientDto );
     }
 }

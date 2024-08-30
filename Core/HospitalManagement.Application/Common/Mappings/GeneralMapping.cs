@@ -2,7 +2,6 @@
 using HospitalManagement.Application.Common.DTOs.Appointment;
 using HospitalManagement.Application.Common.DTOs.Common;
 using HospitalManagement.Application.Common.DTOs.Medical;
-using HospitalManagement.Application.Common.DTOs.User;
 using HospitalManagement.Application.Features.Commands.Announcement.CrearteAnnouncement;
 using HospitalManagement.Application.Features.Commands.Announcement.UpdateAnnouncement;
 using HospitalManagement.Application.Features.Commands.Appointment.CreateAppointment;
@@ -21,6 +20,11 @@ using HospitalManagement.Application.Features.Queries.Appointment.GetByIdAppoint
 using HospitalManagement.Application.Features.Queries.Appointment.GetDataListAppointment;
 using HospitalManagement.Application.Features.Queries.Appointment.GetValueAppointment;
 using HospitalManagement.Application.Features.Queries.Citiy.GetDataListCity;
+using HospitalManagement.Application.Features.Queries.DbParameter.GetAllDbParameter;
+using HospitalManagement.Application.Features.Queries.DbParameter.GetAllPagedDbParameter;
+using HospitalManagement.Application.Features.Queries.DbParameterType.GetAllDbParameterType;
+using HospitalManagement.Application.Features.Queries.DbParameterType.GetAllPagedDbParameterType;
+using HospitalManagement.Application.Features.Queries.DbParameterType.GetByIdOrGuidDbParameterType;
 using HospitalManagement.Application.Features.Queries.Department.GetByEntity;
 using HospitalManagement.Application.Features.Queries.Department.GetByGuid;
 using HospitalManagement.Application.Features.Queries.Department.GetById;
@@ -37,8 +41,6 @@ using HospitalManagement.Application.Features.Queries.Medicine.GetAllPagedMedici
 using HospitalManagement.Application.Features.Queries.Medicine.GetByIdOrGuidMedicine;
 using HospitalManagement.Application.Features.Queries.Medicine.GetDataListMedicine;
 using HospitalManagement.Application.Features.Queries.Medicine.GetMedicineDetail;
-using HospitalManagement.Application.Features.Queries.Medicine.GetValueMedicine;
-using HospitalManagement.Application.Features.Queries.Room.GetAllPagedRoom;
 using HospitalManagement.Application.Features.Queries.Room.GetAllPagedRoom;
 using HospitalManagement.Application.Features.Queries.Room.GetAllRoom;
 using HospitalManagement.Application.Features.Queries.Room.GetByIdOrGuidRoom;
@@ -47,6 +49,7 @@ using HospitalManagement.Application.Features.Queries.User.GetAllPagedUser;
 using HospitalManagement.Application.Features.Queries.User.GetAllUser;
 using HospitalManagement.Application.Features.Queries.User.GetByUserIdOrGuidUser;
 using HospitalManagement.Application.Utilities.Converters;
+using HospitalManagement.Domain.Entities.Users;
 
 namespace HospitalManagement.Application.Common.Mappings
 {
@@ -62,8 +65,8 @@ namespace HospitalManagement.Application.Common.Mappings
             CreateMap<AppUser, CreateUser_Dto>().ReverseMap();
 
 
-            CreateMap<UpdateUserCommandRequest, UpdateUser_Dto>().ReverseMap();            
-            CreateMap<AppUser, UpdateUserCommandResponse>().ReverseMap();           
+            CreateMap<UpdateUserCommandRequest, UpdateUser_Dto>().ReverseMap();
+            CreateMap<AppUser, UpdateUserCommandResponse>().ReverseMap();
             CreateMap<UpdateUser_Dto, UpdateUserCommandResponse>();
             CreateMap<UpdateUser_Dto, AppUser>().ReverseMap();
 
@@ -71,10 +74,15 @@ namespace HospitalManagement.Application.Common.Mappings
             CreateMap<AppUser, GetAllPagedUserQueryResponse>();
 
             CreateMap<AppUser, GetByIdOrGuidUserQueryResponse>();
-           
+
             CreateMap<DataList1, GetDataListXQueryResponse>();
 
             CreateMap<AppUser, GetAllUserQueryResponse>();
+
+            #endregion
+
+            #region PATIENT
+            CreateMap<Create_Patient_Dto, Patient>();
 
             #endregion
 
@@ -94,6 +102,22 @@ namespace HospitalManagement.Application.Common.Mappings
             CreateMap<DataList1, GetDataListQueryResponse>();
             CreateMap<CreateDepartmentCommandRequest, Create_Department_Dto>();
             #endregion
+
+            #region DBPARAMETERTYPE
+            CreateMap<DbParameterType, GetAllDbParameterTypeQueryResponse>();
+
+            CreateMap<GetAllPagedDbParameterTypeQueryRequest, GetAllPaged_DBParameterType_Index_Dto>();
+            CreateMap<DbParameterType, GetAllPagedDbParameterTypeQueryResponse>();
+            #endregion
+
+            #region DBPARAMETER
+            CreateMap<DbParameter, GetAllDbParameterQueryResponse>();
+
+            CreateMap<GetAllPagedDbParameterQueryRequest, GetAllPaged_DBParameter_Index_Dto>();
+            CreateMap<DbParameter, GetAllPagedDbParameterQueryResponse>();
+            #endregion
+
+            CreateMap<DbParameterType, GetByIdOrGuidDbParameterTypeQueryResponse>();
 
             #region APPOINTMENT
             CreateMap<CreateAppointment_Dto, VisitorAppointment>()
@@ -195,9 +219,9 @@ namespace HospitalManagement.Application.Common.Mappings
 
             CreateMap<Update_Medicine_Dto, UpdateMedicineCommandRequest>().ForMember(dest => dest.MedicineDetail, opt => opt.MapFrom(src => src.MedicineDetail))
                 .ReverseMap(); ;
-           
+
             CreateMap<Medicine, UpdateMedicineCommandResponse>().ReverseMap();
-            
+
             CreateMap<Update_Medicine_Dto, Medicine>()
                 .ForMember(dest => dest.MedicineDetail, opt => opt.MapFrom(src => src.MedicineDetail))
                 .ReverseMap();
@@ -206,7 +230,7 @@ namespace HospitalManagement.Application.Common.Mappings
 
             CreateMap<GetAllPagedMedicineQueryRequest, GetAllPaged_Medicine_Index_Dto>();
             CreateMap<Medicine, GetAllPagedMedicineQueryResponse>();
-            
+
             CreateMap<Medicine, GetByIdOrGuidAnnouncementQueryResponse>();
 
             CreateMap<DataList1, GetDataListMedicineQueryResponse>();
@@ -216,7 +240,7 @@ namespace HospitalManagement.Application.Common.Mappings
 
             CreateMap<Medicine, GetAllMedicineQueryResponse>();
             CreateMap<Medicine, GetByIdOrGuidMedicineQueryResponse>();
-            
+
             CreateMap<MedicineDetail, GetMedicineDetailQueryResponse>();
             #endregion
 
@@ -236,7 +260,7 @@ namespace HospitalManagement.Application.Common.Mappings
             CreateMap<Room, CreateRoomCommandResponse>()
                 .ForMember(dest => dest.TotalBedNumber, opt => opt.MapFrom(src => src.Beds.Count));
             CreateMap<Bed, BedResponse>();
-           
+
             CreateMap<AvailabilityBedIn_Room_Dto, GetRoomAvailabilityQueryResponse>()
             .ForMember(dest => dest.RoomBedNumber, opt => opt.MapFrom(src => src.RoomBedNumber));
 

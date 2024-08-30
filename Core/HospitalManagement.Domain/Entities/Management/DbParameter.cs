@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HospitalManagement.Domain.Entities.Common
+﻿namespace HospitalManagement.Domain.Entities.Management
 {
     public class DbParameter : BaseEntity
     {

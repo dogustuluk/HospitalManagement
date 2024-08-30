@@ -1,6 +1,6 @@
 ﻿namespace HospitalManagement.Application.Repositories.Common
 {
-    public interface IDbParameterReadRepository : IReadRepository<Domain.Entities.Common.DbParameter>
+    public interface IDbParameterReadRepository : IReadRepository<DbParameter>
     {
     }
 }

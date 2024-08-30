@@ -179,6 +179,9 @@ namespace HospitalManagement.Persistence.Migrations
                     b.Property<DateTime?>("DateTimeValue5")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int?>("DoctorId")
+                        .HasColumnType("integer");
+
                     b.Property<Guid>("Guid")
                         .HasColumnType("uuid");
 
@@ -222,6 +225,8 @@ namespace HospitalManagement.Persistence.Migrations
                         .HasColumnType("boolean");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
 
                     b.ToTable("AnyParams");
                 });
@@ -1883,6 +1888,148 @@ namespace HospitalManagement.Persistence.Migrations
                     b.ToTable("TreatmentPlans");
                 });
 
+            modelBuilder.Entity("HospitalManagement.Domain.Entities.Users.Doctor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Certifications")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ConsultationHours")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("CreatedUser")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("DoctorLeftDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DoctorStartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("Guid")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Languages")
+                        .HasColumnType("text");
+
+                    b.Property<string>("LicenseNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("text");
+
+                    b.Property<int>("SpecializationId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UpdatedUser")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId")
+                        .IsUnique();
+
+                    b.ToTable("Doctors");
+                });
+
+            modelBuilder.Entity("HospitalManagement.Domain.Entities.Users.Patient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("AdmissionDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("BedId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("CreatedUser")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Desc")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Diagnosis")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DischargeDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<List<int>>("Doctors")
+                        .HasColumnType("integer[]");
+
+                    b.Property<Guid>("Guid")
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("MedicineId")
+                        .HasColumnType("integer");
+
+                    b.Property<List<int>>("Medicines")
+                        .HasColumnType("integer[]");
+
+                    b.Property<int>("PatientType")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("RoomId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("TreatmentPlanId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("TreatmentPlanId1")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UpdatedUser")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId")
+                        .IsUnique();
+
+                    b.HasIndex("MedicineId");
+
+                    b.HasIndex("RoomId");
+
+                    b.HasIndex("TreatmentPlanId1");
+
+                    b.ToTable("Patients");
+                });
+
             modelBuilder.Entity("MedicinePrescription", b =>
                 {
                     b.Property<int>("MedicinesId")
@@ -2051,6 +2198,13 @@ namespace HospitalManagement.Persistence.Migrations
                         .HasForeignKey("HospitalId");
                 });
 
+            modelBuilder.Entity("HospitalManagement.Domain.Entities.Common.AnyParam", b =>
+                {
+                    b.HasOne("HospitalManagement.Domain.Entities.Users.Doctor", null)
+                        .WithMany("Params")
+                        .HasForeignKey("DoctorId");
+                });
+
             modelBuilder.Entity("HospitalManagement.Domain.Entities.Common.Bed", b =>
                 {
                     b.HasOne("HospitalManagement.Domain.Entities.Common.Room", "Room")
@@ -2147,6 +2301,46 @@ namespace HospitalManagement.Persistence.Migrations
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("TreatmentPlan");
+                });
+
+            modelBuilder.Entity("HospitalManagement.Domain.Entities.Users.Doctor", b =>
+                {
+                    b.HasOne("HospitalManagement.Domain.Entities.Identity.AppUser", "AppUser")
+                        .WithOne("Doctor")
+                        .HasForeignKey("HospitalManagement.Domain.Entities.Users.Doctor", "AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+                });
+
+            modelBuilder.Entity("HospitalManagement.Domain.Entities.Users.Patient", b =>
+                {
+                    b.HasOne("HospitalManagement.Domain.Entities.Identity.AppUser", "AppUser")
+                        .WithOne("Patient")
+                        .HasForeignKey("HospitalManagement.Domain.Entities.Users.Patient", "AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HospitalManagement.Domain.Entities.Medical.Medicine", "Medicine")
+                        .WithMany()
+                        .HasForeignKey("MedicineId");
+
+                    b.HasOne("HospitalManagement.Domain.Entities.Common.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomId");
+
+                    b.HasOne("HospitalManagement.Domain.Entities.Medical.TreatmentPlan", "TreatmentPlan")
+                        .WithMany()
+                        .HasForeignKey("TreatmentPlanId1");
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Medicine");
+
+                    b.Navigation("Room");
 
                     b.Navigation("TreatmentPlan");
                 });
@@ -2256,6 +2450,10 @@ namespace HospitalManagement.Persistence.Migrations
 
             modelBuilder.Entity("HospitalManagement.Domain.Entities.Identity.AppUser", b =>
                 {
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Patient");
+
                     b.Navigation("UserRoles");
                 });
 
@@ -2267,6 +2465,11 @@ namespace HospitalManagement.Persistence.Migrations
             modelBuilder.Entity("HospitalManagement.Domain.Entities.Medical.TreatmentPlan", b =>
                 {
                     b.Navigation("Prescriptions");
+                });
+
+            modelBuilder.Entity("HospitalManagement.Domain.Entities.Users.Doctor", b =>
+                {
+                    b.Navigation("Params");
                 });
 #pragma warning restore 612, 618
         }

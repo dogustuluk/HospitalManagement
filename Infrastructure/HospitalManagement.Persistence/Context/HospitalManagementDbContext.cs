@@ -3,6 +3,7 @@ using HospitalManagement.Domain.Entities.Common;
 using HospitalManagement.Domain.Entities.Identity;
 using HospitalManagement.Domain.Entities.Management;
 using HospitalManagement.Domain.Entities.Medical;
+using HospitalManagement.Domain.Entities.Users;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -67,6 +68,8 @@ namespace HospitalManagement.Persistence.Context
         #endregion
 
         #region Users
+        public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Patient> Patients { get; set; }
 
         #endregion
 

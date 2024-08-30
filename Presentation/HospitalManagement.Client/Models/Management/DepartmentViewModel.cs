@@ -2,6 +2,17 @@
 
 namespace HospitalManagement.Client.Models.Management
 {
+    public class Create_Department_ViewModel
+    {
+        public int ParentId { get; set; }
+        public string? DepartmentCode { get; set; }
+        public string? DepartmentName { get; set; }
+        public int SortOrderNo { get; set; }
+        public int ManagerMemberId { get; set; }
+        public string? Param1 { get; set; }
+        public string? Param2 { get; set; }
+        public bool isActive { get; set; }
+    }
     public class Department_Index_ViewModel
     {
         public string? PageTitle { get; set; }

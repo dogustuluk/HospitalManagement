@@ -19,6 +19,8 @@ namespace HospitalManagement.Application
             //otomatize et -->
             // serviceCollection.AddScoped<GenericSpecification<Department>>();
             serviceCollection.AddSingleton<IHostedService, CityCacheHostedService>();
+            serviceCollection.AddScoped<DbParameterSpecifications>();
+            serviceCollection.AddScoped<DbParameterTypeSpecifications>();
             serviceCollection.AddScoped<RoomSpecifications>();
             serviceCollection.AddScoped<UserSpecifications>();
             serviceCollection.AddScoped<ErrorSpecifications>();
@@ -31,7 +33,10 @@ namespace HospitalManagement.Application
             serviceCollection.AddScoped<ICryptographyService,CryptographyService>();
             serviceCollection.AddScoped<IUserRegistrationStrategyService, DefaultUserRegistrationStrategyService>();
             serviceCollection.AddScoped<IUserRegistrationStrategyService, DoctorUserRegistrationStrategyService>();
+
+            serviceCollection.AddScoped<PatientUserRegistrationStrategyService>();
             serviceCollection.AddScoped<IUserRegistrationStrategyService, PatientUserRegistrationStrategyService>();
+
             serviceCollection.AddScoped<IUserRegistrationStrategyService, VisitorAppointmentUserRegistrationStrategyService>();
 
         }

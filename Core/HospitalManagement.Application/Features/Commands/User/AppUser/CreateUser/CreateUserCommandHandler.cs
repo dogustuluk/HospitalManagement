@@ -22,13 +22,13 @@
             {
                 var createUserDto = _mapper.Map<CreateUser_Dto>(request);
                 createUserDto.IdentityNo = await _cryptoHelperService.EncryptString(request.IdentityNo);
-               
+
                 var createdUser = await _userService.CreateAsync(createUserDto);
                 if (createdUser.Succeeded)
                 {
                     var appUser = _mapper.Map<Domain.Entities.Identity.AppUser>(createdUser.Data);
                     var strategy = _strategyFactory.GetRegisterStrategy(appUser.UserType);
-                    await strategy.ExecuteAsync(appUser);
+                    await strategy.ExecuteAsync(appUser,request.PatientUser);
 
                     response.Succeeded = true;
                     response.Data = _mapper.Map<CreateUserCommandResponse>(createdUser.Data);

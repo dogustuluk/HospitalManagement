@@ -1,5 +1,5 @@
 ﻿using HospitalManagement.Application.Repositories.Common;
-using HospitalManagement.Domain.Entities.Common;
+using HospitalManagement.Domain.Entities.Management;
 using HospitalManagement.Persistence.Context;
 
 namespace HospitalManagement.Persistence.Repositories.Common

@@ -19,5 +19,13 @@
         public int CityId { get; set; }
         public DateTime BirthDate { get; set; }
         public DateTime Experience { get; set; }
+
+        public Create_Patient_Dto? PatientUser { get; set; }
+        public DoctorDto? DoctorUser { get; set; }
     }
+    public class DoctorDto
+    {
+        public int DoctorId { get; set; }
+    }
+
 }

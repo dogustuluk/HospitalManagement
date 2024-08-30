@@ -32,18 +32,25 @@
     <Folder Include="Abstractions\Token\" />
     <Folder Include="Abstractions\Storage\" />
     <Folder Include="Features\Commands\Announcement\DeleteAnnouncement\" />
+    <Folder Include="Features\Commands\DbParameterType\CreateDbParameterType\" />
+    <Folder Include="Features\Commands\DbParameterType\DeleteDbParameterType\" />
+    <Folder Include="Features\Commands\DbParameterType\UpdateDbParameterType\" />
+    <Folder Include="Features\Commands\DbParameter\CreateDbParameter\" />
+    <Folder Include="Features\Commands\DbParameter\DeleteDbParameter\" />
+    <Folder Include="Features\Commands\DbParameter\UpdateDbParameter\" />
     <Folder Include="Features\Commands\Hospital\DeleteHospital\" />
     <Folder Include="Features\Commands\Room\DeleteRoom\" />
     <Folder Include="Features\Commands\Room\AppendPatientToRoom\" />
     <Folder Include="Features\Commands\Room\RemovePatientFromRoom\" />
     <Folder Include="Features\Commands\Room\UpdateRoom\" />
+    <Folder Include="Features\Queries\DbParameter\GetDataListDbParameter\" />
+    <Folder Include="Features\Queries\DbParameter\GetValueDbParameter\" />
+    <Folder Include="Features\Queries\DbParameter\GetByIdOrGuidDbParameter\" />
     <Folder Include="Features\Queries\Room\GetEmptyRoomOrBedCount\" />
-    <Folder Include="Features\Queries\Room\GetCheckRoomCapacity\" />
     <Folder Include="Features\Queries\Room\GetAvailableRooms\" />
     <Folder Include="Repositories\HR\" />
     <Folder Include="Repositories\Commerce\" />
     <Folder Include="Repositories\Payment\" />
-    <Folder Include="Repositories\Users\" />
   </ItemGroup>
 
 </Project>
