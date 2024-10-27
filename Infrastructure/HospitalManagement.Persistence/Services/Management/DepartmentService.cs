@@ -91,7 +91,8 @@ namespace HospitalManagement.Persistence.Services.Management
 
             PaginatedList<Department> pagedDepartments;
 
-            if (!string.IsNullOrEmpty(model.SearchText) || model.OrderBy != "Id ASC" || model.ParentID != -99 || model.ManagerMemberID > 0 ||!_redisCacheService.IsConnected)
+            //redisteki index page kısmını çöz
+            if (!string.IsNullOrEmpty(model.SearchText) || model.OrderBy != "Id ASC" || model.ParentID != -99 || model.ManagerMemberID > 0 || model.PageIndex != 1 ||!_redisCacheService.IsConnected)
                 pagedDepartments = await _readRepository.GetDataPagedAsync(predicate, "", model.PageIndex, model.Take, model.OrderBy);
             else
                 pagedDepartments = await _redisCacheService.GetPaginatedListAsync("departments", model.PageIndex, async pageIndex =>

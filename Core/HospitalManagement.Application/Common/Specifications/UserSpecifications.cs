@@ -20,8 +20,9 @@ namespace HospitalManagement.Application.Common.Specifications
             if (!string.IsNullOrEmpty(requestParameters.SearchText))
                 predicate1 = predicate1.And(a => a.NameSurname.Contains(requestParameters.SearchText));
 
-            if(requestParameters.UserType > 0)
-                predicate1 = predicate1.And(a => a.UserType == requestParameters.UserType);
+
+            //if(requestParameters.UserType > 0)
+            //    predicate1 = predicate1.And(a => a.UserType == requestParameters.UserType);
 
             return predicate1;
         }
