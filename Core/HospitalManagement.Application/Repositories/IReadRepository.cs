@@ -22,6 +22,7 @@
         Task<T> GetByEntityAsync(object value, string fieldName = null);
         Task<T> GetByIdAsync(int id);
         Task<T> GetByGuidAsync(Guid guid);
+        Task<T> GetByIdOrGuidAsync(object keyValue);
         Task<T> GetEntityWithIncludeAsync(Expression<Func<T, bool>> predicate, string? include);
         string? GetValue(string table, string column, string sqlQuery);
         Task<string?> GetValueAsync(string table, string column, string sqlQuery, int dbType);

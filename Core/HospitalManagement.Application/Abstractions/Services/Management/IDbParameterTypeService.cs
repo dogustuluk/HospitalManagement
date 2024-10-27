@@ -3,6 +3,7 @@
     public interface IDbParameterTypeService
     {
         Task<OptResult<DbParameterType>> CreateDbParameterTypeAsync(Create_DBParameterType_Dto model);
+        Task<OptResult<DbParameterType>> DeleteDbParameterTypeAsync(Guid Guid, int deleteType);
         Task<OptResult<DbParameterType>> UpdateDbParameterTypeAsync(Update_DBParameterType_Dto model);
         Task<OptResult<DbParameterType>> GetByIdOrGuid(object criteria);
         Task<List<DbParameterType>> GetAllDbParameterTypeAsync(Expression<Func<DbParameterType, bool>>? predicate, string? include);

@@ -47,6 +47,19 @@ namespace HospitalManagement.Persistence.Services.Management
                 return await OptResult<DbParameterType>.SuccessAsync(mappedModel);
             });
         }
+        public async Task<OptResult<DbParameterType>> DeleteDbParameterTypeAsync(Guid Guid, int deleteType)
+        {
+            return await ExceptionHandler.HandleOptResultAsync(async () =>
+            {
+                var myData = await _readRepository.GetByGuidAsync(Guid);
+                if (deleteType == 1) //soft
+                    myData.isActive = false;
+                else if (deleteType == 2)
+                    await _writeRepository.RemoveAsync(myData.Id);
+                await _writeRepository.SaveChanges();
+                return await OptResult<DbParameterType>.SuccessAsync(myData);
+            });
+        }
         public async Task<OptResult<DbParameterType>> UpdateDbParameterTypeAsync(Update_DBParameterType_Dto model)
         {
             return await ExceptionHandler.HandleOptResultAsync(async () =>
@@ -139,5 +152,7 @@ namespace HospitalManagement.Persistence.Services.Management
                 return returnDataList;
             });
         }
+
+
     }
 }

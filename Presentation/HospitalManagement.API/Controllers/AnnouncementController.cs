@@ -1,5 +1,6 @@
 ﻿using HospitalManagement.Application.Common.GenericObjects;
 using HospitalManagement.Application.Features.Commands.Announcement.CrearteAnnouncement;
+using HospitalManagement.Application.Features.Commands.Announcement.DeleteAnnouncement;
 using HospitalManagement.Application.Features.Commands.Announcement.UpdateAnnouncement;
 using HospitalManagement.Application.Features.Queries.Announcement.GetAllAnnouncement;
 using HospitalManagement.Application.Features.Queries.Announcement.GetAllPagedAnnouncement;
@@ -35,6 +36,13 @@ namespace HospitalManagement.API.Controllers
             OptResult<UpdateAnnouncementCommandResponse> response = await _mediator.Send(request);
             return Ok(response);
         }
+        [HttpDelete]
+        [Route("DeleteAnnouncement")]
+        public async Task<IActionResult> DeleteAnnouncement(DeleteAnnouncementCommandRequest request)
+        {
+            OptResult<DeleteAnnouncementCommandResponse> response = await _mediator.Send(request);
+            return Ok(response);
+        }
         [HttpGet]
         [Route("GetAllAnnouncement")]
         public async Task<IActionResult> GetAllHospital([FromQuery] GetAllAnnouncementQueryRequest request)
@@ -44,7 +52,7 @@ namespace HospitalManagement.API.Controllers
         }
         [HttpGet]
         [Route("GetAllPagedAnnouncement")]
-        public async Task<IActionResult> GetAllPagedAnnouncement([FromQuery]GetAllPagedAnnouncementQueryRequest request)
+        public async Task<IActionResult> GetAllPagedAnnouncement([FromQuery] GetAllPagedAnnouncementQueryRequest request)
         {
             OptResult<PaginatedList<GetAllPagedAnnouncementQueryResponse>> response = await _mediator.Send(request);
             return Ok(response);

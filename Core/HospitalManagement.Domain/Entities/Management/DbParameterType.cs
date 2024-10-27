@@ -13,7 +13,7 @@
         public int ItemTypeId { get; set; }
         public string? ItemColumName { get; set; }
         public string? Params { get; set; }
-
+        public bool isActive { get; set; }
         public virtual IList<DbParameter> DBParameters { get; set; }
     }
 }

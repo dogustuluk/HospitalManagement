@@ -1,5 +1,7 @@
 ﻿using HospitalManagement.Application.Common.DTOs._0RequestResponse;
 using HospitalManagement.Application.Common.GenericObjects;
+using HospitalManagement.Application.Features.Commands.DbParameterType.CreateDbParameterType;
+using HospitalManagement.Application.Features.Commands.DbParameterType.DeleteDbParameterType;
 using HospitalManagement.Application.Features.Queries.DbParameterType.GetAllDbParameterType;
 using HospitalManagement.Application.Features.Queries.DbParameterType.GetAllPagedDbParameterType;
 using HospitalManagement.Application.Features.Queries.DbParameterType.GetByIdOrGuidDbParameterType;
@@ -19,13 +21,13 @@ namespace DbParameterTypeManagement.API.Controllers
             _mediator = mediator;
         }
 
-        //[HttpPost]
-        //[Route("CreateDbParameterType")]
-        //public async Task<IActionResult> CreateDbParameterType(CreateDbParameterTypeCommandRequest request)
-        //{
-        //    OptResult<CreateDbParameterTypeCommandResponse> response = await _mediator.Send(request);
-        //    return Ok(response);
-        //}
+        [HttpPost]
+        [Route("CreateDbParameterType")]
+        public async Task<IActionResult> CreateDbParameterType(CreateDbParameterTypeCommandRequest request)
+        {
+            OptResult<CreateDbParameterTypeCommandResponse> response = await _mediator.Send(request);
+            return Ok(response);
+        }
         //[HttpPut]
         //[Route("UpdateDbParameterType")]
         //public async Task<IActionResult> UpdateDbParameterType(UpdateDbParameterTypeCommandRequest request)
@@ -33,6 +35,13 @@ namespace DbParameterTypeManagement.API.Controllers
         //    OptResult<UpdateDbParameterTypeCommandResponse> response = await _mediator.Send(request);
         //    return Ok(response);
         //}
+        [HttpDelete]
+        [Route("DeleteDbParameterType")]
+        public async Task<IActionResult> DeleteDbParameterType(DeleteDbParameterTypeCommandRequest request)
+        {
+            OptResult<DeleteDbParameterTypeCommandResponse> response = await _mediator.Send(request);
+            return Ok(response);
+        }
         [HttpGet]
         [Route("GetAllDbParameterType")]
         public async Task<IActionResult> GetAllDbParameterType([FromQuery] GetAllDbParameterTypeQueryRequest request)

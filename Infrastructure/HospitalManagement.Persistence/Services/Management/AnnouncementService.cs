@@ -40,13 +40,26 @@ namespace HospitalManagement.Persistence.Services.Management
                     a => a.AnnouncementTitle == mappedModel.AnnouncementTitle &&
                     a.AnnouncementContent == mappedModel.AnnouncementContent);
 
-                if (isExist) 
+                if (isExist)
                     return await OptResult<Announcement>.FailureAsync(Messages.AddedDataIsAlready);
 
                 await _writeRepository.AddAsync(mappedModel);
                 await _writeRepository.SaveChanges();
                 return await OptResult<Announcement>.SuccessAsync(mappedModel);
             });
+        }
+        public async Task<OptResult<Announcement>> DeleteAnnouncementAsync(object value, int deleteType)
+        {
+            var myUser = await _readRepository.GetByIdOrGuidAsync(value);
+
+            if (deleteType == 1) //hard
+                myUser.isActive = false;
+
+            else if (deleteType == 2) //hard
+                await _writeRepository.RemoveAsync(myUser.Id);
+
+            await _writeRepository.SaveChanges();
+            return await OptResult<Announcement>.SuccessAsync(myUser);
         }
         public async Task<OptResult<Announcement>> UpdateAnnouncementAsync(Update_Announcemnet_Dto model)
         {
@@ -57,7 +70,7 @@ namespace HospitalManagement.Persistence.Services.Management
                     return await OptResult<Announcement>.FailureAsync(Messages.NullData);
 
                 var myExistDatas = await _readRepository.GetAllAsync(a => a.AnnouncementTitle == model.AnnouncementTitle && a.AnnouncementContent == model.AnnouncementContent, "");
-                if (myExistDatas.Any()) 
+                if (myExistDatas.Any())
                     return await OptResult<Announcement>.FailureAsync(Messages.UpdatedDataIsAlready);
 
                 Announcement mappedModel = _mapper.Map(model, myAnnouncement);

@@ -1,7 +1,6 @@
 ﻿using HospitalManagement.Application.Common.GenericObjects;
 using HospitalManagement.Application.Repositories;
 using HospitalManagement.Domain.Entities.Common;
-using HospitalManagement.Domain.Entities.Identity;
 using HospitalManagement.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
@@ -75,6 +74,25 @@ namespace HospitalManagement.Persistence.Repositories
             if (entity != null) return entity;
             else throw new ArgumentNullException("guid bulunamadı");
         }
+
+        public async Task<T> GetByIdOrGuidAsync(object keyValue)
+        {
+            if (keyValue is Guid guid)
+            {
+                var entity = await Table.FirstOrDefaultAsync(x => x.Guid == guid);
+                if (entity != null) return entity;
+                else throw new ArgumentNullException("Guid bulunamadı");
+            }
+            else if (keyValue is int id)
+            {
+                var entity = await Table.FirstOrDefaultAsync(x => x.Id == id);
+                if (entity != null) return entity;
+                else throw new ArgumentNullException("Id bulunamadı");
+            }
+            else throw new ArgumentException("Geçersiz anahtar değeri.");
+
+        }
+
 
         public async Task<T> GetByEntityAsync(object value, string? fieldName = null)
         {
@@ -283,5 +301,6 @@ Expression<Func<T, bool>>? predicate, string? include, Expression<Func<T, TResul
             //    throw new ArgumentNullException();
             return query;
         }
+
     }
 }
