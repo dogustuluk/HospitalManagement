@@ -17,8 +17,8 @@ public class DeleteAnnouncementCommandHandler : IRequestHandler<DeleteAnnounceme
         {
             var data = await _announcementService.DeleteAnnouncementAsync(request.Guid, 1);
             var mappedData = _mapper.Map<DeleteAnnouncementCommandResponse>(data.Data);
-            if (mappedData == null) return await OptResult<DeleteAnnouncementCommandResponse>.FailureAsync(Messages.NullData);
-            return await OptResult<DeleteAnnouncementCommandResponse>.SuccessAsync(mappedData, Messages.SuccessfullyDeleted);
+            if (mappedData == null) return await OptResult<DeleteAnnouncementCommandResponse>.FailureAsync(Constants.Messages.NullData);
+            return await OptResult<DeleteAnnouncementCommandResponse>.SuccessAsync(mappedData, Constants.Messages.SuccessfullyDeleted);
         });
     }
 }

@@ -16,7 +16,7 @@ namespace HospitalManagement.Application.Features.Commands.Error.AddError
                 if (data.Succeeded)
                 {
                     var response = _mapper.Map<AddErrorCommandResponse>(data.Data);
-                    return await OptResult<AddErrorCommandResponse>.SuccessAsync(response, Messages.SuccessfullyAdded);
+                    return await OptResult<AddErrorCommandResponse>.SuccessAsync(response, Constants.Messages.SuccessfullyAdded);
                 }
 
                 return await OptResult<AddErrorCommandResponse>.FailureAsync(data.Messages);

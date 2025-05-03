@@ -20,7 +20,7 @@ public class CreateDbParameterTypeCommandHandler : IRequestHandler<CreateDbParam
                 return await OptResult<CreateDbParameterTypeCommandResponse>.FailureAsync(data.Messages);
 
             var response = _mapper.Map<CreateDbParameterTypeCommandResponse>(data.Data);
-            return await OptResult<CreateDbParameterTypeCommandResponse>.SuccessAsync(response, Messages.SuccessfullyAdded);
+            return await OptResult<CreateDbParameterTypeCommandResponse>.SuccessAsync(response, Constants.Messages.SuccessfullyAdded);
         });
     }
 }

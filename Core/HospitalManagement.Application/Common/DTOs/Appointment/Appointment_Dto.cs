@@ -10,6 +10,7 @@
     }
     public class CreateAppointment_Dto
     {
+        public Guid Guid { get; set; }
         public Guid CreatedUser { get; set; }
         public string NameSurname { get; set; }
         public int Gender { get; set; }

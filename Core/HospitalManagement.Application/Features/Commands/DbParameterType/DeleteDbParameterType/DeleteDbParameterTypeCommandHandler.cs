@@ -16,8 +16,8 @@ public class DeleteDbParameterTypeCommandHandler : IRequestHandler<DeleteDbParam
         {
             var data = await _dbParameterTypeService.DeleteDbParameterTypeAsync(request.Guid, 1);
             var mappedData = _mapper.Map<DeleteDbParameterTypeCommandResponse>(data.Data);
-            if (mappedData == null) return await OptResult<DeleteDbParameterTypeCommandResponse>.FailureAsync(Messages.NullData);
-            return await OptResult<DeleteDbParameterTypeCommandResponse>.SuccessAsync(mappedData, Messages.SuccessfullyDeleted);
+            if (mappedData == null) return await OptResult<DeleteDbParameterTypeCommandResponse>.FailureAsync(Constants.Messages.NullData);
+            return await OptResult<DeleteDbParameterTypeCommandResponse>.SuccessAsync(mappedData, Constants.Messages.SuccessfullyDeleted);
         });
     }
 }

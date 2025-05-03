@@ -1,31 +1,35 @@
-﻿using HospitalManagement.Application.Common.DTOs.Appointment;
+﻿using HospitalManagement.Application.Message.Commands.Appointment;
+using MassTransit;
 
 namespace HospitalManagement.Application.Features.Commands.Appointment.CreateAppointment
 {
     public class CreateAppointmentCommandHandler : IRequestHandler<CreateAppointmentCommandRequest, OptResult<CreateAppointmentCommandResponse>>
     {
-        private readonly IAppointmentService _appointmentService;
         private readonly IMapper _mapper;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-        public CreateAppointmentCommandHandler(IAppointmentService appointmentService, IMapper mapper)
+        public CreateAppointmentCommandHandler(IMapper mapper, IPublishEndpoint publishEndpoint)
         {
-            _appointmentService = appointmentService;
             _mapper = mapper;
+            _publishEndpoint = publishEndpoint;
         }
 
         public async Task<OptResult<CreateAppointmentCommandResponse>> Handle(CreateAppointmentCommandRequest request, CancellationToken cancellationToken)
         {
-            OptResult<CreateAppointmentCommandResponse> response = new OptResult<CreateAppointmentCommandResponse>();
+            // OptResult<CreateAppointmentCommandResponse> response = new OptResult<CreateAppointmentCommandResponse>();
+            var message = _mapper.Map<CreateAppointmentMessage>(request);
+
             return await ExceptionHandler.HandleOptResultAsync(async () =>
             {
-                var createAppointmentDto = _mapper.Map<CreateAppointment_Dto>(request);
-                var result = await _appointmentService.CreateAppointmentAsync(createAppointmentDto);
-                if (result.Succeeded)
+                await _publishEndpoint.Publish(message, cancellationToken);
+                var response = new CreateAppointmentCommandResponse
                 {
-                    var response = _mapper.Map<CreateAppointmentCommandResponse>(result.Data);
-                    return await OptResult<CreateAppointmentCommandResponse>.SuccessAsync(response, result.Message);
-                }
-                return await OptResult<CreateAppointmentCommandResponse>.FailureAsync(result.Messages);
+
+                    Message = "Randevu isteğiniz işleme alındı."
+                };
+
+                return await OptResult<CreateAppointmentCommandResponse>.SuccessAsync(response);
+
             });
         }
     }

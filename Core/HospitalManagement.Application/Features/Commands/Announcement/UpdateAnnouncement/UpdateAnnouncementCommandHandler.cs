@@ -23,7 +23,7 @@
                         return await OptResult<UpdateAnnouncementCommandResponse>.FailureAsync(updatedAnnouncement.Message);
 
                     var response = _mapper.Map<UpdateAnnouncementCommandResponse>(updatedAnnouncement.Data);
-                    return await OptResult<UpdateAnnouncementCommandResponse>.SuccessAsync(response, Messages.SuccessfullyUpdated);
+                    return await OptResult<UpdateAnnouncementCommandResponse>.SuccessAsync(response, Constants.Messages.SuccessfullyUpdated);
                 });
         }
     }

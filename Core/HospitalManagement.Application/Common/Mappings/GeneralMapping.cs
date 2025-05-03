@@ -48,6 +48,7 @@ using HospitalManagement.Application.Features.Queries.Room.GetRoomAvailability;
 using HospitalManagement.Application.Features.Queries.User.GetAllPagedUser;
 using HospitalManagement.Application.Features.Queries.User.GetAllUser;
 using HospitalManagement.Application.Features.Queries.User.GetByUserIdOrGuidUser;
+using HospitalManagement.Application.Message.Commands.Appointment;
 using HospitalManagement.Application.Utilities.Converters;
 using HospitalManagement.Domain.Entities.Users;
 
@@ -133,9 +134,12 @@ namespace HospitalManagement.Application.Common.Mappings
                 .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate))
                 .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate)).ReverseMap();
 
+            CreateMap<CreateAppointmentCommandRequest, CreateAppointmentMessage>();
             CreateMap<CreateAppointmentCommandRequest, CreateAppointment_Dto>();
             CreateMap<CreateAppointment_Dto, CreateAppointmentCommandResponse>();
             CreateMap<Appointment, GetAllAppointmentQueryResponse>();
+            CreateMap<CreateAppointmentMessage, CreateAppointment_Dto>();
+
             CreateMap<OptResult<Appointment>, GetByIdOrGuidAppointmentQueryResponse>().ReverseMap();
 
             CreateMap<Appointment, GetByIdOrGuidAppointmentQueryResponse>()
@@ -275,6 +279,11 @@ namespace HospitalManagement.Application.Common.Mappings
 
             CreateMap<string, GetValueXQueryResponse>()
                 .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src));
+            #endregion
+
+            #region ServiceLog
+            CreateMap<Create_ServiceLog_Dto, ServiceLog>();
+
             #endregion
         }
     }

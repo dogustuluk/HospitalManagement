@@ -1,4 +1,6 @@
-﻿using HospitalManagement.Application.Utilities.Security.Resiliance;
+﻿using HospitalManagement.Application.Message.Consumers.Appointment;
+using HospitalManagement.Application.Utilities.Security.Resiliance;
+using MassTransit;
 using Microsoft.Extensions.Hosting;
 
 namespace HospitalManagement.Application
@@ -10,7 +12,7 @@ namespace HospitalManagement.Application
 
             serviceCollection.AddMediatR(typeof(ServiceRegistration));
             serviceCollection.AddHttpClient();
-            serviceCollection.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly()); 
+            serviceCollection.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             serviceCollection.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
             serviceCollection.AddTransient<IResiliencePolicyProvider, ResiliencePolicyProvider>();
             serviceCollection.AddTransient(typeof(IPipelineBehavior<,>), typeof(ResilianceBehavior<,>));
@@ -30,7 +32,7 @@ namespace HospitalManagement.Application
             serviceCollection.AddScoped<AppointmentSpecifications>();
             serviceCollection.AddScoped<DepartmentSpecifications>();
             serviceCollection.AddScoped<UserRegistrationStrategyFactoryService>();
-            serviceCollection.AddScoped<ICryptographyService,CryptographyService>();
+            serviceCollection.AddScoped<ICryptographyService, CryptographyService>();
             serviceCollection.AddScoped<IUserRegistrationStrategyService, DefaultUserRegistrationStrategyService>();
             serviceCollection.AddScoped<IUserRegistrationStrategyService, DoctorUserRegistrationStrategyService>();
 
@@ -38,6 +40,29 @@ namespace HospitalManagement.Application
             serviceCollection.AddScoped<IUserRegistrationStrategyService, PatientUserRegistrationStrategyService>();
 
             serviceCollection.AddScoped<IUserRegistrationStrategyService, VisitorAppointmentUserRegistrationStrategyService>();
+
+
+            //massTransit konfigürasyonları
+            serviceCollection.AddMassTransit(a =>
+            {
+                a.AddConsumer<CreateAppointmentConsumer>();
+                a.AddConsumer<CreateAppointmentEventConsumer>();
+
+                a.UsingRabbitMq((context, _config) =>
+                {
+                    _config.Host("amqps://zsipeopu:ICYmOGZN9EQScGYni3JQB2z2bnRAxWV5@possum.lmq.cloudamqp.com/zsipeopu");
+
+                    _config.ReceiveEndpoint(RabbitMQSettings.Appointment_CreateAppointmentQueue, e =>
+                    {
+                        e.ConfigureConsumer<CreateAppointmentConsumer>(context);
+                    });
+
+                    _config.ReceiveEndpoint(RabbitMQSettings.ServiceLog_EventQueue, e =>
+                    {
+                        e.ConfigureConsumer<CreateAppointmentEventConsumer>(context);
+                    });
+                });
+            });
 
         }
     }

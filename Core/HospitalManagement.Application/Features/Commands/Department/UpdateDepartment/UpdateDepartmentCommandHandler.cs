@@ -1,11 +1,4 @@
-﻿using HospitalManagement.Application.Features.Commands.Announcement.UpdateAnnouncement;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HospitalManagement.Application.Features.Commands.Department.UpdateDepartment
+﻿namespace HospitalManagement.Application.Features.Commands.Department.UpdateDepartment
 {
     public class UpdateDepartmentCommandHandler : IRequestHandler<UpdateDepartmentCommandRequest, OptResult<UpdateDepartmentCommandResponse>>
     {
@@ -25,10 +18,10 @@ namespace HospitalManagement.Application.Features.Commands.Department.UpdateDepa
                 var mappedDto = _mapper.Map<Update_Department_Dto>(request);
                 var updatedDepartment = await _departmentService.UpdateDepartmentAsync(mappedDto);
                 if (!updatedDepartment.Succeeded)
-                    return await OptResult<UpdateDepartmentCommandResponse>.FailureAsync(Messages.UnSuccessfull);
+                    return await OptResult<UpdateDepartmentCommandResponse>.FailureAsync(Constants.Messages.UnSuccessfull);
 
                 var response = _mapper.Map<UpdateDepartmentCommandResponse>(updatedDepartment.Data);
-                return await OptResult<UpdateDepartmentCommandResponse>.SuccessAsync(response, Messages.SuccessfullyUpdated);
+                return await OptResult<UpdateDepartmentCommandResponse>.SuccessAsync(response, Constants.Messages.SuccessfullyUpdated);
             });
         }
     }
